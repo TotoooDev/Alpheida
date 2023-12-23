@@ -1,18 +1,26 @@
 #include <app.h>
-#include <stdlib.h>
+#include <window.h>
 
 typedef struct App {
-    int foo;
+    Window* window;
 } App;
 
-App* app_new() {
+App* app_new(const char* name) {
     App* app = (App*)malloc(sizeof(App));
-    app->foo = 5;
+    
+    app->window = window_new(name, 800, 600);
 
     return app;
 }
 
 void app_delete(App* app) {
+    window_delete(app->window);
     free(app);
+}
+
+void app_run(App* app) {
+    while (window_is_open(app->window)) {
+
+    }
 }
 

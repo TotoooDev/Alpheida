@@ -3,8 +3,10 @@
 
 typedef struct App App;
 
-App* app_new();
+App* app_new(const char* name);
 void app_delete(App* app);
+
+void app_run(App* app);
 
 #endif
 
