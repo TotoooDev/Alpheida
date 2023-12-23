@@ -20,7 +20,7 @@ void app_delete(App* app) {
 
 void app_run(App* app) {
     while (window_is_open(app->window)) {
-
+        window_poll_events(app->window);
     }
 }
 

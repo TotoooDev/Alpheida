@@ -39,7 +39,9 @@ Window* window_new(const char* title, int width, int height) {
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
     TOTO_ASSERT_VA(window->renderer != NULL, "Failed to create renderer! SDL_Error: %s\n", SDL_GetError());
-    
+
+    window->is_open = true;
+
     num_windows++;
     return window;
 }
