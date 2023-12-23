@@ -2,8 +2,8 @@
 #include <app.h>
 
 int main(/*int argc, char* argv*/) {
-    printf("Hi mom!\n");
     App* app = app_new("Alpheida");
+    app_run(app);
     app_delete(app);
     return 0;
 }
