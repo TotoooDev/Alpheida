@@ -11,7 +11,7 @@ SRCS := $(shell find $(SRC_DIR) -name '*.c')
 OBJS := $(SRCS:%=$(OBJ_DIR)/%.o)
 
 CFLAGS := -I$(INC_DIR) -Wall -Wconversion -Werror
-LDFLAGS := -lSDL2
+LDFLAGS := -lSDL2 -lSDL2_image
 
 $(BIN_DIR)/$(BIN_NAME): $(OBJS)
 	@echo "Linking $(BIN_NAME)..."
