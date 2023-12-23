@@ -1,0 +1,34 @@
+[
+  {
+    "arguments": [
+      "/bin/gcc",
+      "-I./include",
+      "-Wall",
+      "-Wconversion",
+      "-Werror",
+      "-c",
+      "-o",
+      "obj/./src/app.c.o",
+      "src/app.c"
+    ],
+    "directory": "/home/toto/Alpheida",
+    "file": "/home/toto/Alpheida/src/app.c",
+    "output": "/home/toto/Alpheida/obj/src/app.c.o"
+  },
+  {
+    "arguments": [
+      "/bin/gcc",
+      "-I./include",
+      "-Wall",
+      "-Wconversion",
+      "-Werror",
+      "-c",
+      "-o",
+      "obj/./src/main.c.o",
+      "src/main.c"
+    ],
+    "directory": "/home/toto/Alpheida",
+    "file": "/home/toto/Alpheida/src/main.c",
+    "output": "/home/toto/Alpheida/obj/src/main.c.o"
+  }
+]
