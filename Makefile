@@ -6,6 +6,7 @@ BIN_DIR := ./bin
 OBJ_DIR := ./obj
 SRC_DIR := ./src
 INC_DIR := ./include
+ASSETS_DIR := ./assets
 
 SRCS := $(shell find $(SRC_DIR) -name '*.c')
 OBJS := $(SRCS:%=$(OBJ_DIR)/%.o)
@@ -17,6 +18,8 @@ $(BIN_DIR)/$(BIN_NAME): $(OBJS)
 	@echo "Linking $(BIN_NAME)..."
 	@mkdir -p $(dir $@)
 	@$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	@echo "Copying files..."
+	@cp $(ASSETS_DIR)/* $(BIN_DIR)
 
 $(OBJ_DIR)/%.c.o: %.c
 	@echo "Compiling $<..."
