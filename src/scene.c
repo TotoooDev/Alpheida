@@ -50,3 +50,17 @@ void scene_remove_sprite(Scene* scene, Sprite* sprite) {
     scene->num_sprites--;
 }
 
+void scene_update(Scene* scene, float timestep) {
+    for (unsigned int i = 0; i < scene->num_sprites; i++) {
+        Sprite* sprite = scene->sprites[i];
+        sprite->update_function(sprite, timestep);
+    }
+}
+
+void scene_render_sprites(Scene* scene, Window* window) {
+    for (unsigned int i = 0; i < scene->num_sprites; i++) {
+        Sprite* sprite = scene->sprites[i];
+        sprite->draw_function(sprite, window);
+    }
+}
+
