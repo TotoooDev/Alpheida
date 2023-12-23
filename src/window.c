@@ -88,6 +88,14 @@ void window_add_event_function(void* user_pointer, EventFunction event_function)
     num_event_functions++;
 }
 
+void window_render_texture(Window* window, Texture* texture, SDL_Rect src_rect, SDL_Rect dest_rect) {
+    SDL_RenderCopy(window->renderer, texture_get_native_texture(texture), &src_rect, &dest_rect);
+}
+
+void window_render_full_texture(Window* window, Texture* texture, SDL_Rect dest_rect) {
+    SDL_RenderCopy(window->renderer, texture_get_native_texture(texture), NULL, &dest_rect);
+}
+
 SDL_Window* window_get_native_window(Window* window) {
     return window->window;
 }

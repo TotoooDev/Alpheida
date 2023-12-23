@@ -22,3 +22,7 @@ void texture_delete(Texture* texture) {
     SDL_DestroyTexture(texture->texture);
     free(texture);
 }
+
+SDL_Texture* texture_get_native_texture(Texture* texture) {
+    return texture->texture;
+}
