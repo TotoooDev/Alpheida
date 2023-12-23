@@ -1,10 +1,14 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <window.h>
+
 typedef struct App App;
 
-App* app_new(const char* name);
-void app_delete(App* app);
+App* app_get();
+void app_delete();
+
+Window* app_get_window(App* app);
 
 void app_run(App* app);
 

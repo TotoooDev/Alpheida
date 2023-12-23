@@ -2,8 +2,7 @@
 #include <app.h>
 
 int main(/*int argc, char* argv*/) {
-    App* app = app_new("Alpheida");
-    app_run(app);
-    app_delete(app);
+    app_run(app_get());
+    app_delete();
     return 0;
 }
