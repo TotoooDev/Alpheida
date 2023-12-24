@@ -1,5 +1,6 @@
 #include <texture.h>
 #include <app.h>
+#include <log.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -11,8 +12,10 @@ Texture* texture_new(const char* filename) {
     Texture* texture = malloc(sizeof(Texture));
 
     SDL_Surface* surface = IMG_Load(filename);
-    Window* window = app_get_window(app_get());
+    TOTO_ASSERT_VA(surface != NULL, "failed to load image %s! img error: %s\n", filename, IMG_GetError());
+    Window* window = app_get_window();
     texture->texture = SDL_CreateTextureFromSurface(window_get_renderer(window), surface);
+    TOTO_ASSERT_VA(texture->texture != NULL, "failed to create texture for image %s! sdl error: %s\n", filename, SDL_GetError());
     SDL_FreeSurface(surface);
 
     return texture;
