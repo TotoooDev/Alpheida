@@ -10,8 +10,7 @@ typedef void(*UpdateFunction)(Sprite*, float);
 typedef void(*DrawFunction)(Sprite*, Window*);
 
 typedef struct Sprite {
-    int x, y;
-    int width, height;
+    AABB* aabb;
     Texture* texture;
 
     UpdateFunction update_function;

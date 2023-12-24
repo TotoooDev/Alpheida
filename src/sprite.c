@@ -7,17 +7,13 @@ void default_update_function(Sprite* sprite, float timestep) {
 
 void default_draw_function(Sprite* sprite, Window* window) {
     // draw the sprite (easy)
-    SDL_Rect dest_rect = { sprite->x, sprite->y, sprite->width, sprite->height };
-    window_render_full_texture(window, sprite->texture, dest_rect);
+    window_render_full_texture(window, sprite->texture, sprite->aabb);
 }
 
 Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
     Sprite* sprite = (Sprite*)malloc(sizeof(Sprite));
 
-    sprite->x = x;
-    sprite->y = y;
-    sprite->width = width;
-    sprite->height = height;
+    sprite->aabb = aabb_new(x, y, width, height);
     sprite->texture = texture;
 
     sprite->update_function = default_update_function;
@@ -27,6 +23,7 @@ Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
 }
 
 void sprite_delete(Sprite* sprite) {
+    aabb_delete(sprite->aabb);
     free(sprite);
 }
 
