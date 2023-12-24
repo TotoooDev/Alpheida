@@ -1,34 +1,14 @@
-BIN_NAME := alpheida
+.PHONY: linux switch clean
 
-CC := /bin/gcc
+linux:
+	make -f Makefile.linux
 
-BIN_DIR := ./bin
-OBJ_DIR := ./obj
-SRC_DIR := ./src
-INC_DIR := ./include
-ASSETS_DIR := ./assets
+switch:
+	@mkdir -p bin
+	@mkdir -p obj
+	make -f Makefile.switch
 
-SRCS := $(shell find $(SRC_DIR) -name '*.c')
-OBJS := $(SRCS:%=$(OBJ_DIR)/%.o)
-
-CFLAGS := -I$(INC_DIR) -Wall -Wconversion -Werror -g
-LDFLAGS := -lSDL2 -lSDL2_image
-
-$(BIN_DIR)/$(BIN_NAME): $(OBJS)
-	@echo "Linking $(BIN_NAME)..."
-	@mkdir -p $(dir $@)
-	@$(CC) $(OBJS) -o $@ $(LDFLAGS)
-	@echo "Copying files..."
-	@cp $(ASSETS_DIR)/* $(BIN_DIR)
-
-$(OBJ_DIR)/%.c.o: %.c
-	@echo "Compiling $<..."
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-.PHONY: clean
 clean:
 	@echo "Cleaning..."
-	@rm -r $(OBJ_DIR)
-	@rm -r $(BIN_DIR)
-
+	@rm -r obj
+	@rm -r bin

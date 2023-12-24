@@ -5,5 +5,9 @@
     #define TOTO_DEBUG
 #endif
 
+#ifdef __SWITCH__
+    #define TOTO_SWITCH
+#endif
+
 #endif
 
