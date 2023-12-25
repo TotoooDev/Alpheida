@@ -9,11 +9,24 @@ typedef struct App {
     Window* window;
     Scene* current_scene;
 
+    bool is_running;
+    
     float timestep;
     float last_time;
 } App;
 
 static App* app_instance = NULL;
+
+void app_event_functions(void* user_pointer, SDL_Event event) {
+    App* app = (App*)user_pointer;
+    
+    if (event.type == SDL_QUIT)
+        app->is_running = false;
+
+    if (event.type == SDL_CONTROLLERBUTTONDOWN)
+        if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START)
+            app->is_running = false;
+}
 
 void app_platform_init() {
     #ifdef TOTO_SWITCH
@@ -44,7 +57,9 @@ App* app_new(const char* name) {
     
     app->window = window_new(name, 800, 600);
     app->current_scene = NULL;
+    app->is_running = true;
     app->timestep = 0.0f;
+    app->last_time = 0.0f;
 
     app_platform_init();
 
