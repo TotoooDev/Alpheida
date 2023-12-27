@@ -1,10 +1,7 @@
 #include <app.h>
 #include <timer.h>
-#include <config.h>
+#include <platform/platform.h>
 #include <log.h>
-#ifdef TOTO_SWITCH
-    #include <platform/switch.h>
-#endif
 
 typedef struct App {
     Window* window;
@@ -29,24 +26,6 @@ void app_event_functions(void* user_pointer, SDL_Event event) {
             log_info("a pressed\n");
 }
 
-void app_platform_init() {
-    #ifdef TOTO_SWITCH
-        switch_init();
-    #endif
-}
-
-void app_platform_update() {
-    #ifdef TOTO_SWITCH
-        switch_update();
-    #endif
-}
-
-void app_platform_exit() {
-    #ifdef TOTO_SWITCH
-        switch_exit();
-    #endif
-}
-
 void app_update_timestep() {
     float current_time = timer_get_time_ms();
     app_get()->timestep = current_time - app_get()->last_time;
@@ -62,13 +41,13 @@ App* app_new(const char* name) {
     app->timestep = 0.0f;
     app->last_time = 0.0f;
 
-    app_platform_init();
+    platform_init();
 
     return app;
 }
 
 void app_delete() {
-    app_platform_exit();
+    platform_exit();
     window_delete(app_instance->window);
     free(app_instance);
 }
@@ -97,9 +76,9 @@ void app_run() {
         
         window_present(app_instance->window);
 
-        app_platform_update();
-
         app_update_timestep();
+        
+        platform_update();
     }
 }
 
