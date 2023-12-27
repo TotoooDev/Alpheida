@@ -5,7 +5,7 @@
 
 #ifdef TOTO_SWITCH
     #define fs_get_path_romfs(path) "romfs:/"path
-    #define fs_get_path(path) "sdmc:/"path
+    #define fs_get_path(path) "sdmc:/switch/Alpheida/"path
 #else
     #define fs_get_path_romfs(path) path
     #define fs_get_path(path) path

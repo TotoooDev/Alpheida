@@ -2,6 +2,11 @@
 #include <game/controller.h>
 #include <fs.h>
 #include <window.h>
+#include <log.h>
+
+#include <string.h>
+#include <stdio.h>
+#include <dirent.h>
 
 typedef struct NewScene {
     Scene* scene;
@@ -12,7 +17,7 @@ NewScene* newscene_new() {
 
     scene->scene = scene_new();
 
-    Texture* texture = texture_new(fs_get_path("images/pp.jpg"));
+    Texture* texture = texture_new(fs_get_path_romfs("images/pp.jpg"));
     Sprite* sprite = sprite_new(0, 0, 128, 128, texture);
     scene_add_sprite(scene->scene, sprite);
 

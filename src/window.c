@@ -20,8 +20,8 @@ static unsigned int num_event_functions = 0;
 Window* window_new(const char* title, int width, int height) {
     // Initialize SDL if this is the first window
     if (num_windows <= 0) {
-        TOTO_ASSERT_VA(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
-        TOTO_ASSERT_VA(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP) != 0, "failed to initialize sdl image! img error: %s\n", IMG_GetError());
+        log_assert(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
+        log_assert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP) != 0, "failed to initialize sdl image! img error: %s\n", IMG_GetError());
     }
     
     Window* window = (Window*)malloc(sizeof(Window));
@@ -34,14 +34,14 @@ Window* window_new(const char* title, int width, int height) {
         height,
         SDL_WINDOW_SHOWN
     );
-    TOTO_ASSERT_VA(window->window != NULL, "failed to create window! sdl error: %s\n", SDL_GetError());
+    log_assert(window->window != NULL, "failed to create window! sdl error: %s\n", SDL_GetError());
 
     window->renderer = SDL_CreateRenderer(
         window->window,
         -1,
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
-    TOTO_ASSERT_VA(window->renderer != NULL, "failed to create renderer! sdl error: %s\n", SDL_GetError());
+    log_assert(window->renderer != NULL, "failed to create renderer! sdl error: %s\n", SDL_GetError());
 
     window->is_open = true;
 
@@ -82,7 +82,7 @@ void window_poll_events(Window* window) {
 }
 
 void window_add_event_function(void* user_pointer, EventFunction event_function) {
-    TOTO_ASSERT(num_event_functions < EVENT_FUNCTIONS_SIZE, "failed to add event function! the array is not big enough.");
+    log_assert(num_event_functions < EVENT_FUNCTIONS_SIZE, "failed to add event function! the array is not big enough.");
     event_functions[num_event_functions] = event_function;
     user_pointers[num_event_functions] = user_pointer;
     num_event_functions++;

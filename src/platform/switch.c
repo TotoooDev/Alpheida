@@ -14,7 +14,12 @@ void switch_init() {
     
     // initialize romfs
     Result result = romfsInit();
-    TOTO_ASSERT_VA(!R_FAILED(result), "%08X: failed to initialize switch romfs!\n", result);
+    log_assert(!R_FAILED(result), "%08X: failed to initialize switch romfs!\n", result);
+    
+    // initialize nxlink for printf debugging
+    // https://switch.homebrew.guide/homebrew_dev/app_dev.html#printf-debugging-through-nxlink
+    socketInitializeDefault();
+    nxlinkStdio();
 }
 
 void switch_update() {
@@ -23,6 +28,8 @@ void switch_update() {
 }
 
 void switch_exit() {
+    socketExit();
+    
     romfsExit();
     consoleExit(NULL);
 }

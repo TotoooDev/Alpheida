@@ -9,5 +9,7 @@
     #define TOTO_SWITCH
 #endif
 
+#define LOG_FILE_PATH "alpheida.log"
+
 #endif
 

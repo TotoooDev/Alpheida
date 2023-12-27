@@ -1,6 +1,7 @@
 #include <app.h>
 #include <timer.h>
 #include <config.h>
+#include <log.h>
 #ifdef TOTO_SWITCH
     #include <platform/switch.h>
 #endif
@@ -25,7 +26,7 @@ void app_event_functions(void* user_pointer, SDL_Event event) {
 
     if (event.type == SDL_CONTROLLERBUTTONDOWN)
         if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START)
-            app->is_running = false;
+            log_info("a pressed\n");
 }
 
 void app_platform_init() {
