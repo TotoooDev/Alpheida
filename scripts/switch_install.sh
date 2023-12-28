@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # parameters
-IP=192.168.1.21
+IP=192.168.1.23
 PORT=5000
 USER=toto
 PASS=pass

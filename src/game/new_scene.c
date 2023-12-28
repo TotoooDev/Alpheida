@@ -6,16 +6,13 @@
 #include <app.h>
 #include <log.h>
 
-#include <string.h>
-#include <stdio.h>
-#include <dirent.h>
-
 typedef struct NewScene {
     Scene* scene;
 } NewScene;
 
 void newscene_on_event(void* user_pointer, SDL_Event event) {
     if (event.type == SDL_JOYBUTTONDOWN) {
+        log_info("button pressed: %d\n", event.jbutton.button);
         if (event.jbutton.button == JOY_PLUS)
             app_quit();
     }
