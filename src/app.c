@@ -15,7 +15,7 @@ typedef struct App {
 
 static App* app_instance = NULL;
 
-void app_event_functions(void* user_pointer, SDL_Event event) {
+void app_on_event(void* user_pointer, SDL_Event event) {
     App* app = (App*)user_pointer;
     
     if (event.type == SDL_QUIT)
@@ -39,6 +39,8 @@ App* app_new(const char* name) {
 
     platform_init();
 
+    window_add_event_function((void*)app, app_on_event);
+
     return app;
 }
 
@@ -61,7 +63,7 @@ Window* app_get_window() {
 void app_run() {
     app_get();
 
-    while (window_is_open(app_instance->window)) {
+    while (app_instance->is_running) {
         window_poll_events(app_instance->window);
         window_clear(app_instance->window);
         
