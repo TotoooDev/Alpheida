@@ -4,6 +4,7 @@
 #include <window.h>
 #include <platform/input.h>
 #include <app.h>
+#include <timer.h>
 #include <log.h>
 
 typedef struct NewScene {
@@ -18,13 +19,19 @@ void newscene_on_event(void* user_pointer, SDL_Event event) {
     }
 }
 
+void newscene_update_sprite(Sprite* sprite, float timestep) {
+    float time = timer_get_time_s();
+    sprite->color = color_newf(sinf(time), cosf(time + 3.14f), sinf(time + 1.5f), 1.0f);
+}
+
 NewScene* newscene_new() {
     NewScene* scene = (NewScene*)malloc(sizeof(NewScene*));
 
     scene->scene = scene_new();
 
-    Texture* texture = texture_new(fs_get_path_romfs("images/pp.jpg"));
-    Sprite* sprite = sprite_new(0, 0, 128, 128, texture);
+    // Texture* texture = texture_new(fs_get_path_romfs("images/pp.jpg"));
+    Sprite* sprite = sprite_new_color(0, 0, 128, 128, color_magenta());
+    sprite->update_function = newscene_update_sprite;
     scene_add_sprite(scene->scene, sprite);
 
     window_add_event_function((void*)sprite, controller_on_event);
