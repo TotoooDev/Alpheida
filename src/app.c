@@ -20,10 +20,6 @@ void app_event_functions(void* user_pointer, SDL_Event event) {
     
     if (event.type == SDL_QUIT)
         app->is_running = false;
-
-    if (event.type == SDL_CONTROLLERBUTTONDOWN)
-        if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START)
-            log_info("a pressed\n");
 }
 
 void app_update_timestep() {
