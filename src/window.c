@@ -90,7 +90,7 @@ void window_poll_events(Window* window) {
 }
 
 void window_add_event_function(void* user_pointer, EventFunction event_function) {
-    log_assert(num_event_functions < EVENT_FUNCTIONS_SIZE, "failed to add event function! the array is not big enough.");
+    log_assert(num_event_functions < EVENT_FUNCTIONS_SIZE, "failed to add event function! the array is not big enough.\n");
     event_functions[num_event_functions] = event_function;
     user_pointers[num_event_functions] = user_pointer;
     num_event_functions++;

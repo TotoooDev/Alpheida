@@ -25,7 +25,7 @@ void scene_delete(Scene* scene) {
 }
 
 void scene_add_sprite(Scene* scene, Sprite* sprite) {
-    log_assert(scene->num_sprites <= NUM_SPRITES_MAX, "failed to add sprite to scene! sprite limit was reached.");
+    log_assert(scene->num_sprites <= NUM_SPRITES_MAX, "failed to add sprite to scene! sprite limit was reached.\n");
     scene->sprites[scene->num_sprites] = sprite;
     scene->num_sprites++;
 }
@@ -39,7 +39,7 @@ void scene_remove_sprite(Scene* scene, Sprite* sprite) {
             break;
         }
     }
-    log_assert(sprite_index != -1, "failed to find sprite in scene! maybe it's not in the scene?");
+    log_assert(sprite_index != -1, "failed to find sprite in scene! maybe it's not in the scene?\n");
 
     // remove the sprite
     for (int i = sprite_index; i < scene->num_sprites; i++) {
