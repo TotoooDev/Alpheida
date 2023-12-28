@@ -6,10 +6,10 @@ float timer_get_time_s() {
 }
 
 float timer_get_time_ms() {
-    return timer_get_time_s() * 0.001f;
+    return timer_get_time_s() * 1000.0f;
 }
 
 float timer_get_time_us() {
-    return timer_get_time_ms() * 0.001f;
+    return timer_get_time_ms() * 1000.0f;
 }
 
