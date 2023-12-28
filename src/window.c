@@ -17,11 +17,19 @@ static EventFunction event_functions[EVENT_FUNCTIONS_SIZE];
 static void* user_pointers[EVENT_FUNCTIONS_SIZE];
 static unsigned int num_event_functions = 0;
 
+void window_init_sdl() {
+    log_assert(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
+    log_assert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP) != 0, "failed to initialize sdl image! img error: %s\n", IMG_GetError());
+    
+    SDL_InitSubSystem(SDL_INIT_JOYSTICK);
+    SDL_JoystickEventState(SDL_ENABLE);
+    SDL_JoystickOpen(0);
+}
+
 Window* window_new(const char* title, int width, int height) {
     // Initialize SDL if this is the first window
     if (num_windows <= 0) {
-        log_assert(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
-        log_assert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP) != 0, "failed to initialize sdl image! img error: %s\n", IMG_GetError());
+        window_init_sdl();
     }
     
     Window* window = (Window*)malloc(sizeof(Window));
