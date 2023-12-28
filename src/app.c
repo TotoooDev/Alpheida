@@ -78,6 +78,10 @@ void app_run() {
     }
 }
 
+void app_quit() {
+    app_get()->is_running = false;
+}
+
 void app_set_current_scene(Scene* scene) {
     app_get()->current_scene = scene;
 }

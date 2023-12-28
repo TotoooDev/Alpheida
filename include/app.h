@@ -12,6 +12,7 @@ void app_delete();
 Window* app_get_window();
 
 void app_run();
+void app_quit();
 
 void app_set_current_scene(Scene* scene);
 
