@@ -5,13 +5,7 @@
 #include <log.h>
 #include <switch.h>
 
-static PadState pad;
-
 void switch_init() {
-    consoleInit(NULL);
-    padConfigureInput(1, HidNpadStyleSet_NpadStandard);
-    padInitializeDefault(&pad);
-    
     // initialize romfs
     Result result = romfsInit();
     log_assert(!R_FAILED(result), "%08X: failed to initialize switch romfs!\n", result);
@@ -23,15 +17,13 @@ void switch_init() {
 }
 
 void switch_update() {
-    padUpdate(&pad);
-    consoleUpdate(NULL);
+
 }
 
 void switch_exit() {
     socketExit();
     
     romfsExit();
-    consoleExit(NULL);
 }
 
 #endif
