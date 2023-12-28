@@ -7,7 +7,10 @@ void default_update_function(Sprite* sprite, float timestep) {
 
 void default_draw_function(Sprite* sprite, Window* window) {
     // draw the sprite (easy)
-    window_render_full_texture(window, sprite->texture, sprite->aabb);
+    if (sprite->use_color || !sprite->texture)
+        window_render_color(window, sprite->color, sprite->aabb);
+    else
+        window_render_full_texture(window, sprite->texture, sprite->aabb);
 }
 
 Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
@@ -15,10 +18,20 @@ Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
 
     sprite->aabb = aabb_new(x, y, width, height);
     sprite->texture = texture;
+    sprite->color = color_magenta();
+    sprite->use_color = false;
 
     sprite->update_function = default_update_function;
     sprite->draw_function = default_draw_function;
+    sprite->user_pointer = NULL;
 
+    return sprite;
+}
+
+Sprite* sprite_new_color(int x, int y, int width, int height, Color color) {
+    Sprite* sprite = sprite_new(x, y, width, height, NULL);
+    sprite->color = color;
+    sprite->use_color = true;
     return sprite;
 }
 

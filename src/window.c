@@ -107,6 +107,12 @@ void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
     SDL_RenderCopy(window->renderer, texture_get_native_texture(texture), NULL, &dest_rect);
 }
 
+void window_render_color(Window* window, Color color, AABB* dest) {
+    SDL_SetRenderDrawColor(window->renderer, color.r, color.g, color.b, color.a);
+    SDL_Rect dest_rect = { dest->x, dest->y, dest->width, dest->height };
+    SDL_RenderFillRect(window->renderer, &dest_rect);
+}
+
 SDL_Window* window_get_native_window(Window* window) {
     return window->window;
 }

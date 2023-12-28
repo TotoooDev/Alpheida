@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include <texture.h>
+#include <color.h>
 #include <window.h>
 
 typedef struct Sprite Sprite;
@@ -12,6 +13,8 @@ typedef void(*DrawFunction)(Sprite*, Window*);
 typedef struct Sprite {
     AABB* aabb;
     Texture* texture;
+    Color color;
+    bool use_color;
 
     UpdateFunction update_function;
     DrawFunction draw_function;
@@ -19,6 +22,7 @@ typedef struct Sprite {
 } Sprite;
 
 Sprite* sprite_new(int x, int y, int width, int height, Texture* texture);
+Sprite* sprite_new_color(int x, int y, int width, int height, Color color);
 void sprite_delete(Sprite* sprite);
 
 #endif

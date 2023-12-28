@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <texture.h>
+#include <color.h>
 #include <aabb.h>
 #include <SDL2/SDL.h>
 #include <stdbool.h>
@@ -20,6 +21,7 @@ void window_poll_events(Window* window);
 
 void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest);
 void window_render_full_texture(Window* window, Texture* texture, AABB* dest);
+void window_render_color(Window* window, Color color, AABB* dest);
 
 SDL_Window* window_get_native_window(Window* window);
 SDL_Renderer* window_get_renderer(Window* window);
