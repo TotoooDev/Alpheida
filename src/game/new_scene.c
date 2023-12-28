@@ -2,6 +2,8 @@
 #include <game/controller.h>
 #include <fs.h>
 #include <window.h>
+#include <platform/input.h>
+#include <app.h>
 #include <log.h>
 
 #include <string.h>
@@ -11,6 +13,13 @@
 typedef struct NewScene {
     Scene* scene;
 } NewScene;
+
+void newscene_on_event(void* user_pointer, SDL_Event event) {
+    if (event.type == SDL_JOYBUTTONDOWN) {
+        if (event.jbutton.button == JOY_PLUS)
+            app_quit();
+    }
+}
 
 NewScene* newscene_new() {
     NewScene* scene = (NewScene*)malloc(sizeof(NewScene*));
@@ -22,6 +31,7 @@ NewScene* newscene_new() {
     scene_add_sprite(scene->scene, sprite);
 
     window_add_event_function((void*)sprite, controller_on_event);
+    window_add_event_function(NULL, newscene_on_event);
 
     return scene;
 }
