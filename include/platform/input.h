@@ -12,31 +12,31 @@
     #define JOY_A             SWITCH_JOY_A
     #define JOY_B             SWITCH_JOY_B
     #define JOY_X             SWITCH_JOY_X
-    #define JOY_Y             SWITCH_JOY_X
-    #define JOY_LSTICK_BUTTON SWITCH_JOY_X
-    #define JOY_RSTICK_BUTTON SWITCH_JOY_X
-    #define JOY_L             SWITCH_JOY_X
-    #define JOY_R             SWITCH_JOY_X
-    #define JOY_L2            SWITCH_JOY_X
-    #define JOY_R2            SWITCH_JOY_X
-    #define JOY_PLUS          SWITCH_JOY_X
-    #define JOY_MINUS         SWITCH_JOY_X
-    #define JOY_LEFT          SWITCH_JOY_X
-    #define JOY_UP            SWITCH_JOY_X
-    #define JOY_RIGHT         SWITCH_JOY_X
-    #define JOY_DOWN          SWITCH_JOY_X
-    #define JOY_LSTICK_LEFT   SWITCH_JOY_X
-    #define JOY_LSTICK_UP     SWITCH_JOY_X
-    #define JOY_LSTICK_RIGHT  SWITCH_JOY_X
-    #define JOY_LSTCIK_DOWN   SWITCH_JOY_X
-    #define JOY_RSTICK_LEFT   SWITCH_JOY_X
-    #define JOY_RSTICK_UP     SWITCH_JOY_X
-    #define JOY_RSTICK_RIGHT  SWITCH_JOY_X
-    #define JOY_RSTICK_DOWN   SWITCH_JOY_X
-    #define JOY_LSL           SWITCH_JOY_X
-    #define JOY_LSR           SWITCH_JOY_X
-    #define JOY_RSL           SWITCH_JOY_X
-    #define JOY_RSR           SWITCH_JOY_X
+    #define JOY_Y             SWITCH_JOY_Y
+    #define JOY_LSTICK_BUTTON SWITCH_JOY_LSTICK_BUTTON
+    #define JOY_RSTICK_BUTTON SWITCH_JOY_RSTICK_BUTTON
+    #define JOY_L             SWITCH_JOY_L
+    #define JOY_R             SWITCH_JOY_R
+    #define JOY_L2            SWITCH_JOY_L2
+    #define JOY_R2            SWITCH_JOY_R2
+    #define JOY_PLUS          SWITCH_JOY_PLUS
+    #define JOY_MINUS         SWITCH_JOY_MINUS
+    #define JOY_LEFT          SWITCH_JOY_LEFT
+    #define JOY_UP            SWITCH_JOY_UP
+    #define JOY_RIGHT         SWITCH_JOY_RIGHT
+    #define JOY_DOWN          SWITCH_JOY_DOWN
+    #define JOY_LSTICK_LEFT   SWITCH_JOY_LSTICK_LEFT
+    #define JOY_LSTICK_UP     SWITCH_JOY_LSTICK_UP
+    #define JOY_LSTICK_RIGHT  SWITCH_JOY_LSTICK_RIGHT
+    #define JOY_LSTCIK_DOWN   SWITCH_JOY_LSTICK_DOWN
+    #define JOY_RSTICK_LEFT   SWITCH_JOY_RSTCIK_LEFT
+    #define JOY_RSTICK_UP     SWITCH_JOY_RSTICK_UP
+    #define JOY_RSTICK_RIGHT  SWITCH_JOY_RSTICK_RIGHT
+    #define JOY_RSTICK_DOWN   SWITCH_JOY_RSTICK_DOWN
+    #define JOY_LSL           SWITCH_JOY_LSL
+    #define JOY_LSR           SWITCH_JOY_LSR
+    #define JOY_RSL           SWITCH_JOY_RSL
+    #define JOY_RSR           SWITCH_JOY_RSR
 #else
     // toto: investigate how to get more controller input
     #define JOY_INVALID       SDL_CONTROLLER_BUTTON_INVALID
