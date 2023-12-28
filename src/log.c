@@ -14,7 +14,7 @@ void log_log(FILE* out, const char* msg, va_list parameters) {
     FILE* file = fopen(fs_get_path(LOG_FILE_PATH), "a+");
     // i would love to use log_assert here but log_assert calls log_log so it's not a good idea lol
     if (file == NULL)
-        fprintf(file, "failed to open log file %s! something is terribly wrong...\n", LOG_FILE_PATH);
+        fprintf(stderr, "failed to open log file %s! something is terribly wrong...\n", LOG_FILE_PATH);
     vfprintf(file, msg, parameters);
     fclose(file);
 #endif
