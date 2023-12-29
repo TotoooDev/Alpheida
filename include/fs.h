@@ -3,7 +3,7 @@
 
 #include <config.h>
 
-#ifdef TOTO_SWITCH
+#ifdef SHRIMP_SWITCH
     #define fs_get_path_romfs(path) path
     #define fs_get_path(path) "sdmc:/switch/Alpheida/"path
 #else

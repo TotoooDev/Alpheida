@@ -3,11 +3,11 @@
 
 #include <config.h>
 
-#ifdef TOTO_SWITCH
+#ifdef SHRIMP_SWITCH
 #include <platform/switch.h>
 #endif
 
-#ifdef TOTO_SWITCH
+#ifdef SHRIMP_SWITCH
     #define JOY_INVALID       -1
     #define JOY_A             SWITCH_JOY_A
     #define JOY_B             SWITCH_JOY_B
@@ -38,7 +38,7 @@
     #define JOY_RSL           SWITCH_JOY_RSL
     #define JOY_RSR           SWITCH_JOY_RSR
 #else
-    // toto: investigate how to get more controller input
+    // todo: investigate how to get more controller input
     #define JOY_INVALID       SDL_CONTROLLER_BUTTON_INVALID
     #define JOY_A             SDL_CONTROLLER_BUTTON_A
     #define JOY_B             SDL_CONTROLLER_BUTTON_B

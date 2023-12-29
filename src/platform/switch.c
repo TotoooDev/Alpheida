@@ -1,5 +1,5 @@
 #include <config.h>
-#ifdef TOTO_SWITCH
+#ifdef SHRIMP_SWITCH
 
 #include <platform/switch.h>
 #include <log.h>
