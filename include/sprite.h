@@ -3,6 +3,7 @@
 
 #include <texture.h>
 #include <color.h>
+#include <physics.h>
 #include <window.h>
 
 typedef struct Sprite Sprite;
@@ -15,6 +16,8 @@ typedef struct Sprite {
     Texture* texture;
     Color color;
     bool use_color;
+
+    PhysicsObject* physics_object;
 
     UpdateFunction update_function;
     DrawFunction draw_function;

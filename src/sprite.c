@@ -7,7 +7,7 @@ void default_update_function(Sprite* sprite, float timestep) {
 
 void default_draw_function(Sprite* sprite, Window* window) {
     // draw the sprite (easy)
-    if (sprite->use_color || !sprite->texture)
+    if (sprite->use_color || sprite->texture == NULL)
         window_render_color(window, sprite->color, sprite->aabb);
     else
         window_render_full_texture(window, sprite->texture, sprite->aabb);

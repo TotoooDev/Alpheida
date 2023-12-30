@@ -20,12 +20,19 @@ void newscene_on_event(void* user_pointer, SDL_Event event) {
 
 NewScene* newscene_new() {
     NewScene* scene = (NewScene*)malloc(sizeof(NewScene*));
-    
-    scene->scene = scene_new_physics(physics_new());
+
+    PhysicsWorld* world = physics_new();    
+    scene->scene = scene_new_physics(world);
 
     Texture* texture = texture_new(fs_get_path_romfs("images/cool_image.jpg"));
     Sprite* sprite = sprite_new(0, 0, 128, 128, texture);
     scene_add_sprite(scene->scene, sprite);
+    physics_add_physics_object(world, sprite);
+
+    Sprite* ground = sprite_new_color(0, 590, 1280, 10000, color_magenta());
+    scene_add_sprite(scene->scene, ground);
+    PhysicsObject* ground_physics = physics_add_physics_object(world, ground);
+    ground_physics->takes_gravity = false;
 
     window_add_event_function((void*)sprite, controller_on_event);
     window_add_event_function(NULL, newscene_on_event);

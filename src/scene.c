@@ -32,16 +32,10 @@ void scene_delete(Scene* scene) {
 
 void scene_add_sprite(Scene* scene, Sprite* sprite) {
     array_add(scene->sprites, sprite);
-
-    if (scene->physics_world != NULL)
-        physics_add_sprite(scene->physics_world, sprite);
 }
 
 void scene_remove_sprite(Scene* scene, Sprite* sprite) {
     array_remove(scene->sprites, sprite);
-    
-    if (scene->physics_world != NULL)
-        physics_remove_sprite(scene->physics_world, sprite);
 }
 
 void scene_set_physics_world(Scene* scene, PhysicsWorld* world) {

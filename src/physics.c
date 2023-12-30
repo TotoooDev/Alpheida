@@ -1,10 +1,11 @@
 #include <physics.h>
+#include <sprite.h>
 #include <array.h>
 
 #define PHYSICS_MAX_SPRITES 128
 
 typedef struct PhysicsWorld {
-    Array* sprites;
+    Array* objects;
 
     float gravity[2];
 } PhysicsWorld;
@@ -12,7 +13,7 @@ typedef struct PhysicsWorld {
 PhysicsWorld* physics_new() {
     PhysicsWorld* world = (PhysicsWorld*)malloc(sizeof(PhysicsWorld));
 
-    world->sprites = array_new(PHYSICS_MAX_SPRITES);
+    world->objects = array_new(PHYSICS_MAX_SPRITES);
 
     world->gravity[0] = 0.0f;
     world->gravity[1] = -9.81f;
@@ -21,16 +22,12 @@ PhysicsWorld* physics_new() {
 }
 
 void physics_delete(PhysicsWorld* world) {
-    array_delete(world->sprites);
+    for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
+        physics_remove_physics_object(world, array_get(world->objects, i));
+    }
+
+    array_delete(world->objects);
     free(world);
-}
-
-void physics_add_sprite(PhysicsWorld* world, Sprite* sprite) {
-    array_add(world->sprites, sprite);
-}
-
-void physics_remove_sprite(PhysicsWorld* world, Sprite* sprite) {
-    array_remove(world->sprites, sprite);
 }
 
 void physics_set_gravity(PhysicsWorld* world, float* gravity) {
@@ -39,13 +36,42 @@ void physics_set_gravity(PhysicsWorld* world, float* gravity) {
 }
 
 void physics_update(PhysicsWorld* world, float timestep) {
-    for (unsigned int i = 0; i < array_get_num_elements(world->sprites); i++) {
-        Sprite* sprite = array_get(world->sprites, i);
+    for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
+        PhysicsObject* object = array_get(world->objects, i);
+
+        // detect collisions
+        bool collision_detected = false;
+        for (unsigned int ii = 0; ii < array_get_num_elements(world->objects); ii++) {
+            PhysicsObject* other_object = array_get(world->objects, ii);
+
+            if (object == other_object)
+                continue;
+
+            collision_detected = aabb_intersect(object->sprite->aabb, other_object->sprite->aabb);
+        }
         
-        // apply gravity
-        // i have to subtract from the y axis because for some fucking reason the sdl positive y axis is down (?????)
-        sprite->aabb->x += (int)world->gravity[0];
-        sprite->aabb->y -= (int)world->gravity[1];
+        if (!collision_detected && object->takes_gravity) {
+            // apply gravity
+            // i have to subtract from the y axis because for some fucking reason the sdl positive y axis is down (?????)
+            object->sprite->aabb->x += (int)world->gravity[0];
+            object->sprite->aabb->y -= (int)world->gravity[1];
+        };
     }
+}
+
+PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite) {
+    PhysicsObject* object = (PhysicsObject*)malloc(sizeof(PhysicsObject));
+
+    object->sprite = sprite;
+    sprite->physics_object = object;
+
+    array_add(world->objects, object);
+
+    return object;
+}
+
+void physics_remove_physics_object(PhysicsWorld* world, PhysicsObject* object) {
+    array_remove(world->objects, object);
+    free(object);
 }
 
