@@ -46,6 +46,7 @@ ROMFS		:=	assets
 
 APP_TITLE   := Alpheida
 APP_AUTHOR  := TotoDev
+APP_VERSION := 0.1.0
 
 #---------------------------------------------------------------------------------
 # options for code generation

@@ -6,7 +6,7 @@
 
 typedef struct App App;
 
-App* app_get();
+void app_create(const char* name);
 void app_delete();
 
 Window* app_get_window();

@@ -9,7 +9,5 @@
     #define SHRIMP_SWITCH
 #endif
 
-#define LOG_FILE_PATH "alpheida.log"
-
 #endif
 

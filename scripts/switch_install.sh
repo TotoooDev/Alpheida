@@ -3,20 +3,16 @@
 # parameters
 IP=192.168.1.23
 PORT=5000
-USER=toto
-PASS=pass
+USER=host
+PASS=cool_password
 
 # actual script
-cd ..
 ftp -i -n $IP $PORT << END_SCRIPT
 quote USER $USER
 quote PASS $PASS
+binary
 cd switch
-delete Alpheida.nro
-rmdir Alpheida
-mkdir Alpheida
-mkdir Alpheida/images
-send bin/Alpheida.nro Alpheida.nro
-send assets/images/pp.jpg Alpheida/images/pp.jpg
+delete Alpheida/Alpheida.nro
+send bin/Alpheida.nro Alpheida/Alpheida.nro
 END_SCRIPT
 

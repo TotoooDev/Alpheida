@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#define LOG_FILE_PATH "alpheida.log"
+
 void log_log(FILE* out, const char* msg, va_list parameters) {
-#ifdef SHRIMPMP_DEBUG
+#ifdef SHRIMP_DEBUG
     // print to stdout
     vfprintf(out, msg, parameters);
 

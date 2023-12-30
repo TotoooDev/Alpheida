@@ -11,5 +11,7 @@ void platform_init();
 void platform_update();
 void platform_exit();
 
+void platform_get_window_size(int* width, int* height);
+
 #endif
 

@@ -31,6 +31,9 @@
 #define SWITCH_JOY_RSL          26
 #define SWITCH_JOY_RSR          27
 
+#define SWITCH_WINDOW_WIDTH 1280
+#define SWITCH_WINDOW_HEIGHT 720
+
 void switch_init();
 void switch_update();
 void switch_exit();
