@@ -39,6 +39,13 @@ void physics_set_gravity(PhysicsWorld* world, float* gravity) {
 }
 
 void physics_update(PhysicsWorld* world, float timestep) {
-    // do things here
+    for (unsigned int i = 0; i < array_get_num_elements(world->sprites); i++) {
+        Sprite* sprite = array_get(world->sprites, i);
+        
+        // apply gravity
+        // i have to subtract from the y axis because for some fucking reason the sdl positive y axis is down (?????)
+        sprite->aabb->x += (int)world->gravity[0];
+        sprite->aabb->y -= (int)world->gravity[1];
+    }
 }
 

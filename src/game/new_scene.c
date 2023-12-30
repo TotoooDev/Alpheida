@@ -21,7 +21,7 @@ void newscene_on_event(void* user_pointer, SDL_Event event) {
 NewScene* newscene_new() {
     NewScene* scene = (NewScene*)malloc(sizeof(NewScene*));
     
-    scene->scene = scene_new();
+    scene->scene = scene_new_physics(physics_new());
 
     Texture* texture = texture_new(fs_get_path_romfs("images/cool_image.jpg"));
     Sprite* sprite = sprite_new(0, 0, 128, 128, texture);
