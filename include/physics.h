@@ -10,6 +10,7 @@ typedef struct PhysicsWorld PhysicsWorld;
 
 typedef struct PhysicsObject {
     bool takes_gravity;
+    float forces[2];
     Sprite* sprite;
 } PhysicsObject;
 

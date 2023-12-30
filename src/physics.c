@@ -50,12 +50,22 @@ void physics_update(PhysicsWorld* world, float timestep) {
             collision_detected = aabb_intersect(object->sprite->aabb, other_object->sprite->aabb);
         }
         
-        if (!collision_detected && object->takes_gravity) {
-            // apply gravity
-            // i have to subtract from the y axis because for some fucking reason the sdl positive y axis is down (?????)
-            object->sprite->aabb->x += (int)world->gravity[0];
-            object->sprite->aabb->y -= (int)world->gravity[1];
-        };
+        if (!collision_detected) {
+            if (object->takes_gravity) {
+                // apply gravity
+                // i have to subtract from the y axis because for some fucking reason the sdl positive y axis is down (?????)
+                object->forces[0] += world->gravity[0];
+                object->forces[1] += world->gravity[1];
+            }
+        }
+        
+        // apply other forces
+        object->sprite->aabb->x += (int)object->forces[0];
+        object->sprite->aabb->y -= (int)object->forces[1];
+
+        // reset forces
+        object->forces[0] = 0.0f;
+        object->forces[1] = 0.0f;
     }
 }
 
