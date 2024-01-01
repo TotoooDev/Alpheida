@@ -20,6 +20,9 @@ void controller_on_event(void* user_pointer, SDL_Event event) {
         case SDL_SCANCODE_DOWN:
             sprite->aabb->y++;
             break;
+        case SDL_SCANCODE_A:
+            sprite->physics_object->forces[1] += 50.0f;
+            break;
 
         default:
            break;
@@ -34,6 +37,14 @@ void controller_on_event(void* user_pointer, SDL_Event event) {
             sprite->aabb->x += event.jaxis.value / 1000;
         if (event.jaxis.axis == 1)
             sprite->aabb->y += event.jaxis.value / 1000;
+    }
+
+    if (event.type == SDL_JOYBUTTONDOWN) {
+        switch (event.jbutton.button) {
+        case JOY_A:
+            sprite->physics_object->forces[1] += 50.0f;
+            break;
+        }
     }
 }
 
