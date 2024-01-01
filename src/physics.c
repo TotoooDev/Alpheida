@@ -16,7 +16,7 @@ PhysicsWorld* physics_new() {
     world->objects = array_new(PHYSICS_MAX_SPRITES);
 
     world->gravity[0] = 0.0f;
-    world->gravity[1] = -9.81f;
+    world->gravity[1] = -0.981f;
 
     return world;
 }
@@ -58,14 +58,23 @@ void physics_update(PhysicsWorld* world, float timestep) {
                 object->forces[1] += world->gravity[1];
             }
         }
+
+        // apply forces to velocity
+        object->velocity[0] += object->forces[0];
+        object->velocity[1] += object->forces[1];
         
-        // apply other forces
-        object->sprite->aabb->x += (int)object->forces[0];
-        object->sprite->aabb->y -= (int)object->forces[1];
+        // move the sprite
+        object->sprite->aabb->x += (int)object->velocity[0];
+        object->sprite->aabb->y -= (int)object->velocity[1];
 
         // reset forces
         object->forces[0] = 0.0f;
         object->forces[1] = 0.0f;
+
+        if (collision_detected) {
+            object->velocity[0] = 0.0f;
+            object->velocity[1] = 0.0f;
+        }
     }
 }
 
@@ -73,6 +82,12 @@ PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite) {
     PhysicsObject* object = (PhysicsObject*)malloc(sizeof(PhysicsObject));
 
     object->sprite = sprite;
+    object->takes_gravity = true;
+    object->forces[0] = 0.0f;
+    object->forces[1] = 0.0f;
+    object->velocity[0] = 0.0f;
+    object->velocity[1] = 0.0f;
+
     sprite->physics_object = object;
 
     array_add(world->objects, object);
