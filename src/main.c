@@ -8,6 +8,8 @@ int main(/*int argc, char* argv*/) {
     app_set_current_scene(newscene_get_scene(scene));
 
     app_run();
+
+    newscene_delete(scene);
     app_delete();
     return 0;
 }
