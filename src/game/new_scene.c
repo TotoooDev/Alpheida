@@ -9,6 +9,11 @@
 
 typedef struct NewScene {
     Scene* scene;
+    
+    Sprite* sprite;
+    Texture* sprite_texture;
+
+    Sprite* ground;
 } NewScene;
 
 void newscene_on_event(void* user_pointer, SDL_Event event) {
@@ -19,28 +24,34 @@ void newscene_on_event(void* user_pointer, SDL_Event event) {
 }
 
 NewScene* newscene_new() {
-    NewScene* scene = (NewScene*)malloc(sizeof(NewScene*));
+    NewScene* scene = (NewScene*)malloc(sizeof(NewScene));
 
-    PhysicsWorld* world = physics_new();    
+    PhysicsWorld* world = physics_new();
     scene->scene = scene_new_physics(world);
 
-    Texture* texture = texture_new(fs_get_path_romfs("images/cool_image.jpg"));
-    Sprite* sprite = sprite_new(0, 0, 128, 128, texture);
-    scene_add_sprite(scene->scene, sprite);
-    physics_add_physics_object(world, sprite);
+    scene->sprite_texture = texture_new(fs_get_path_romfs("images/cool_image.jpg"));
+    scene->sprite = sprite_new(0, 0, 128, 128, scene->sprite_texture);
+    scene_add_sprite(scene->scene, scene->sprite);
+    physics_add_physics_object(world, scene->sprite);
 
-    Sprite* ground = sprite_new_color(0, 590, 1280, 10000, color_magenta());
-    scene_add_sprite(scene->scene, ground);
-    PhysicsObject* ground_physics = physics_add_physics_object(world, ground);
+    scene->ground = sprite_new_color(0, 590, 1280, 10000, color_magenta());
+    scene_add_sprite(scene->scene, scene->ground);
+    PhysicsObject* ground_physics = physics_add_physics_object(world, scene->ground);
     ground_physics->takes_gravity = false;
 
-    window_add_event_function((void*)sprite, controller_on_event);
+    window_add_event_function((void*)(scene->sprite), controller_on_event);
     window_add_event_function(NULL, newscene_on_event);
 
     return scene;
 }
 
 void newscene_delete(NewScene* scene) {
+    sprite_delete(scene->sprite);
+    texture_delete(scene->sprite_texture);
+
+    sprite_delete(scene->ground);
+
+    physics_delete(scene_get_physics_world(scene->scene));
     scene_delete(scene->scene);
     free(scene);
 }
