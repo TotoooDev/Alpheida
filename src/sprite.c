@@ -1,11 +1,7 @@
 #include <sprite.h>
 #include <stdlib.h>
 
-void default_update_function(Sprite* sprite, float timestep) {
-    // do nothing lol
-}
-
-void default_draw_function(Sprite* sprite, Window* window) {
+void sprite_default_draw_function(Sprite* sprite, Window* window) {
     // draw the sprite (easy)
     if (sprite->use_color || sprite->texture == NULL)
         window_render_color(window, sprite->color, sprite->aabb);
@@ -21,8 +17,8 @@ Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
     sprite->color = color_magenta();
     sprite->use_color = false;
 
-    sprite->update_function = default_update_function;
-    sprite->draw_function = default_draw_function;
+    sprite->update_function = NULL;
+    sprite->draw_function = sprite_default_draw_function;
     sprite->user_pointer = NULL;
 
     return sprite;
