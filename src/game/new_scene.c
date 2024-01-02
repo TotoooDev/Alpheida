@@ -1,10 +1,10 @@
 #include <game/new_scene.h>
 #include <game/controller.h>
+#include <sound.h>
 #include <fs.h>
 #include <window.h>
 #include <platform/input.h>
 #include <app.h>
-#include <timer.h>
 #include <log.h>
 
 typedef struct NewScene {
@@ -14,12 +14,37 @@ typedef struct NewScene {
     Texture* sprite_texture;
 
     Sprite* ground;
+
+    Sound* sound;
 } NewScene;
 
 void newscene_on_event(void* user_pointer, SDL_Event event) {
+    NewScene* scene = (NewScene*)user_pointer;
+    
     if (event.type == SDL_JOYBUTTONDOWN) {
-        if (event.jbutton.button == JOY_PLUS)
+        switch (event.jbutton.button) {
+        case JOY_PLUS:
             app_quit();
+            break;
+
+        case JOY_A:
+            sound_play(scene->sound);
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    if (event.type == SDL_KEYDOWN) {
+        switch (event.key.keysym.scancode) {
+        case SDL_SCANCODE_Z:
+            sound_play(scene->sound);
+            break;
+
+        default:
+            break;
+        }
     }
 }
 
@@ -39,8 +64,10 @@ NewScene* newscene_new() {
     PhysicsObject* ground_physics = physics_add_physics_object(world, scene->ground);
     ground_physics->takes_gravity = false;
 
+    scene->sound = sound_new(fs_get_path_romfs("sounds/sound.mp3"));
+
     window_add_event_function((void*)(scene->sprite), controller_on_event);
-    window_add_event_function(NULL, newscene_on_event);
+    window_add_event_function((void*)scene, newscene_on_event);
 
     return scene;
 }
@@ -50,6 +77,8 @@ void newscene_delete(NewScene* scene) {
     texture_delete(scene->sprite_texture);
 
     sprite_delete(scene->ground);
+
+    sound_delete(scene->sound);
 
     physics_delete(scene_get_physics_world(scene->scene));
     scene_delete(scene->scene);
