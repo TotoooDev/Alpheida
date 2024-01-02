@@ -1,8 +1,12 @@
 #include <window.h>
 #include <log.h>
+#include <config.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 #define EVENT_FUNCTIONS_SIZE 64
+#define AUDIO_FREQUENCY 48000
+#define NUM_CHANNELS 2
 
 typedef struct Window {
     SDL_Window* window;
@@ -20,7 +24,9 @@ static unsigned int num_event_functions = 0;
 void window_init_sdl() {
     log_assert(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
     log_assert(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP) != 0, "failed to initialize sdl image! img error: %s\n", IMG_GetError());
-    
+    log_assert(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MID | MIX_INIT_OPUS) != 0, "failed to initialize sdl mixer! mix error: %s", Mix_GetError());
+    log_assert(Mix_OpenAudio(AUDIO_FREQUENCY, AUDIO_FORMAT, AUDIO_NUM_CHANNELS, AUDIO_CHUNK_SIZE) != -1, "failed to open audio device! mix error: %s\n", Mix_GetError());    
+
     SDL_InitSubSystem(SDL_INIT_JOYSTICK);
     SDL_JoystickEventState(SDL_ENABLE);
     SDL_JoystickOpen(0);
@@ -65,8 +71,12 @@ void window_delete(Window* window) {
     num_windows--;
     
     // If there is no window left, quit SDL
-    if (num_windows <= 0)
+    if (num_windows <= 0) {
+        Mix_CloseAudio();
+        Mix_Quit();
+        IMG_Quit();
         SDL_Quit();
+    }
 }
 
 void window_clear(Window* window) {
