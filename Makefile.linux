@@ -12,7 +12,7 @@ SRCS := $(shell find $(SRC_DIR) -name '*.c')
 OBJS := $(SRCS:%=$(OBJ_DIR)/%.o)
 
 CFLAGS := -I$(INC_DIR) -Wall -Wconversion -Werror -g
-LDFLAGS := -lm -lSDL2 -lSDL2_image
+LDFLAGS := -lm -lSDL2 -lSDL2_image -lSDL2_mixer
 
 $(BIN_DIR)/$(BIN_NAME): $(OBJS)
 	@echo "Linking $(BIN_NAME)..."
