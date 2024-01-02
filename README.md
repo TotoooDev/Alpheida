@@ -1,4 +1,4 @@
-# Alpheida
+# Alpheida 0.1.1
 
 Alpheida is a game written entirely in C with minimal depedencies, for multiple platforms.
 
