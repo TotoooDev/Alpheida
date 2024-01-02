@@ -1,6 +1,7 @@
 #include <physics.h>
 #include <sprite.h>
 #include <array.h>
+#include <log.h>
 
 #define PHYSICS_MAX_SPRITES 128
 
@@ -35,45 +36,106 @@ void physics_set_gravity(PhysicsWorld* world, float* gravity) {
     world->gravity[1] = gravity[1];
 }
 
+bool physics_detect_collisions(PhysicsWorld* world, PhysicsObject* object, PhysicsObject** colliding_object) {
+    bool collision_detected = false;
+
+    for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
+        PhysicsObject* other_object = array_get(world->objects, i);
+
+        if (object == other_object)
+            continue;
+
+        collision_detected = aabb_intersect(object->sprite->aabb, other_object->sprite->aabb);
+        if (collision_detected) {
+            *colliding_object = other_object;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void physics_apply_gravity(PhysicsWorld* world, PhysicsObject* object) {
+    if (object->takes_gravity) {
+        object->forces[0] += world->gravity[0];
+        object->forces[1] += world->gravity[1];
+    }
+}
+
+void physics_apply_forces(PhysicsObject* object) {
+    object->velocity[0] += object->forces[0];
+    object->velocity[1] += object->forces[1];
+}
+
+void physics_move(PhysicsObject* object) {
+    object->sprite->aabb->x += (int)(object->velocity[0]);
+    object->sprite->aabb->y -= (int)(object->velocity[1]);
+}
+
+void physics_reset_forces(PhysicsObject* object) {
+    object->forces[0] = 0.0f;
+    object->forces[1] = 0.0f;
+}
+
+void physics_reset_velocity(PhysicsObject* object) {
+    object->velocity[0] = 0.0f;
+    object->velocity[1] = 0.0f;
+}
+
+void physics_move_intersecting_aabb(AABB* a, AABB* b) {
+    IntersectionAxis axis = aabb_get_intersection_axis(a, b);
+
+    switch (axis) {
+    case POSITIVE_Y: {
+        int offset = a->y + a->height - b->y;
+        a->y -= offset;
+        break;
+    }
+
+    case NEGATIVE_Y: {
+        int offset = b->y + b->height - a->y;
+        a->y += offset;
+        break;
+    }
+
+    case POSITIVE_X: {
+        int offset = a->x + a->width - b->x;
+        a->x -= offset;
+        break;
+    }
+
+    case NEGATIVE_X: {
+        int offset = b->x + b->width - a->x;
+        a->x += offset;
+        break;
+    }
+       
+    case NONE:
+        break;
+    }
+}
+
 void physics_update(PhysicsWorld* world, float timestep) {
+    // a really bad """""""physics""""""" simulation
     for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
         PhysicsObject* object = array_get(world->objects, i);
+        PhysicsObject* colliding_object = NULL;
 
-        // detect collisions
-        bool collision_detected = false;
-        for (unsigned int ii = 0; ii < array_get_num_elements(world->objects); ii++) {
-            PhysicsObject* other_object = array_get(world->objects, ii);
+        bool collision_detected = physics_detect_collisions(world, object, &colliding_object);
 
-            if (object == other_object)
-                continue;
+        if (!collision_detected)
+            physics_apply_gravity(world, object);
 
-            collision_detected = aabb_intersect(object->sprite->aabb, other_object->sprite->aabb);
-        }
+        physics_apply_forces(object);
+        physics_move(object);
+        physics_reset_forces(object);
+
+        // re-check collisions after moving the objects
+        collision_detected |= physics_detect_collisions(world, object, &colliding_object);
         
-        if (!collision_detected) {
-            if (object->takes_gravity) {
-                // apply gravity
-                // i have to subtract from the y axis because for some fucking reason the sdl positive y axis is down (?????)
-                object->forces[0] += world->gravity[0];
-                object->forces[1] += world->gravity[1];
-            }
-        }
-
-        // apply forces to velocity
-        object->velocity[0] += object->forces[0];
-        object->velocity[1] += object->forces[1];
-        
-        // move the sprite
-        object->sprite->aabb->x += (int)object->velocity[0];
-        object->sprite->aabb->y -= (int)object->velocity[1];
-
-        // reset forces
-        object->forces[0] = 0.0f;
-        object->forces[1] = 0.0f;
-
         if (collision_detected) {
-            object->velocity[0] = 0.0f;
-            object->velocity[1] = 0.0f;
+            physics_move_intersecting_aabb(object->sprite->aabb, colliding_object->sprite->aabb);
+            physics_reset_velocity(object);
         }
     }
 }
