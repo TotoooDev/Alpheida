@@ -1,4 +1,5 @@
 #include <platform/platform.h>
+#include <platform/sdl_events.h>
 #include <log.h>
 
 void platform_init() {
@@ -10,6 +11,13 @@ void platform_init() {
 void platform_update() {
 #ifdef SHRIMP_SWITCH
     switch_update();
+#endif
+}
+
+void platform_process_events(EventType* event_type, void* event) {
+#ifdef SHRIMP_PLATFORMS_THAT_DONT_USE_SDL2_TO_HANDLE_EVENTS_THATS_A_LOT_I_THINK
+#else
+    sdl_process_events(event_type, event);
 #endif
 }
 

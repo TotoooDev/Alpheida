@@ -9,11 +9,11 @@ typedef struct AABB {
 } AABB;
 
 typedef enum IntersectionAxis {
-    NONE,
-    POSITIVE_X,
-    NEGATIVE_X,
-    POSITIVE_Y,
-    NEGATIVE_Y
+    INTERSECTION_AXIS_NONE,
+    INTERSECTION_AXIS_POSITIVE_X,
+    INTERSECTION_AXIS_NEGATIVE_X,
+    INTERSECTION_AXIS_POSITIVE_Y,
+    INTERSECTION_AXIS_NEGATIVE_Y
 } IntersectionAxis;
 
 AABB* aabb_new(float x, float y, float width, float height);

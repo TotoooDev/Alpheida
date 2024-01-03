@@ -24,13 +24,13 @@ bool aabb_intersect(AABB* a, AABB* b) {
 
 IntersectionAxis aabb_get_intersection_axis(AABB* a, AABB* b) {
     if (a->y + a->height > b->y)
-        return POSITIVE_Y;
+        return INTERSECTION_AXIS_POSITIVE_Y;
     if (b->y + b->height > a->y)
-        return NEGATIVE_Y;
+        return INTERSECTION_AXIS_NEGATIVE_Y;
     if (a->x + a->width > b->x)
-        return NEGATIVE_X;
+        return INTERSECTION_AXIS_NEGATIVE_X;
     if (b->x + b->width > a->x)
-        return POSITIVE_X;
-    return NONE;
+        return INTERSECTION_AXIS_POSITIVE_X;
+    return INTERSECTION_AXIS_NONE;
 }
 

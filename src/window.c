@@ -4,7 +4,6 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 
-#define EVENT_FUNCTIONS_SIZE 64
 #define AUDIO_FREQUENCY 48000
 #define NUM_CHANNELS 2
 
@@ -17,9 +16,6 @@ typedef struct Window {
 
 // global varibales (bad practice i know) (number of fucks given: 0)
 static unsigned int num_windows = 0;
-static EventFunction event_functions[EVENT_FUNCTIONS_SIZE];
-static void* user_pointers[EVENT_FUNCTIONS_SIZE];
-static unsigned int num_event_functions = 0;
 
 void window_init_sdl() {
     log_assert(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
@@ -86,24 +82,6 @@ void window_clear(Window* window) {
 
 void window_present(Window* window) {
     SDL_RenderPresent(window->renderer);
-}
-
-void window_poll_events(Window* window) {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT)
-            window->is_open = false;
-
-        for (unsigned int i = 0; i < num_event_functions; i++)
-            event_functions[i](user_pointers[i], event);
-    }
-}
-
-void window_add_event_function(void* user_pointer, EventFunction event_function) {
-    log_assert(num_event_functions < EVENT_FUNCTIONS_SIZE, "failed to add event function! the array is not big enough.\n");
-    event_functions[num_event_functions] = event_function;
-    user_pointers[num_event_functions] = user_pointer;
-    num_event_functions++;
 }
 
 void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest) {

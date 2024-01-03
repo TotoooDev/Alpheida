@@ -1,10 +1,12 @@
 #include <game/main_scene.h>
+#include <event.h>
 #include <platform/input.h>
 #include <app.h>
 
-void mainscene_on_event(void* user_pointer, SDL_Event event) {
-    if (event.type == SDL_JOYBUTTONDOWN) {
-        switch (event.jbutton.button) {
+void mainscene_on_event(Event* e, EventType event_type, void* user_pointer) {
+    if (event_type == EVENT_TYPE_BUTTON_DOWN) {
+        ButtonDownEvent* event = (ButtonDownEvent*)e;
+        switch (event->button) {
         case JOY_PLUS:
             app_quit();
             break;
@@ -29,7 +31,7 @@ MainScene* mainscene_new() {
     scene_add_sprite(scene->scene, scene->shrimp->sprite);
     scene_add_sprite(scene->scene, scene->ground);
 
-    window_add_event_function(NULL, mainscene_on_event);
+    event_add_function(NULL, mainscene_on_event);
 
     return scene;
 }

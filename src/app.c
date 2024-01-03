@@ -1,5 +1,6 @@
 #include <app.h>
 #include <timer.h>
+#include <event.h>
 #include <platform/platform.h>
 #include <log.h>
 
@@ -15,10 +16,10 @@ typedef struct App {
 
 static App* app_instance = NULL;
 
-void app_on_event(void* user_pointer, SDL_Event event) {
+void app_on_event(Event* event, EventType event_type, void* user_pointer) {
     App* app = (App*)user_pointer;
     
-    if (event.type == SDL_QUIT)
+    if (event_type == EVENT_TYPE_PLATFORM_QUIT)
         app->is_running = false;
 }
 
@@ -42,7 +43,7 @@ void app_create(const char* name) {
 
     platform_init();
 
-    window_add_event_function((void*)app_instance, app_on_event);
+    event_add_function((void*)app_instance, app_on_event);
 }
 
 void app_delete() {
@@ -57,7 +58,7 @@ Window* app_get_window() {
 
 void app_run() {
     while (app_instance->is_running) {
-        window_poll_events(app_instance->window);
+        event_update();
         window_clear(app_instance->window);
         
         if (app_instance->current_scene) {

@@ -86,31 +86,31 @@ void physics_move_intersecting_aabb(AABB* a, AABB* b) {
     IntersectionAxis axis = aabb_get_intersection_axis(a, b);
 
     switch (axis) {
-    case POSITIVE_Y: {
+    case INTERSECTION_AXIS_POSITIVE_Y: {
         float offset = a->y + a->height - b->y;
         a->y -= offset;
         break;
     }
 
-    case NEGATIVE_Y: {
+    case INTERSECTION_AXIS_NEGATIVE_Y: {
         float offset = b->y + b->height - a->y;
         a->y += offset;
         break;
     }
 
-    case POSITIVE_X: {
+    case INTERSECTION_AXIS_POSITIVE_X: {
         float offset = a->x + a->width - b->x;
         a->x -= offset;
         break;
     }
 
-    case NEGATIVE_X: {
+    case INTERSECTION_AXIS_NEGATIVE_X: {
         float offset = b->x + b->width - a->x;
         a->x += offset;
         break;
     }
        
-    case NONE:
+    case INTERSECTION_AXIS_NONE:
         break;
     }
 }
