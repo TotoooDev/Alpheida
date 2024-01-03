@@ -46,7 +46,7 @@ void sdl_process_events(EventType* event_type, void* event) {
         *event_type = EVENT_TYPE_JOYSTICK_MOTION;
         ((JoystickMotionEvent*)event)->joystick = sdl_get_joystick_axis(sdl_event.jaxis.axis);
         ((JoystickMotionEvent*)event)->axis = sdl_event.jaxis.axis % 2; // 0 and 2 are horizontal, 1 and 3 are vertical
-        ((JoystickMotionEvent*)event)->value = sdl_event.jaxis.value;
+        ((JoystickMotionEvent*)event)->value = (float)sdl_event.jaxis.value / (float)INT16_MAX;
         break;
     
     default:

@@ -40,7 +40,7 @@ typedef struct ButtonUpEvent {
 typedef struct JoystickMotionEvent {
     JoystickType joystick;
     JoystickAxis axis;
-    int value;
+    float value;
 } JoystickMotionEvent;
 
 typedef void* Event;
