@@ -1,4 +1,18 @@
 #include <game/main_scene.h>
+#include <platform/input.h>
+#include <app.h>
+
+void mainscene_on_event(void* user_pointer, SDL_Event event) {
+    if (event.type == SDL_JOYBUTTONDOWN) {
+        switch (event.jbutton.button) {
+        case JOY_PLUS:
+            app_quit();
+            break;
+        default:
+            break;
+        }
+    }
+}
 
 MainScene* mainscene_new() {
     MainScene* scene = (MainScene*)malloc(sizeof(MainScene));
@@ -14,6 +28,8 @@ MainScene* mainscene_new() {
 
     scene_add_sprite(scene->scene, scene->shrimp->sprite);
     scene_add_sprite(scene->scene, scene->ground);
+
+    window_add_event_function(NULL, mainscene_on_event);
 
     return scene;
 }
