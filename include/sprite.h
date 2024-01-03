@@ -24,8 +24,8 @@ typedef struct Sprite {
     void* user_pointer;
 } Sprite;
 
-Sprite* sprite_new(int x, int y, int width, int height, Texture* texture);
-Sprite* sprite_new_color(int x, int y, int width, int height, Color color);
+Sprite* sprite_new(float x, float y, float width, float height, Texture* texture);
+Sprite* sprite_new_color(float x, float y, float width, float height, Color color);
 void sprite_delete(Sprite* sprite);
 
 #endif

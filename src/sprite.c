@@ -9,7 +9,7 @@ void sprite_default_draw_function(Sprite* sprite, Window* window) {
         window_render_full_texture(window, sprite->texture, sprite->aabb);
 }
 
-Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
+Sprite* sprite_new(float x, float y, float width, float height, Texture* texture) {
     Sprite* sprite = (Sprite*)malloc(sizeof(Sprite));
 
     sprite->aabb = aabb_new(x, y, width, height);
@@ -24,7 +24,7 @@ Sprite* sprite_new(int x, int y, int width, int height, Texture* texture) {
     return sprite;
 }
 
-Sprite* sprite_new_color(int x, int y, int width, int height, Color color) {
+Sprite* sprite_new_color(float x, float y, float width, float height, Color color) {
     Sprite* sprite = sprite_new(x, y, width, height, NULL);
     sprite->color = color;
     sprite->use_color = true;

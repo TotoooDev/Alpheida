@@ -4,8 +4,8 @@
 #include <stdbool.h>
 
 typedef struct AABB {
-    int x, y;
-    int width, height;
+    float x, y;
+    float width, height;
 } AABB;
 
 typedef enum IntersectionAxis {
@@ -16,7 +16,7 @@ typedef enum IntersectionAxis {
     NEGATIVE_Y
 } IntersectionAxis;
 
-AABB* aabb_new(int x, int y, int width, int height);
+AABB* aabb_new(float x, float y, float width, float height);
 void aabb_delete(AABB* aabb);
 
 bool aabb_intersect(AABB* a, AABB* b);

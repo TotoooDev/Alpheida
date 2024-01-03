@@ -68,8 +68,8 @@ void physics_apply_forces(PhysicsObject* object) {
 }
 
 void physics_move(PhysicsObject* object) {
-    object->sprite->aabb->x += (int)(object->velocity[0]);
-    object->sprite->aabb->y -= (int)(object->velocity[1]);
+    object->sprite->aabb->x += object->velocity[0];
+    object->sprite->aabb->y -= object->velocity[1];
 }
 
 void physics_reset_forces(PhysicsObject* object) {
@@ -87,25 +87,25 @@ void physics_move_intersecting_aabb(AABB* a, AABB* b) {
 
     switch (axis) {
     case POSITIVE_Y: {
-        int offset = a->y + a->height - b->y;
+        float offset = a->y + a->height - b->y;
         a->y -= offset;
         break;
     }
 
     case NEGATIVE_Y: {
-        int offset = b->y + b->height - a->y;
+        float offset = b->y + b->height - a->y;
         a->y += offset;
         break;
     }
 
     case POSITIVE_X: {
-        int offset = a->x + a->width - b->x;
+        float offset = a->x + a->width - b->x;
         a->x -= offset;
         break;
     }
 
     case NEGATIVE_X: {
-        int offset = b->x + b->width - a->x;
+        float offset = b->x + b->width - a->x;
         a->x += offset;
         break;
     }

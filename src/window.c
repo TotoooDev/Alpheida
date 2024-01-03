@@ -107,20 +107,20 @@ void window_add_event_function(void* user_pointer, EventFunction event_function)
 }
 
 void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest) {
-    SDL_Rect src_rect = { src->x, src->y, src->width, src->height };
-    SDL_Rect dest_rect = { dest->x, dest->y, dest->width, dest->height };
-    SDL_RenderCopy(window->renderer, texture_get_native_texture(texture), &src_rect, &dest_rect);
+    SDL_Rect src_rect = { (int)src->x, (int)src->y, (int)src->width, (int)src->height };
+    SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
+    SDL_RenderCopyF(window->renderer, texture_get_native_texture(texture), &src_rect, &dest_rect);
 }
 
 void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
-    SDL_Rect dest_rect = { dest->x, dest->y, dest->width, dest->height };
-    SDL_RenderCopy(window->renderer, texture_get_native_texture(texture), NULL, &dest_rect);
+    SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
+    SDL_RenderCopyF(window->renderer, texture_get_native_texture(texture), NULL, &dest_rect);
 }
 
 void window_render_color(Window* window, Color color, AABB* dest) {
     SDL_SetRenderDrawColor(window->renderer, color.r, color.g, color.b, color.a);
-    SDL_Rect dest_rect = { dest->x, dest->y, dest->width, dest->height };
-    SDL_RenderFillRect(window->renderer, &dest_rect);
+    SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
+    SDL_RenderFillRectF(window->renderer, &dest_rect);
 }
 
 SDL_Window* window_get_native_window(Window* window) {
