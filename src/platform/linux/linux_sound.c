@@ -1,3 +1,7 @@
+#include <config.h>
+
+#ifdef SHRIMP_LINUX
+
 #include <sound.h>
 #include <log.h>
 #include <SDL2/SDL_mixer.h>
@@ -42,3 +46,4 @@ int sound_get_volume(Sound* sound) {
     return Mix_VolumeChunk(sound->chunk, -1);
 }
 
+#endif

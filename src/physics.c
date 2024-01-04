@@ -2,6 +2,7 @@
 #include <sprite.h>
 #include <array.h>
 #include <log.h>
+#include <stdlib.h>
 
 #define PHYSICS_MAX_SPRITES 128
 

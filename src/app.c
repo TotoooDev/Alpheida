@@ -3,6 +3,7 @@
 #include <event.h>
 #include <platform/platform.h>
 #include <log.h>
+#include <stdlib.h>
 
 typedef struct App {
     Window* window;

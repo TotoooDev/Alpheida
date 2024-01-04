@@ -2,6 +2,7 @@
 #include <array.h>
 #include <physics.h>
 #include <log.h>
+#include <stdlib.h>
 
 #define NUM_SPRITES_MAX 128
 

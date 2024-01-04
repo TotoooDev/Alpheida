@@ -2,6 +2,7 @@
 #include <event.h>
 #include <platform/input.h>
 #include <app.h>
+#include <stdlib.h>
 
 void mainscene_on_event(Event* e, EventType event_type, void* user_pointer) {
     if (event_type == EVENT_TYPE_BUTTON_DOWN) {

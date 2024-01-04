@@ -6,6 +6,9 @@
 #ifdef SHRIMP_SWITCH
 #include <platform/switch/switch.h>
 #endif
+#ifdef SHRIMP_LINUX
+#include <SDL2/SDL.h>
+#endif
 
 #ifdef SHRIMP_SWITCH
     #define JOY_INVALID       -1

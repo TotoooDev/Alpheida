@@ -5,8 +5,12 @@
     #define SHRIMP_DEBUG
 #endif
 
-#ifdef __SWITCH__
+#if defined(__SWITCH__)
     #define SHRIMP_SWITCH
+#elif defined(__WII__)
+    #define SHRIMP_WII
+#else
+    #define SHRIMP_LINUX
 #endif
 
 #define AUDIO_FREQUENCY 48000

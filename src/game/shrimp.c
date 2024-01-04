@@ -2,7 +2,7 @@
 #include <fs.h>
 #include <event.h>
 #include <platform/input.h>
-#include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL.h>
 
 void shrimp_update(Sprite* sprite, float timestep) {
     Shrimp* shrimp = (Shrimp*)sprite->user_pointer;

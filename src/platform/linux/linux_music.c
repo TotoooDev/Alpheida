@@ -1,3 +1,7 @@
+#include <config.h>
+
+#ifdef SHRIMP_LINUX
+
 #include <music.h>
 #include <log.h>
 #include <SDL2/SDL_mixer.h>
@@ -68,3 +72,4 @@ int music_get_volume(Music* music) {
     return Mix_VolumeMusic(-1);
 }
 
+#endif
