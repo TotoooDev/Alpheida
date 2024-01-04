@@ -17,7 +17,7 @@ include $(DEVKITPPC)/wii_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	Alpheida
 BUILD		:=	obj
-SOURCES		:=	src src/game src/platform
+SOURCES		:=	src src/game src/platform src/platform/wii
 DATA		:=	assets
 INCLUDES	:=  include
 
@@ -25,7 +25,7 @@ INCLUDES	:=  include
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS	= -g -O2 -Wall $(MACHDEP) $(INCLUDE)
+CFLAGS	= -D__WII__ -g -O2 -Wall $(MACHDEP) $(INCLUDE)
 CXXFLAGS	=	$(CFLAGS)
 
 LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
