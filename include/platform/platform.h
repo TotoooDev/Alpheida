@@ -5,7 +5,7 @@
 #include <event.h>
 
 #ifdef SHRIMP_SWITCH
-#include <platform/switch.h>
+#include <platform/switch/switch.h>
 #endif
 
 void platform_init();

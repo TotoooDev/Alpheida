@@ -4,7 +4,7 @@
 #include <config.h>
 
 #ifdef SHRIMP_SWITCH
-#include <platform/switch.h>
+#include <platform/switch/switch.h>
 #endif
 
 #ifdef SHRIMP_SWITCH
