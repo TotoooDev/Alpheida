@@ -4,10 +4,6 @@
 #include <config.h>
 #include <event.h>
 
-#ifdef SHRIMP_SWITCH
-#include <platform/switch/switch.h>
-#endif
-
 void platform_init();
 void platform_update();
 void platform_process_events(EventType* event_type, void* event);
