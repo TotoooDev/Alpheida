@@ -102,7 +102,20 @@ void window_clear(Window* window) {
 }
 
 void window_present(Window* window) {
+    GX_DrawDone();
 
+    GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+    GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
+    GX_SetAlphaUpdate(GX_TRUE);
+    GX_SetColorUpdate(GX_TRUE);
+    GX_CopyDisp(window->framebuffers[window->framebuffer_index], GX_TRUE);
+
+    VIDEO_SetNextFramebuffer(window->framebuffers[window->framebuffer_index]);
+    VIDEO_Flush();
+    VIDEO_WaitVSync();
+
+    // flip framebuffer
+    window->framebuffer_index ^= 1;
 }
 
 void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest) {
