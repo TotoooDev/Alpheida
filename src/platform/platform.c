@@ -32,8 +32,8 @@ void platform_get_window_size(int* width, int* height) {
     *width = SWITCH_WINDOW_WIDTH;
     *height = SWITCH_WINDOW_HEIGHT;
 #else
-    *width = 800;
-    *height = 600;
+    *width = 1280;
+    *height = 720;
 #endif
 }
 
