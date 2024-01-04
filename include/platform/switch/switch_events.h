@@ -3,6 +3,6 @@
 
 #include <event.h>
 
-void switch_process_events(EventType* event_type, void* event);
+void switch_process_events(EventType* event_type, Event* event);
 
 #endif

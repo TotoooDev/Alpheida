@@ -3,6 +3,6 @@
 
 #include <event.h>
 
-void linux_process_events(EventType* event_type, void* event);
+void linux_process_events(EventType* event_type, Event* event);
 
 #endif

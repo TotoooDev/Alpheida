@@ -14,7 +14,7 @@ JoystickAxis switch_get_joystick_axis(int sdl_axis) {
     return -1;
 }
 
-void switch_process_events(EventType* event_type, void* event) {
+void switch_process_events(EventType* event_type, Event* event) {
     SDL_Event sdl_event;
     if (SDL_PollEvent(&sdl_event) == 0) {
         *event_type = EVENT_TYPE_NONE;
