@@ -32,7 +32,7 @@
     #define JOY_LSTICK_UP     SWITCH_JOY_LSTICK_UP
     #define JOY_LSTICK_RIGHT  SWITCH_JOY_LSTICK_RIGHT
     #define JOY_LSTCIK_DOWN   SWITCH_JOY_LSTICK_DOWN
-    #define JOY_RSTICK_LEFT   SWITCH_JOY_RSTCIK_LEFT
+    #define JOY_RSTICK_LEFT   SWITCH_JOY_RSTICK_LEFT
     #define JOY_RSTICK_UP     SWITCH_JOY_RSTICK_UP
     #define JOY_RSTICK_RIGHT  SWITCH_JOY_RSTICK_RIGHT
     #define JOY_RSTICK_DOWN   SWITCH_JOY_RSTICK_DOWN
@@ -40,7 +40,39 @@
     #define JOY_LSR           SWITCH_JOY_LSR
     #define JOY_RSL           SWITCH_JOY_RSL
     #define JOY_RSR           SWITCH_JOY_RSR
-#else
+#endif
+#ifdef SHRIMP_WII
+    #define JOY_INVALID       -1
+    #define JOY_A             -1
+    #define JOY_B             -1
+    #define JOY_X             -1
+    #define JOY_Y             -1
+    #define JOY_LSTICK_BUTTON -1
+    #define JOY_RSTICK_BUTTON -1
+    #define JOY_L             -1
+    #define JOY_R             -1
+    #define JOY_L2            -1
+    #define JOY_R2            -1
+    #define JOY_PLUS          -1
+    #define JOY_MINUS         -1
+    #define JOY_LEFT          -1
+    #define JOY_UP            -1
+    #define JOY_RIGHT         -1
+    #define JOY_DOWN          -1
+    #define JOY_LSTICK_LEFT   -1
+    #define JOY_LSTICK_UP     -1
+    #define JOY_LSTICK_RIGHT  -1
+    #define JOY_LSTCIK_DOWN   -1
+    #define JOY_RSTICK_LEFT   -1
+    #define JOY_RSTICK_UP     -1
+    #define JOY_RSTICK_RIGHT  -1
+    #define JOY_RSTICK_DOWN   -1
+    #define JOY_LSL           -1
+    #define JOY_LSR           -1
+    #define JOY_RSL           -1
+    #define JOY_RSR           -1
+#endif
+#ifdef SHRIMP_LINUX
     // todo: investigate how to get more controller input
     #define JOY_INVALID       SDL_CONTROLLER_BUTTON_INVALID
     #define JOY_A             SDL_CONTROLLER_BUTTON_A

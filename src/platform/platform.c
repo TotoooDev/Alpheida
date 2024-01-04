@@ -4,7 +4,13 @@
 #include <config.h>
 
 #ifdef SHRIMP_SWITCH
+#include <platform/switch/switch.h>
 #include <platform/switch/switch_events.h>
+#endif
+
+#ifdef SHRIMP_WII
+#include <platform/wii/wii.h>
+#include <platform/wii/wii_events.h>
 #endif
 
 #ifdef SHRIMP_LINUX
@@ -24,10 +30,11 @@ void platform_update() {
 }
 
 void platform_process_events(EventType* event_type, void* event) {
-#ifdef SHRIMP_PLATFORMS_THAT_DONT_USE_SDL2_TO_HANDLE_EVENTS_THATS_A_LOT_I_THINK
-#endif
 #ifdef SHRIMP_SWITCH
     switch_process_events(event_type, event);
+#endif
+#ifdef SHRIMP_WII
+    wii_process_events(event_type, event);
 #endif
 #ifdef SHRIMP_LINUX
     linux_process_events(event_type, event);
@@ -44,7 +51,12 @@ void platform_get_window_size(int* width, int* height) {
 #ifdef SHRIMP_SWITCH
     *width = SWITCH_WINDOW_WIDTH;
     *height = SWITCH_WINDOW_HEIGHT;
-#else
+#endif
+#ifdef SHRIMP_WII
+    *width = WII_WINDOW_WIDTH;
+    *height = WII_WINDOW_HEIGHT;
+#endif
+#ifdef SHRIMP_LINUX
     *width = 1280;
     *height = 720;
 #endif
