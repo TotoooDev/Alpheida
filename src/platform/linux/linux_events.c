@@ -1,8 +1,12 @@
-#include <platform/sdl_events.h>
+#include <config.h>
+
+#ifdef SHRIMP_LINUX
+
+#include <platform/linux/linux_events.h>
 #include <platform/input.h>
 #include <SDL2/SDL.h>
 
-JoystickAxis sdl_get_joystick_axis(int sdl_axis) {
+JoystickAxis linux_get_joystick_axis(int sdl_axis) {
     if (sdl_axis == 0 || sdl_axis == 1)
         return JOYSTICK_TYPE_LEFT;
     if (sdl_axis == 2 || sdl_axis == 3)
@@ -10,7 +14,7 @@ JoystickAxis sdl_get_joystick_axis(int sdl_axis) {
     return -1;
 }
 
-void sdl_process_events(EventType* event_type, void* event) {
+void linux_process_events(EventType* event_type, void* event) {
     SDL_Event sdl_event;
     if (SDL_PollEvent(&sdl_event) == 0) {
         *event_type = EVENT_TYPE_NONE;
@@ -44,7 +48,7 @@ void sdl_process_events(EventType* event_type, void* event) {
 
     case SDL_JOYAXISMOTION:
         *event_type = EVENT_TYPE_JOYSTICK_MOTION;
-        ((JoystickMotionEvent*)event)->joystick = sdl_get_joystick_axis(sdl_event.jaxis.axis);
+        ((JoystickMotionEvent*)event)->joystick = linux_get_joystick_axis(sdl_event.jaxis.axis);
         ((JoystickMotionEvent*)event)->axis = sdl_event.jaxis.axis % 2; // 0 and 2 are horizontal, 1 and 3 are vertical
         ((JoystickMotionEvent*)event)->value = (float)sdl_event.jaxis.value / (float)INT16_MAX;
         break;
@@ -54,3 +58,5 @@ void sdl_process_events(EventType* event_type, void* event) {
         break;
     }
 }
+
+#endif

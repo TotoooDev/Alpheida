@@ -2,7 +2,9 @@
 #include <fs.h>
 #include <event.h>
 #include <platform/input.h>
-#include <SDL2/SDL.h>
+#include <platform/keyboard.h>
+#include <math.h>
+#include <stdlib.h>
 
 void shrimp_update(Sprite* sprite, float timestep) {
     Shrimp* shrimp = (Shrimp*)sprite->user_pointer;
@@ -20,17 +22,17 @@ void shrimp_on_event(Event* e, EventType event_type, void* user_pointer) {
         KeyDownEvent* event = (KeyDownEvent*)e;
         switch (event->key)
         {
-        case SDL_SCANCODE_A:
+        case SHRIMP_KEY_A:
             shrimp->is_moving[0] = true;
             shrimp->speed_multiplier = 1.0f;
             break;
 
-        case SDL_SCANCODE_D:
+        case SHRIMP_KEY_D:
             shrimp->is_moving[1] = true;
             shrimp->speed_multiplier = 1.0f;
             break;
 
-        case SDL_SCANCODE_SPACE:
+        case SHRIMP_KEY_SPACE:
             shrimp->sprite->physics_object->forces[1] += 5.0f;
             break;
         
@@ -43,12 +45,12 @@ void shrimp_on_event(Event* e, EventType event_type, void* user_pointer) {
         KeyUpEvent* event = (KeyUpEvent*)e;
         switch (event->key)
         {
-        case SDL_SCANCODE_A:
+        case SHRIMP_KEY_A:
             shrimp->is_moving[0] = false;
             shrimp->speed_multiplier = 0.0f;
             break;
 
-        case SDL_SCANCODE_D:
+        case SHRIMP_KEY_D:
             shrimp->is_moving[1] = false;
             shrimp->speed_multiplier = 0.0f;
             break;
