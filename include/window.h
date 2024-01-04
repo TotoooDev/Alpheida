@@ -18,6 +18,4 @@ void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* de
 void window_render_full_texture(Window* window, Texture* texture, AABB* dest);
 void window_render_color(Window* window, Color color, AABB* dest);
 
-bool window_is_open(Window* window);
-
 #endif

@@ -13,8 +13,6 @@
 typedef struct Window {
     SDL_Window* window;
     SDL_Renderer* renderer;
-
-    bool is_open;
 } Window;
 
 // global varibales (bad practice i know) (number of fucks given: 0)
@@ -55,8 +53,6 @@ Window* window_new(const char* title, int width, int height) {
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
     log_assert(window->renderer != NULL, "failed to create renderer! sdl error: %s\n", SDL_GetError());
-
-    window->is_open = true;
 
     num_windows++;
     return window;
@@ -102,10 +98,6 @@ void window_render_color(Window* window, Color color, AABB* dest) {
     SDL_SetRenderDrawColor(window->renderer, color.r, color.g, color.b, color.a);
     SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
     SDL_RenderFillRectF(window->renderer, &dest_rect);
-}
-
-bool window_is_open(Window* window) {
-    return window->is_open;
 }
 
 SDL_Window* linuxwindow_get_native_window(Window* window) {
