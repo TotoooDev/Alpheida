@@ -2,6 +2,7 @@
 #ifdef SHRIMP_LINUX
 
 #include <window.h>
+#include <config.h>
 #include <platform/linux/linux_texture.h>
 #include <log.h>
 #include <SDL2/SDL_image.h>
