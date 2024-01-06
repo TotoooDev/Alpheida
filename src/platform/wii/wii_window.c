@@ -3,6 +3,7 @@
 #ifdef SHRIMP_WII
 
 #include <window.h>
+#include <platform/wii/wii_texture.h>
 #include <log.h>
 #include <gccore.h>
 #include <wiiuse/wpad.h>
@@ -49,11 +50,12 @@ Window* window_new(const char* title, int width, int height) {
 
     GX_Init(gp_fifo, DEFAULT_FIFO_SIZE);
 
-    window_clear(window);
+    GXColor background = { 127, 127, 127, 255 };
+    GX_SetCopyClear(background, 0x00FFFFFF);
 
     // gx setup
     GX_SetViewport(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight, 0, 1);
-    float y_scale = GX_GetYScaleFactor(window->video_settings->efb_height, window->video_settings->xfbHeight);
+    float y_scale = GX_GetYScaleFactor(window->video_settings->efbHeight, window->video_settings->xfbHeight);
     float xfbHeight = GX_SetDispCopyYScale(y_scale);
     GX_SetScissor(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight);
     GX_SetDispCopySrc(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight);
@@ -73,7 +75,7 @@ Window* window_new(const char* title, int width, int height) {
     // setup the vertex descriptor
     // tell the flipper to expect direct data
     GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
-    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_POS_ST, GX_F32, 0);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 
     GX_SetNumChans(1);
     GX_SetNumTexGens(1);
@@ -97,8 +99,21 @@ void window_delete(Window* window) {
 }
 
 void window_clear(Window* window) {
-    GXColor background = { 127, 127, 127, 255 };
-    GX_SetCopyClear(background, 0x00FFFFFF);
+    VIDEO_Flush();
+    VIDEO_WaitVSync();
+
+    GX_SetViewport(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight, 0, 1);
+    GX_InvVtxCache();
+    GX_InvalidateTexAll();
+
+    GX_ClearVtxDesc();
+    GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+
+    Mtx model_view_2d;
+    guMtxIdentity(model_view_2d);
+    guMtxTransApply(model_view_2d, model_view_2d, 0.0f, 0.0f, -5.0f);
+    GX_LoadPosMtxImm(model_view_2d, GX_PNMTX0);
 }
 
 void window_present(Window* window) {
@@ -111,8 +126,6 @@ void window_present(Window* window) {
     GX_CopyDisp(window->framebuffers[window->framebuffer_index], GX_TRUE);
 
     VIDEO_SetNextFramebuffer(window->framebuffers[window->framebuffer_index]);
-    VIDEO_Flush();
-    VIDEO_WaitVSync();
 
     // flip framebuffer
     window->framebuffer_index ^= 1;
@@ -123,7 +136,31 @@ void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* de
 }
 
 void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
+    float tex_coords[] = {
+    	0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f
+    };
+
+    GXTexObj texture_object = wiitexture_get_texture_object(texture);
+    GX_LoadTexObj(&texture_object, GX_TEXMAP0);
     
+    GX_Begin(GX_QUADS, GX_VTXFMT0, 4);
+
+    GX_Position2f32(dest->x, dest->y);
+    GX_TexCoord2f32(tex_coords[0], tex_coords[1]);
+
+    GX_Position2f32(dest->x + dest->width - 1, dest->y);
+    GX_TexCoord2f32(tex_coords[2], tex_coords[3]);
+
+    GX_Position2f32(dest->x + dest->width - 1, dest->y + dest->height - 1);
+    GX_TexCoord2f32(tex_coords[4], tex_coords[5]);
+
+    GX_Position2f32(dest->x, dest->y + dest->height - 1);
+    GX_TexCoord2f32(tex_coords[6], tex_coords[7]);
+
+    GX_End();
 }
 
 void window_render_color(Window* window, Color color, AABB* dest) {

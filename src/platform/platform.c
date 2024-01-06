@@ -21,6 +21,9 @@ void platform_init() {
 #ifdef SHRIMP_SWITCH
     switch_init();
 #endif
+#ifdef SHRIMP_WII
+    wii_init();
+#endif
 }
 
 void platform_update() {
@@ -51,10 +54,6 @@ void platform_get_window_size(int* width, int* height) {
 #ifdef SHRIMP_SWITCH
     *width = SWITCH_WINDOW_WIDTH;
     *height = SWITCH_WINDOW_HEIGHT;
-#endif
-#ifdef SHRIMP_WII
-    *width = WII_WINDOW_WIDTH;
-    *height = WII_WINDOW_HEIGHT;
 #endif
 #ifdef SHRIMP_LINUX
     *width = 1280;
