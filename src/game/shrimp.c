@@ -15,6 +15,11 @@ void shrimp_update(Sprite* sprite, float timestep) {
         sprite->aabb->x += shrimp->speed * shrimp->speed_multiplier;
 }
 
+void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
+    Shrimp* shrimp = (Shrimp*)object->user_pointer;
+    shrimp->can_jump = true;
+}
+
 void shrimp_on_event(Event* e, EventType event_type, void* user_pointer) {
     Shrimp* shrimp = (Shrimp*)user_pointer;
 
@@ -33,7 +38,10 @@ void shrimp_on_event(Event* e, EventType event_type, void* user_pointer) {
             break;
 
         case SHRIMP_KEY_SPACE:
-            shrimp->sprite->physics_object->forces[1] += 5.0f;
+            if (shrimp->can_jump) {
+                shrimp->sprite->physics_object->forces[1] += 10.0f;
+                shrimp->can_jump = false;
+            }
             break;
         
         default:
@@ -65,7 +73,10 @@ void shrimp_on_event(Event* e, EventType event_type, void* user_pointer) {
         switch (event->button)
         {
         case JOY_A:
-            shrimp->sprite->physics_object->forces[1] += 5.0f;
+            if (shrimp->can_jump) {
+                shrimp->sprite->physics_object->forces[1] += 10.0f;
+                shrimp->can_jump = false;
+            }
             break;
         
         default:
@@ -106,8 +117,11 @@ Shrimp* shrimp_new(Scene* scene) {
     shrimp->is_moving[1] = false;
     shrimp->speed_multiplier = 1.0f;
     shrimp->speed = 5.0f;
+    shrimp->can_jump = false;
 
-    physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
+    PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
+    physics_object->on_collision = shrimp_on_collision;
+    physics_object->user_pointer = shrimp;
 
     event_add_function(shrimp, shrimp_on_event);
 
