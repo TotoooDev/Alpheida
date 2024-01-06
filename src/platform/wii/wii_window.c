@@ -1,4 +1,4 @@
-#include <config.h>
+#include <platform/config.h>
 
 #ifdef SHRIMP_WII
 

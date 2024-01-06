@@ -1,7 +1,7 @@
 #ifndef FS_H
 #define FS_H
 
-#include <config.h>
+#include <platform/config.h>
 
 #ifdef SHRIMP_SWITCH
     #define fs_get_path_romfs(path) "romfs:/"path

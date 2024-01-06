@@ -1,5 +1,5 @@
 #include <game/shrimp.h>
-#include <fs.h>
+#include <platform/fs.h>
 #include <event.h>
 #include <platform/input.h>
 #include <platform/keyboard.h>

@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <config.h>
+#include <platform/config.h>
 
 #ifdef SHRIMP_SWITCH
 #include <platform/switch/switch.h>

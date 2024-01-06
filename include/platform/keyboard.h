@@ -1,8 +1,6 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#include <config.h>
-
 // i'm not really in the mood to write (or rather copy-paste) every keycode for every platform
 // so these are the scancodes just for sdl
 // good luck trying to work with that on other platforms lol

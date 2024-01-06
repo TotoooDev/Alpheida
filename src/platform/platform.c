@@ -1,7 +1,7 @@
 #include <platform/platform.h>
 #include <log.h>
 
-#include <config.h>
+#include <platform/config.h>
 
 #ifdef SHRIMP_SWITCH
 #include <platform/switch/switch.h>

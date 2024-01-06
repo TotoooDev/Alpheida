@@ -1,5 +1,5 @@
 #include <log.h>
-#include <fs.h>
+#include <platform/fs.h>
 #include <config.h>
 #include <stdlib.h>
 #include <stdio.h>
