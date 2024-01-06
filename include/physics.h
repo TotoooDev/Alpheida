@@ -1,6 +1,7 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include <aabb.h>
 #include <stdbool.h>
 
 // forward declaration to avoid recursive inclusion hell
@@ -8,11 +9,18 @@ typedef struct Sprite Sprite;
 
 typedef struct PhysicsWorld PhysicsWorld;
 
+typedef struct PhysicsObject PhysicsObject;
+
+typedef void(*OnCollisionFunction)(PhysicsObject*, PhysicsObject*, IntersectionAxis);
+
 typedef struct PhysicsObject {
     bool takes_gravity;
     float forces[2];
     float velocity[2];
     Sprite* sprite;
+
+    OnCollisionFunction on_collision;
+    void* user_pointer;
 } PhysicsObject;
 
 PhysicsWorld* physics_new();

@@ -83,7 +83,7 @@ void physics_reset_velocity(PhysicsObject* object) {
     object->velocity[1] = 0.0f;
 }
 
-void physics_move_intersecting_aabb(AABB* a, AABB* b) {
+IntersectionAxis physics_move_intersecting_aabb(AABB* a, AABB* b) {
     IntersectionAxis axis = aabb_get_intersection_axis(a, b);
 
     switch (axis) {
@@ -114,6 +114,20 @@ void physics_move_intersecting_aabb(AABB* a, AABB* b) {
     case INTERSECTION_AXIS_NONE:
         break;
     }
+
+    return axis;
+}
+
+void physics_on_collision(PhysicsObject* object, PhysicsObject* colliding_object) {
+    IntersectionAxis axis = physics_move_intersecting_aabb(object->sprite->aabb, colliding_object->sprite->aabb);
+
+    if (object->on_collision != NULL)
+        object->on_collision(object, colliding_object, axis);
+
+    if (colliding_object->on_collision != NULL)
+        colliding_object->on_collision(colliding_object, object, axis);
+
+    physics_reset_velocity(object);
 }
 
 void physics_update(PhysicsWorld* world, float timestep) {
@@ -134,10 +148,8 @@ void physics_update(PhysicsWorld* world, float timestep) {
         // re-check collisions after moving the objects
         collision_detected |= physics_detect_collisions(world, object, &colliding_object);
         
-        if (collision_detected) {
-            physics_move_intersecting_aabb(object->sprite->aabb, colliding_object->sprite->aabb);
-            physics_reset_velocity(object);
-        }
+        if (collision_detected)
+            physics_on_collision(object, colliding_object);
     }
 }
 
@@ -150,6 +162,7 @@ PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite) {
     object->forces[1] = 0.0f;
     object->velocity[0] = 0.0f;
     object->velocity[1] = 0.0f;
+    object->on_collision = NULL;
 
     sprite->physics_object = object;
 
