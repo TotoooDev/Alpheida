@@ -12,13 +12,15 @@
 #include <string.h>
 #include <malloc.h>
 
-#define DEFAULT_FIFO_SIZE	(256*1024)
+#define DEFAULT_FIFO_SIZE (256*1024)
 
 typedef struct Window {
     GXRModeObj* video_settings;
 
     void* framebuffers[2];
     unsigned int framebuffer_index;
+
+    bool first_frame;
 } Window;
 
 Window* window_new(const char* title, int width, int height) {
@@ -32,10 +34,11 @@ Window* window_new(const char* title, int width, int height) {
     window->framebuffers[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(window->video_settings));
     window->framebuffers[1] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(window->video_settings));
     window->framebuffer_index = 0;
+    window->first_frame = true;
 
     VIDEO_Configure(window->video_settings);
     VIDEO_SetNextFramebuffer(window->framebuffers[window->framebuffer_index]);
-    VIDEO_SetBlack(false);
+    VIDEO_SetBlack(FALSE);
     VIDEO_Flush();
     VIDEO_WaitVSync();
 
@@ -50,7 +53,7 @@ Window* window_new(const char* title, int width, int height) {
 
     GX_Init(gp_fifo, DEFAULT_FIFO_SIZE);
 
-    GXColor background = { 127, 127, 127, 255 };
+    GXColor background = { 0, 0, 0, 255 };
     GX_SetCopyClear(background, 0x00FFFFFF);
 
     // gx setup
@@ -88,8 +91,6 @@ Window* window_new(const char* title, int width, int height) {
     Mtx44 perspective;
     guOrtho(perspective, 0, 479, 0, 639, 0, 300);
     GX_LoadProjectionMtx(perspective, GX_ORTHOGRAPHIC);
-
-    WPAD_Init();
     
     return window;
 }
@@ -99,16 +100,9 @@ void window_delete(Window* window) {
 }
 
 void window_clear(Window* window) {
-    VIDEO_Flush();
-    VIDEO_WaitVSync();
-
     GX_SetViewport(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight, 0, 1);
     GX_InvVtxCache();
     GX_InvalidateTexAll();
-
-    GX_ClearVtxDesc();
-    GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
-    GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
 
     Mtx model_view_2d;
     guMtxIdentity(model_view_2d);
@@ -127,6 +121,14 @@ void window_present(Window* window) {
 
     VIDEO_SetNextFramebuffer(window->framebuffers[window->framebuffer_index]);
 
+    if (window->first_frame) {
+        VIDEO_SetBlack(FALSE);
+        window->first_frame = false;
+    }
+
+    VIDEO_Flush();
+    VIDEO_WaitVSync();
+    
     // flip framebuffer
     window->framebuffer_index ^= 1;
 }
@@ -142,6 +144,10 @@ void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
         1.0f, 1.0f,
         0.0f, 1.0f
     };
+
+    GX_ClearVtxDesc();
+    GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
 
     GXTexObj texture_object = wiitexture_get_texture_object(texture);
     GX_LoadTexObj(&texture_object, GX_TEXMAP0);
@@ -164,7 +170,25 @@ void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
 }
 
 void window_render_color(Window* window, Color color, AABB* dest) {
-    
+    GX_ClearVtxDesc();
+    GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GX_SetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+
+    GX_Begin(GX_QUADS, GX_VTXFMT0, 4);
+
+    GX_Position2f32(dest->x, dest->y);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
+
+    GX_Position2f32(dest->x + dest->width - 1, dest->y);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
+
+    GX_Position2f32(dest->x + dest->width - 1, dest->y + dest->height - 1);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
+
+    GX_Position2f32(dest->x, dest->y + dest->height - 1);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
+
+    GX_End();
 }
 
 #endif
