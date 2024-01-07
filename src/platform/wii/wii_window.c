@@ -171,7 +171,7 @@ void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
 
 void window_render_color(Window* window, Color color, AABB* dest) {
     GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
-    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_CLR_RGBA, GX_RGBA8, 0);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
     GX_ClearVtxDesc();
     GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
