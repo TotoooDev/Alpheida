@@ -18,4 +18,8 @@ void platform_update() {
         app_quit();
 }
 
+void platform_exit() {
+    
+}
+
 #endif

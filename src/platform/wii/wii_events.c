@@ -1,5 +1,5 @@
-#include <platform/wii/wii_events.h>
+#include <platform/platform.h>
 
-void wii_process_events(EventType* event_type, void* e) {
+void platform_process_events(EventType* event_type, void* e) {
     
 }

@@ -2,7 +2,7 @@
 
 #ifdef SHRIMP_SWITCH
 
-#include <platform/switch/switch_events.h>
+#include <platform/platform.h>
 #include <platform/input.h>
 #include <SDL2/SDL.h>
 
