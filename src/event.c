@@ -10,18 +10,18 @@ static EventFunction event_functions[EVENT_FUNCTIONS_SIZE];
 static void* user_pointers[EVENT_FUNCTIONS_SIZE];
 static unsigned int num_event_functions = 0;
 
-Event* event_new() {
-    Event* event = (Event*)malloc(MAX_EVENT_STRUCT_SIZE);
+void* event_new() {
+    void* event = malloc(MAX_EVENT_STRUCT_SIZE);
     return event;
 }
 
-void event_delete(Event* event) {
+void event_delete(void* event) {
     free(event);
 }
 
 void event_update() {
     EventType event_type;
-    Event* event = event_new();
+    void* event = event_new();
 
     do {
         platform_process_events(&event_type, event);

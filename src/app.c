@@ -17,7 +17,7 @@ typedef struct App {
 
 static App* app_instance = NULL;
 
-void app_on_event(Event* event, EventType event_type, void* user_pointer) {
+void app_on_event(void* event, EventType event_type, void* user_pointer) {
     App* app = (App*)user_pointer;
     
     if (event_type == EVENT_TYPE_PLATFORM_QUIT)
@@ -33,10 +33,7 @@ void app_update_timestep() {
 void app_create(const char* name) {
     app_instance = (App*)malloc(sizeof(App));
 
-    int width, height;
-    platform_get_window_size(&width, &height);
-
-    app_instance->window = window_new(name, width, height);
+    app_instance->window = window_new(name, 1280, 720);
     app_instance->current_scene = NULL;
     app_instance->is_running = true;
     app_instance->timestep = 0.0f;

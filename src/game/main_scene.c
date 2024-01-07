@@ -4,7 +4,7 @@
 #include <app.h>
 #include <stdlib.h>
 
-void mainscene_on_event(Event* e, EventType event_type, void* user_pointer) {
+void mainscene_on_event(void* e, EventType event_type, void* user_pointer) {
     if (event_type == EVENT_TYPE_BUTTON_DOWN) {
         ButtonDownEvent* event = (ButtonDownEvent*)e;
         switch (event->button) {

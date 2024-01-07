@@ -43,12 +43,10 @@ typedef struct JoystickMotionEvent {
     float value;
 } JoystickMotionEvent;
 
-typedef void* Event;
+typedef void(*EventFunction)(void*, EventType, void*);
 
-typedef void(*EventFunction)(Event* e, EventType event_type, void* user_pointer);
-
-Event* event_new();
-void event_delete(Event* event);
+void* event_new();
+void event_delete(void* event);
 
 void event_update();
 void event_add_function(void* user_pointer, EventFunction function);

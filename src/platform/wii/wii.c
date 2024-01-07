@@ -2,14 +2,15 @@
 
 #ifdef SHRIMP_WII
 
+#include <platform/platform.h>
 #include <app.h>
 #include <wiiuse/wpad.h>
 
-void wii_init() {
+void platform_init() {
     WPAD_Init();
 }
 
-void wii_update() {
+void platform_update() {
     WPAD_ScanPads();
 
     // temp

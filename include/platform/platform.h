@@ -8,7 +8,5 @@ void platform_update();
 void platform_process_events(EventType* event_type, void* event);
 void platform_exit();
 
-void platform_get_window_size(int* width, int* height);
-
 #endif
 

@@ -2,11 +2,11 @@
 #ifdef SHRIMP_SWITCH
 
 #include <config.h>
-#include <platform/switch/switch.h>
+#include <platform/platform.h>
 #include <log.h>
 #include <switch.h>
 
-void switch_init() {
+void platform_init() {
     // initialize romfs
     Result result = romfsInit();
     log_assert(R_SUCCEEDED(result), "%08X: failed to initialize switch romfs!\n", result);
@@ -19,11 +19,11 @@ void switch_init() {
 #endif
 }
 
-void switch_update() {
+void platform_update() {
 
 }
 
-void switch_exit() {
+void platform_exit() {
 #ifdef SHRIMP_DEBUG
     socketExit();
 #endif

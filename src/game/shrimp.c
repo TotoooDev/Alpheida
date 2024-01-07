@@ -20,7 +20,7 @@ void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object,
     shrimp->can_jump = true;
 }
 
-void shrimp_on_event(Event* e, EventType event_type, void* user_pointer) {
+void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
     Shrimp* shrimp = (Shrimp*)user_pointer;
 
     if (event_type == EVENT_TYPE_KEY_DOWN) {
