@@ -30,6 +30,9 @@ void platform_update() {
 #ifdef SHRIMP_SWITCH
     switch_update();
 #endif
+#ifdef SHRIMP_WII
+    wii_update();
+#endif
 }
 
 void platform_process_events(EventType* event_type, void* event) {
