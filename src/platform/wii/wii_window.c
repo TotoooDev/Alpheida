@@ -12,7 +12,7 @@
 #include <string.h>
 #include <malloc.h>
 
-#define DEFAULT_FIFO_SIZE (256*1024)
+#define DEFAULT_FIFO_SIZE (256 * 1024)
 
 typedef struct Window {
     GXRModeObj* video_settings;
@@ -48,12 +48,12 @@ Window* window_new(const char* title, int width, int height) {
     window->framebuffer_index ^= 1;
 
     // setup the fifo then init the flipper
-    void* gp_fifo = memalign(32, DEFAULT_FIFO_SIZE);
+    void* gp_fifo = MEM_K0_TO_K1(memalign(32, DEFAULT_FIFO_SIZE));
     memset(gp_fifo, 0, DEFAULT_FIFO_SIZE);
 
     GX_Init(gp_fifo, DEFAULT_FIFO_SIZE);
 
-    GXColor background = { 0, 0, 0, 255 };
+    GXColor background = { 127, 127, 127, 255 };
     GX_SetCopyClear(background, 0x00FFFFFF);
 
     // gx setup
@@ -77,8 +77,8 @@ Window* window_new(const char* title, int width, int height) {
 
     // setup the vertex descriptor
     // tell the flipper to expect direct data
-    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
-    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
+    // GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
+    // GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 
     GX_SetNumChans(1);
     GX_SetNumTexGens(1);
@@ -170,6 +170,9 @@ void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
 }
 
 void window_render_color(Window* window, Color color, AABB* dest) {
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_CLR_RGBA, GX_RGBA8, 0);
+
     GX_ClearVtxDesc();
     GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
     GX_SetVtxDesc(GX_VA_CLR0, GX_DIRECT);

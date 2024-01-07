@@ -25,7 +25,7 @@ MainScene* mainscene_new() {
 
     // scene->shrimp = shrimp_new(scene->scene);
 
-    scene->ground = sprite_new_color(0.0f, 550.0f, 1000000.0f, 1000000.0f, color_black());
+    scene->ground = sprite_new_color(0.0f, 20.0f, 1000000.0f, 1000000.0f, color_black());
     PhysicsObject* ground_physics = physics_add_physics_object(world, scene->ground);
     ground_physics->takes_gravity = false;
 
@@ -39,7 +39,7 @@ MainScene* mainscene_new() {
 
 void mainscene_delete(MainScene* scene) {
     sprite_delete(scene->ground);
-    shrimp_delete(scene->shrimp);
+    // shrimp_delete(scene->shrimp);
     physics_delete(scene_get_physics_world(scene->scene));
     scene_delete(scene->scene);
     free(scene);
