@@ -23,13 +23,13 @@ MainScene* mainscene_new() {
     PhysicsWorld* world = physics_new();
     scene->scene = scene_new_physics(world);
 
-    scene->shrimp = shrimp_new(scene->scene);
+    // scene->shrimp = shrimp_new(scene->scene);
 
     scene->ground = sprite_new_color(0.0f, 550.0f, 1000000.0f, 1000000.0f, color_black());
     PhysicsObject* ground_physics = physics_add_physics_object(world, scene->ground);
     ground_physics->takes_gravity = false;
 
-    scene_add_sprite(scene->scene, scene->shrimp->sprite);
+    // scene_add_sprite(scene->scene, scene->shrimp->sprite);
     scene_add_sprite(scene->scene, scene->ground);
 
     event_add_function(NULL, mainscene_on_event);
