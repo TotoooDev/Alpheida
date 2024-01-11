@@ -31,6 +31,8 @@ void app_update_timestep() {
 }
 
 void app_create(const char* name) {
+    log_assert(app_instance == NULL, "an application already exists!\n");
+
     app_instance = (App*)malloc(sizeof(App));
 
     app_instance->window = window_new(name, 1280, 720);
