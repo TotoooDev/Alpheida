@@ -4,8 +4,6 @@
 #include <window.h>
 #include <scene.h>
 
-typedef struct App App;
-
 void app_create(const char* name);
 void app_delete();
 
