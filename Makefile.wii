@@ -23,7 +23,7 @@ include $(DEVKITPPC)/wii_rules
 TARGET		:=	Alpheida
 BUILD		:=	obj
 SOURCES		:=	src src/game src/platform src/platform/wii
-INCLUDES	:=  include
+INCLUDES	:=  include obj
 DATA		:=  assets/sound
 TEXTURES    :=  assets/images
 

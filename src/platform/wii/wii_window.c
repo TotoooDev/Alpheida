@@ -19,8 +19,6 @@ typedef struct Window {
 
     void* framebuffers[2];
     unsigned int framebuffer_index;
-
-    bool first_frame;
 } Window;
 
 void wiiwindow_setup_video(Window* window);
@@ -43,7 +41,6 @@ Window* window_new(const char* title, int width, int height) {
     window->framebuffers[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(window->video_settings));
     window->framebuffers[1] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(window->video_settings));
     window->framebuffer_index = 0;
-    window->first_frame = true;
 
     wiiwindow_setup_video(window);
     wiiwindow_setup_gx(window);
@@ -64,14 +61,17 @@ void window_clear(Window* window) {
     Mtx modelview;
     guMtxIdentity(modelview);
     GX_LoadPosMtxImm(modelview, GX_PNMTX0);
+
+    GX_SetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
+	GX_SetTevOp(GX_TEVSTAGE0, GX_REPLACE);
 }
 
 void window_present(Window* window) {
     GX_DrawDone();
 
     GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-    GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-    GX_SetAlphaUpdate(GX_TRUE);
+    // GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
+    // GX_SetAlphaUpdate(GX_TRUE);
     GX_SetColorUpdate(GX_TRUE);
     GX_CopyDisp(window->framebuffers[window->framebuffer_index], GX_TRUE);
 
@@ -114,16 +114,16 @@ void window_render_color(Window* window, Color color, AABB* dest) {
     GX_Begin(GX_QUADS, GX_VTXFMT0, 4);
     
     GX_Position2f32(dest->x, dest->y);
-    GX_Color4u8(color.r, color.g, color.b, color.a);
+    GX_Color3u8(color.r, color.g, color.b);
 
     GX_Position2f32(dest->x + dest->width, dest->y);
-    GX_Color4u8(color.r, color.g, color.b, color.a);
+    GX_Color3u8(color.r, color.g, color.b);
 
     GX_Position2f32(dest->x + dest->width, dest->y + dest->height);
-    GX_Color4u8(color.r, color.g, color.b, color.a);
+    GX_Color3u8(color.r, color.g, color.b);
 
     GX_Position2f32(dest->x, dest->y + dest->height);
-    GX_Color4u8(color.r, color.g, color.b, color.a);
+    GX_Color3u8(color.r, color.g, color.b);
     
     GX_End();
 }
@@ -184,7 +184,7 @@ void wiiwindow_setup_gx_parameters(Window* window) {
 void wiiwindow_set_vertex_attributes() {
     // color attributes
     GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
-    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGB, GX_RGB8, 0);
 
     // texture atributes
     GX_SetVtxAttrFmt(GX_VTXFMT1, GX_VA_POS, GX_POS_XY, GX_F32, 0);
@@ -193,9 +193,8 @@ void wiiwindow_set_vertex_attributes() {
 
 void wiiwindow_setup_textures() {
     GX_SetNumChans(1);
-	GX_SetNumTexGens(0);
-	GX_SetTevOrder(GX_TEVSTAGE0, GX_TEXCOORDNULL, GX_TEXMAP_NULL, GX_COLOR0A0);
-	GX_SetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
+	GX_SetNumTexGens(1);
+    GX_SetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY);
 
     GX_InvalidateTexAll();
 }
