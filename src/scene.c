@@ -55,7 +55,11 @@ void scene_update(Scene* scene, f32 timestep) {
     }
 
     // bad timetstep handling i know
-    // physics_update(scene->physics_world, timestep);
+#ifdef SHRIMP_LINUX
+    physics_update(scene->physics_world, timestep);
+#else
+    physics_update(scene->physics_world, 1.0f);
+#endif
 }
 
 void scene_render_sprites(Scene* scene, Window* window) {
