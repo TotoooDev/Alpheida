@@ -25,7 +25,7 @@ More platforms are on their way!
 
 ## Playing the game
 
-First, you will need to build the game yourself, since Alpheida is not yet on homebrew appstores.
+First, you will need to build the game yourself, since Alpheida is not on homebrew appstores yet.
 
 You can learn how to build the game by following the [build tutorial](BUILD.md).
 
