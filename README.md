@@ -1,39 +1,34 @@
-# Alpheida 0.1.2
+# Alpheida 0.1.3
 
-Alpheida is a game written entirely in C with minimal depedencies, for multiple platforms.
+## Table of contents
 
-It is available on:
-- Linux computers
-- Switch
+- [What is Alpheida?](#what-is-alpheida)
+- [Compatible platforms](#compatible-platforms)
+- [Playing the game](#playing-the-game)
+- [Creating a game with the Shrimp Engine](#creating-a-game-with-the-shrimp-engine)
 
-## Building
+## What is Alpheida?
 
-### Depedencies
+Alpheida is a small game created to be compatible with as much platforms as possible.
 
-Apart from the development environment, you'll need a few depedencies.
+The engine (the Shrimp Engine) of the game aims at being the most platform independant possible, and having the least dependencies poossible.
 
-## Linux
+## Compatible platforms
 
-- SDL2
-- SDL2-image
-- SDL2-mixer
+The Shrimp Engine is currently compatible with these platforms :
 
-## Switch
+- Linux
+- Nintendo Switch (homebrew)
+- Wii (homebrew) **WIP: no sound, no inputs, textures are broken, and only tested on an emulator**
 
-- SDL2
-- SDL2-image
-- SDL2-mixer
+More platforms are on their way!
 
-### Building the executable
+## Playing the game
 
-You can use the Makefil to build the game, and specify the platform you want to build for: 
-- `make` builds for Linux
-- `make switch` builds for Switch
+First, you will need to build the game yourself, since Alpheida is not yet on homebrew appstores.
 
-## Playing on Switch
+You can learn how to build the game by following the [build tutorial](BUILD.md).
 
-Some scripts are provided to install and debug the game:
-- `./scripts/switch_debug_netloader.sh` sends the homebrew via the netloader (press Y on the homebrew menu then execute the script).
-- `./scripts/switch_install.sh` sends the homebrew via FTP (you need to have [sys-ftpd](https://github.com/cathery/sys-ftpd) installed or launch [ftpd-pro first](https://github.com/mtheall/ftpd)).
+## Creating a game with the Shrimp Engine
 
-You can also manually copy the homebrew file (Alpheida.nro) yourself in the `switch` directory of your SD card.
+Comming soon... (although if you look at the structure of the code it should not be difficult to figure out how to isolate the Shrimp Engine from the rest of the game lol).
