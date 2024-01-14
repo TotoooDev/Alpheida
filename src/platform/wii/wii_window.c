@@ -70,8 +70,8 @@ void window_present(Window* window) {
     GX_DrawDone();
 
     GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-    // GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
-    // GX_SetAlphaUpdate(GX_TRUE);
+    GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
+    GX_SetAlphaUpdate(GX_TRUE);
     GX_SetColorUpdate(GX_TRUE);
     GX_CopyDisp(window->framebuffers[window->framebuffer_index], GX_TRUE);
 
@@ -114,16 +114,16 @@ void window_render_color(Window* window, Color color, AABB* dest) {
     GX_Begin(GX_QUADS, GX_VTXFMT0, 4);
     
     GX_Position2f32(dest->x, dest->y);
-    GX_Color3u8(color.r, color.g, color.b);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
 
     GX_Position2f32(dest->x + dest->width, dest->y);
-    GX_Color3u8(color.r, color.g, color.b);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
 
     GX_Position2f32(dest->x + dest->width, dest->y + dest->height);
-    GX_Color3u8(color.r, color.g, color.b);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
 
     GX_Position2f32(dest->x, dest->y + dest->height);
-    GX_Color3u8(color.r, color.g, color.b);
+    GX_Color4u8(color.r, color.g, color.b, color.a);
     
     GX_End();
 }
@@ -184,7 +184,7 @@ void wiiwindow_setup_gx_parameters(Window* window) {
 void wiiwindow_set_vertex_attributes() {
     // color attributes
     GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
-    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGB, GX_RGB8, 0);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
     // texture atributes
     GX_SetVtxAttrFmt(GX_VTXFMT1, GX_VA_POS, GX_POS_XY, GX_F32, 0);

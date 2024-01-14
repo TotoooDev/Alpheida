@@ -61,6 +61,7 @@ void window_render_full_texture(Window* window, Texture* texture, AABB* dest);
  * @param window The window to draw to.
  * @param color The color to use.
  * @param dest The AABB to draw to.
+ * @note CURRENTLY BROKEN ON WII, THE QUAD IS NOT DRAWN AT ALL
 */
 void window_render_color(Window* window, Color color, AABB* dest);
 
