@@ -1,14 +1,15 @@
 #ifndef AABB_H
 #define AABB_H
 
+#include <types.h>
 #include <stdbool.h>
 
 /**
  * An Axis-Aligned Bounding Box (AABB) structure.
 */
 typedef struct AABB {
-    float x, y; /** The coordinates of the top-left corner of the AABB. */
-    float width, height; /** The dimensions of the AABB. */
+    f32 x, y; /** The coordinates of the top-left corner of the AABB. */
+    f32 width, height; /** The dimensions of the AABB. */
 } AABB;
 
 /**
@@ -30,7 +31,7 @@ typedef enum IntersectionAxis {
  * @param width The width of the AABB.
  * @param height The height of the AABB.
 */
-AABB* aabb_new(float x, float y, float width, float height);
+AABB* aabb_new(f32 x, f32 y, f32 width, f32 height);
 
 /**
  * Deletes an AABB.

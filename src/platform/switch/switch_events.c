@@ -6,7 +6,7 @@
 #include <platform/input.h>
 #include <SDL2/SDL.h>
 
-JoystickAxis switch_get_joystick_axis(int sdl_axis) {
+JoystickAxis switch_get_joystick_axis(i32 sdl_axis) {
     if (sdl_axis == 0 || sdl_axis == 1)
         return JOYSTICK_TYPE_LEFT;
     if (sdl_axis == 2 || sdl_axis == 3)
@@ -50,7 +50,7 @@ void platform_process_events(EventType* event_type, void* event) {
         *event_type = EVENT_TYPE_JOYSTICK_MOTION;
         ((JoystickMotionEvent*)event)->joystick = switch_get_joystick_axis(sdl_event.jaxis.axis);
         ((JoystickMotionEvent*)event)->axis = sdl_event.jaxis.axis % 2; // 0 and 2 are horizontal, 1 and 3 are vertical
-        ((JoystickMotionEvent*)event)->value = (float)sdl_event.jaxis.value / (float)INT16_MAX;
+        ((JoystickMotionEvent*)event)->value = (f32)sdl_event.jaxis.value / (f32)INT16_MAX;
         break;
     
     default:

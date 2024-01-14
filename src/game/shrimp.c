@@ -7,7 +7,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-void shrimp_update(Sprite* sprite, float timestep) {
+void shrimp_update(Sprite* sprite, f32 timestep) {
     Shrimp* shrimp = (Shrimp*)sprite->user_pointer;
 
     if (shrimp->is_moving[0])
@@ -103,7 +103,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         }
 
         if (event->axis == JOYSTICK_AXIS_HORIZONTAL) {
-            shrimp->speed_multiplier = (float)fabs((double)event->value);
+            shrimp->speed_multiplier = (f32)fabs((f64)event->value);
             if (event->value > 0.0f)
                 shrimp->is_moving[1] = true;
             else

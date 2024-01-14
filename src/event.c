@@ -8,7 +8,7 @@
 
 static EventFunction event_functions[EVENT_FUNCTIONS_SIZE];
 static void* user_pointers[EVENT_FUNCTIONS_SIZE];
-static unsigned int num_event_functions = 0;
+static u32 num_event_functions = 0;
 
 void* event_new() {
     void* event = malloc(MAX_EVENT_STRUCT_SIZE);
@@ -25,7 +25,7 @@ void event_update() {
 
     do {
         platform_process_events(&event_type, event);
-        for (unsigned int i = 0; i < num_event_functions; i++)
+        for (u32 i = 0; i < num_event_functions; i++)
             event_functions[i](event, event_type, user_pointers[i]);
     } while (event_type != EVENT_TYPE_NONE);
 

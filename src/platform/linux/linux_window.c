@@ -17,7 +17,7 @@ typedef struct Window {
 } Window;
 
 // global varibales (bad practice i know) (number of fucks given: 0)
-static unsigned int num_windows = 0;
+static u32 num_windows = 0;
 
 void window_init_sdl() {
     log_assert(SDL_Init(SDL_INIT_EVERYTHING) == 0, "failed to initialize sdl! sdl error: %s\n", SDL_GetError());
@@ -30,7 +30,7 @@ void window_init_sdl() {
     SDL_JoystickOpen(0);
 }
 
-Window* window_new(const char* title, int width, int height) {
+Window* window_new(const char* title, i32 width, i32 height) {
     // Initialize SDL if this is the first window
     if (num_windows <= 0) {
         window_init_sdl();
@@ -85,7 +85,7 @@ void window_present(Window* window) {
 }
 
 void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest) {
-    SDL_Rect src_rect = { (int)src->x, (int)src->y, (int)src->width, (int)src->height };
+    SDL_Rect src_rect = { (i32)src->x, (i32)src->y, (i32)src->width, (i32)src->height };
     SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
     SDL_RenderCopyF(window->renderer, linuxtexture_get_native_texture(texture), &src_rect, &dest_rect);
 }

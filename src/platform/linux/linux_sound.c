@@ -8,7 +8,7 @@
 
 typedef struct Sound {
     Mix_Chunk* chunk;
-    int num_loops;
+    i32 num_loops;
 } Sound;
 
 Sound* sound_new(const char* filename) {
@@ -27,22 +27,22 @@ void sound_delete(Sound* sound) {
 }
 
 void sound_play(Sound* sound) {
-    int ret = Mix_PlayChannel(-1, sound->chunk, 0);
+    i32 ret = Mix_PlayChannel(-1, sound->chunk, 0);
 
     // not really a critical function, so it is not in an assertion
     if (ret == -1)
         log_error("failed to play sound! mix error: %s\n", Mix_GetError());
 }
 
-void sound_set_loops(Sound* sound, int loops) {
+void sound_set_loops(Sound* sound, i32 loops) {
     sound->num_loops = loops;
 }
 
-void sound_set_volume(Sound* sound, int volume) {
+void sound_set_volume(Sound* sound, i32 volume) {
     Mix_VolumeChunk(sound->chunk, volume);
 }
 
-int sound_get_volume(Sound* sound) {
+i32 sound_get_volume(Sound* sound) {
     return Mix_VolumeChunk(sound->chunk, -1);
 }
 

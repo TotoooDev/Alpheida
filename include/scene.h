@@ -3,6 +3,7 @@
 
 #include <sprite.h>
 #include <physics.h>
+#include <types.h>
 
 typedef struct Scene Scene;
 
@@ -16,7 +17,7 @@ void scene_remove_sprite(Scene* scene, Sprite* sprite);
 void scene_set_physics_world(Scene* scene, PhysicsWorld* world);
 PhysicsWorld* scene_get_physics_world(Scene* scene);
 
-void scene_update(Scene* scene, float timestep);
+void scene_update(Scene* scene, f32 timestep);
 void scene_render_sprites(Scene* scene, Window* window);
 
 #endif

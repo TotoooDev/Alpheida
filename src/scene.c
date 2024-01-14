@@ -47,19 +47,19 @@ PhysicsWorld* scene_get_physics_world(Scene* scene) {
     return scene->physics_world;
 }
 
-void scene_update(Scene* scene, float timestep) {
-    for (unsigned int i = 0; i < array_get_num_elements(scene->sprites); i++) {
+void scene_update(Scene* scene, f32 timestep) {
+    for (u32 i = 0; i < array_get_num_elements(scene->sprites); i++) {
         Sprite* sprite = array_get(scene->sprites, i);
         if (sprite->update_function != NULL)
             sprite->update_function(sprite, timestep);
     }
 
     // bad timetstep handling i know
-    physics_update(scene->physics_world, timestep);
+    // physics_update(scene->physics_world, timestep);
 }
 
 void scene_render_sprites(Scene* scene, Window* window) {
-    for (unsigned int i = 0; i < array_get_num_elements(scene->sprites); i++) {
+    for (u32 i = 0; i < array_get_num_elements(scene->sprites); i++) {
         Sprite* sprite = array_get(scene->sprites, i);
         if (sprite->draw_function != NULL)
             sprite->draw_function(sprite, window);

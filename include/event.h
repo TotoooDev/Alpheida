@@ -1,6 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include <types.h>
+
 /**
  * An enumeration for all the different event types.
 */
@@ -34,28 +36,28 @@ typedef enum JoystickAxis {
  * An event for when a key is pressed on the keyboard.
 */
 typedef struct KeyDownEvent {
-    int key; /** The scancode of the key. You can find them in `platform/keyboard.h` */
+    i32 key; /** The scancode of the key. You can find them in `platform/keyboard.h` */
 } KeyDownEvent;
 
 /**
  * An event for when a key is released on the keyboard.
 */
 typedef struct KeyUpEvent {
-    int key; /** The scancode of the key. You can find them in `platform/keyboard.h` */
+    i32 key; /** The scancode of the key. You can find them in `platform/keyboard.h` */
 } KeyUpEvent;
 
 /**
  * An event for when a button is pressed.
 */
 typedef struct ButtonDownEvent {
-    int button; /** The ID of the button. You can find them in `platform/input.h` */
+    i32 button; /** The ID of the button. You can find them in `platform/input.h` */
 } ButtonDownEvent;
 
 /**
  * An event for when a button is released.
 */
 typedef struct ButtonUpEvent {
-    int button; /** The ID of the button. You can find them in `platform/input.h` */
+    i32 button; /** The ID of the button. You can find them in `platform/input.h` */
 } ButtonUpEvent;
 
 /**
@@ -64,7 +66,7 @@ typedef struct ButtonUpEvent {
 typedef struct JoystickMotionEvent {
     JoystickType joystick; /** The joystick that is moved */
     JoystickAxis axis; /** The axis in which the joystick has moved */
-    float value; /** The normalized value (ranging from 0.0 to 1.0) of the joystick movement. */
+    f32 value; /** The normalized value (ranging from 0.0 to 1.0) of the joystick movement. */
 } JoystickMotionEvent;
 
 /**

@@ -4,7 +4,7 @@ Color color_new(unsigned char r, unsigned char g, unsigned char b, unsigned char
     return (Color){ r, g, b, a };
 }
 
-Color color_newf(float r, float g, float b, float a) {
+Color color_newf(f32 r, f32 g, f32 b, f32 a) {
     return (Color){
         (unsigned char)(r * 255.0f),
         (unsigned char)(g * 255.0f),

@@ -5,10 +5,11 @@
 #include <color.h>
 #include <physics.h>
 #include <window.h>
+#include <types.h>
 
 typedef struct Sprite Sprite;
 
-typedef void(*UpdateFunction)(Sprite*, float);
+typedef void(*UpdateFunction)(Sprite*, f32);
 typedef void(*DrawFunction)(Sprite*, Window*);
 
 typedef struct Sprite {
@@ -24,8 +25,8 @@ typedef struct Sprite {
     void* user_pointer;
 } Sprite;
 
-Sprite* sprite_new(float x, float y, float width, float height, Texture* texture);
-Sprite* sprite_new_color(float x, float y, float width, float height, Color color);
+Sprite* sprite_new(f32 x, f32 y, f32 width, f32 height, Texture* texture);
+Sprite* sprite_new_color(f32 x, f32 y, f32 width, f32 height, Color color);
 void sprite_delete(Sprite* sprite);
 
 #endif

@@ -4,6 +4,7 @@
 #include <sprite.h>
 #include <scene.h>
 #include <aabb.h>
+#include <types.h>
 
 typedef struct Shrimp {
     Scene* scene;
@@ -11,8 +12,8 @@ typedef struct Shrimp {
     AABB* hitbox;
 
     bool is_moving[2];
-    float speed_multiplier;
-    float speed;
+    f32 speed_multiplier;
+    f32 speed;
 
     bool can_jump;
 } Shrimp;

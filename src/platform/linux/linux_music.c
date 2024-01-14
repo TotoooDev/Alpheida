@@ -8,7 +8,7 @@
 
 typedef struct Music {
     Mix_Music* music;
-    int num_loops;
+    i32 num_loops;
 } Music;
 
 Music* music_new(const char* filename) {
@@ -31,16 +31,16 @@ void music_play(Music* music) {
     Mix_PlayMusic(music->music, music->num_loops);
 }
 
-void music_play_position(Music* music, double pos_ms) {
+void music_play_position(Music* music, f64 pos_ms) {
     Mix_SetMusicPosition(pos_ms * 0.001f);
     music_play(music);
 }
 
-void music_play_fade_in(Music* music, int fade) {
+void music_play_fade_in(Music* music, i32 fade) {
     Mix_FadeInMusic(music->music, music->num_loops, fade);
 }
 
-void music_play_fade_in_position(Music* music, int fade, double pos_ms) {
+void music_play_fade_in_position(Music* music, i32 fade, f64 pos_ms) {
     Mix_FadeInMusicPos(music->music, music->num_loops, fade, pos_ms * 0.001f);
 }
 
@@ -56,19 +56,19 @@ void musix_resume() {
     Mix_ResumeMusic();
 }
 
-void music_fade_out(int fade) {
+void music_fade_out(i32 fade) {
     Mix_FadeOutMusic(fade);
 }
 
-void music_set_loops(Music* music, int loops) {
+void music_set_loops(Music* music, i32 loops) {
     music->num_loops = loops;
 }
 
-void music_set_volume(Music* music, int volume) {
+void music_set_volume(Music* music, i32 volume) {
     Mix_VolumeMusic(volume);
 }
 
-int music_get_volume(Music* music) {
+i32 music_get_volume(Music* music) {
     return Mix_VolumeMusic(-1);
 }
 

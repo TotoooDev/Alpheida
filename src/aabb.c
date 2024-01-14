@@ -1,7 +1,7 @@
 #include <aabb.h>
 #include <stdlib.h>
 
-AABB* aabb_new(float x, float y, float width, float height) {
+AABB* aabb_new(f32 x, f32 y, f32 width, f32 height) {
     AABB* aabb = (AABB*)malloc(sizeof(AABB));
 
     aabb->x = x;

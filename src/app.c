@@ -11,8 +11,8 @@ typedef struct App {
 
     bool is_running;
     
-    float timestep;
-    float last_time;
+    f32 timestep;
+    f32 last_time;
 } App;
 
 static App* app_instance = NULL;
@@ -25,7 +25,7 @@ void app_on_event(void* event, EventType event_type, void* user_pointer) {
 }
 
 void app_update_timestep() {
-    float current_time = timer_get_time_ms();
+    f32 current_time = timer_get_time_ms();
     app_instance->timestep = current_time - app_instance->last_time;
     app_instance->last_time = current_time;
 }

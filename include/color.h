@@ -1,6 +1,8 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#include <types.h>
+
 /**
  * A simple structure to represent an RGBA8 color (values ranging 0-255)
 */
@@ -22,14 +24,14 @@ typedef struct Color {
 Color color_new(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
 /**
- * Creates a new color, but uses normalized float values (ranging 0.0-1.0).
+ * Creates a new color, but uses normalized f32 values (ranging 0.0-1.0).
  * @param r The red component of the color.
  * @param g The green component of the color.
  * @param b The blue component of the color.
  * @param a The alpha component of the color.
  * @returns The new color.
 */
-Color color_newf(float r, float g, float b, float a);
+Color color_newf(f32 r, f32 g, f32 b, f32 a);
 
 /**
  * @returns A black color

@@ -18,7 +18,7 @@ typedef struct Window {
     GXRModeObj* video_settings;
 
     void* framebuffers[2];
-    unsigned int framebuffer_index;
+    u32 framebuffer_index;
 } Window;
 
 void wiiwindow_setup_video(Window* window);
@@ -28,9 +28,9 @@ void wiiwindow_setup_gx_parameters(Window* window);
 void wiiwindow_set_vertex_attributes();
 void wiiwindow_setup_textures();
 void wiiwindow_setup_projection();
-void wiiwindow_draw_texture(Texture* texture, AABB* dest, float* tex_coords);
+void wiiwindow_draw_texture(Texture* texture, AABB* dest, f32* tex_coords);
 
-Window* window_new(const char* title, int width, int height) {
+Window* window_new(const char* title, i32 width, i32 height) {
     Window* window = (Window*)malloc(sizeof(Window));
 
     VIDEO_Init();
@@ -85,7 +85,7 @@ void window_present(Window* window) {
 }
 
 void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest) {
-    float tex_coords[] = {
+    f32 tex_coords[] = {
     	0.0f, 0.0f,
         1.0f, 0.0f,
         1.0f, 1.0f,
@@ -96,7 +96,7 @@ void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* de
 }
 
 void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
-    float tex_coords[] = {
+    f32 tex_coords[] = {
     	0.0f, 0.0f,
         1.0f, 0.0f,
         1.0f, 1.0f,
@@ -163,8 +163,8 @@ void* wiiwindow_setup_fifo() {
 
 void wiiwindow_setup_gx_parameters(Window* window) {
     GX_SetViewport(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight, 0, 1);
-    float y_scale = GX_GetYScaleFactor(window->video_settings->efbHeight, window->video_settings->xfbHeight);
-    float xfbHeight = GX_SetDispCopyYScale(y_scale);
+    f32 y_scale = GX_GetYScaleFactor(window->video_settings->efbHeight, window->video_settings->xfbHeight);
+    f32 xfbHeight = GX_SetDispCopyYScale(y_scale);
     GX_SetScissor(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight);
     GX_SetDispCopySrc(0, 0, window->video_settings->fbWidth, window->video_settings->efbHeight);
     GX_SetDispCopyDst(window->video_settings->fbWidth, xfbHeight);
@@ -205,7 +205,7 @@ void wiiwindow_setup_projection() {
 	GX_LoadProjectionMtx(perspective, GX_ORTHOGRAPHIC);
 }
 
-void wiiwindow_draw_texture(Texture* texture, AABB* dest, float* tex_coords) {
+void wiiwindow_draw_texture(Texture* texture, AABB* dest, f32* tex_coords) {
     GX_ClearVtxDesc();
     GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
     GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);

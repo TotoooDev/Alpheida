@@ -2,6 +2,7 @@
 #define PHYSICS_H
 
 #include <aabb.h>
+#include <types.h>
 #include <stdbool.h>
 
 // forward declaration to avoid recursive inclusion hell
@@ -15,8 +16,8 @@ typedef void(*OnCollisionFunction)(PhysicsObject*, PhysicsObject*, IntersectionA
 
 typedef struct PhysicsObject {
     bool takes_gravity;
-    float forces[2];
-    float velocity[2];
+    f32 forces[2];
+    f32 velocity[2];
     Sprite* sprite;
 
     OnCollisionFunction on_collision;
@@ -26,9 +27,9 @@ typedef struct PhysicsObject {
 PhysicsWorld* physics_new();
 void physics_delete(PhysicsWorld* world);
 
-void physics_set_gravity(PhysicsWorld* world, float* gravity);
+void physics_set_gravity(PhysicsWorld* world, f32* gravity);
 
-void physics_update(PhysicsWorld* world, float timestep);
+void physics_update(PhysicsWorld* world, f32 timestep);
 
 PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite);
 void physics_remove_physics_object(PhysicsWorld* world, PhysicsObject* object);

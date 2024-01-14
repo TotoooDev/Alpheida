@@ -4,6 +4,7 @@
 #include <texture.h>
 #include <color.h>
 #include <aabb.h>
+#include <types.h>
 #include <stdbool.h>
 
 /**
@@ -18,7 +19,7 @@ typedef struct Window Window;
  * @param height The height of the window.
  * @note The parameters are currently only used on platforms that offer a windowing system. This function will likely be changed in the future to take no parameters.
 */
-Window* window_new(const char* title, int width, int height);
+Window* window_new(const char* title, i32 width, i32 height);
 
 /**
  * Deletes a window.

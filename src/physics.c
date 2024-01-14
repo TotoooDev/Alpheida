@@ -9,7 +9,7 @@
 typedef struct PhysicsWorld {
     Array* objects;
 
-    float gravity[2];
+    f32 gravity[2];
 } PhysicsWorld;
 
 PhysicsWorld* physics_new() {
@@ -24,7 +24,7 @@ PhysicsWorld* physics_new() {
 }
 
 void physics_delete(PhysicsWorld* world) {
-    for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
+    for (u32 i = 0; i < array_get_num_elements(world->objects); i++) {
         physics_remove_physics_object(world, array_get(world->objects, i));
     }
 
@@ -32,7 +32,7 @@ void physics_delete(PhysicsWorld* world) {
     free(world);
 }
 
-void physics_set_gravity(PhysicsWorld* world, float* gravity) {
+void physics_set_gravity(PhysicsWorld* world, f32* gravity) {
     world->gravity[0] = gravity[0];
     world->gravity[1] = gravity[1];
 }
@@ -40,7 +40,7 @@ void physics_set_gravity(PhysicsWorld* world, float* gravity) {
 bool physics_detect_collisions(PhysicsWorld* world, PhysicsObject* object, PhysicsObject** colliding_object) {
     bool collision_detected = false;
 
-    for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
+    for (u32 i = 0; i < array_get_num_elements(world->objects); i++) {
         PhysicsObject* other_object = array_get(world->objects, i);
 
         if (object == other_object)
@@ -68,7 +68,7 @@ void physics_apply_forces(PhysicsObject* object) {
     object->velocity[1] += object->forces[1];
 }
 
-void physics_move(PhysicsObject* object, float timestep) {
+void physics_move(PhysicsObject* object, f32 timestep) {
     object->sprite->aabb->x += object->velocity[0] * timestep;
     object->sprite->aabb->y -= object->velocity[1] * timestep;
 }
@@ -88,25 +88,25 @@ IntersectionAxis physics_move_intersecting_aabb(AABB* a, AABB* b) {
 
     switch (axis) {
     case INTERSECTION_AXIS_POSITIVE_Y: {
-        float offset = a->y + a->height - b->y;
+        f32 offset = a->y + a->height - b->y;
         a->y -= offset;
         break;
     }
 
     case INTERSECTION_AXIS_NEGATIVE_Y: {
-        float offset = b->y + b->height - a->y;
+        f32 offset = b->y + b->height - a->y;
         a->y += offset;
         break;
     }
 
     case INTERSECTION_AXIS_POSITIVE_X: {
-        float offset = a->x + a->width - b->x;
+        f32 offset = a->x + a->width - b->x;
         a->x -= offset;
         break;
     }
 
     case INTERSECTION_AXIS_NEGATIVE_X: {
-        float offset = b->x + b->width - a->x;
+        f32 offset = b->x + b->width - a->x;
         a->x += offset;
         break;
     }
@@ -130,9 +130,9 @@ void physics_on_collision(PhysicsObject* object, PhysicsObject* colliding_object
     physics_reset_velocity(object);
 }
 
-void physics_update(PhysicsWorld* world, float timestep) {
+void physics_update(PhysicsWorld* world, f32 timestep) {
     // a really bad """""""physics""""""" simulation
-    for (unsigned int i = 0; i < array_get_num_elements(world->objects); i++) {
+    for (u32 i = 0; i < array_get_num_elements(world->objects); i++) {
         PhysicsObject* object = array_get(world->objects, i);
         PhysicsObject* colliding_object = NULL;
 
