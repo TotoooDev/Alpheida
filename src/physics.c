@@ -68,9 +68,9 @@ void physics_apply_forces(PhysicsObject* object) {
     object->velocity[1] += object->forces[1];
 }
 
-void physics_move(PhysicsObject* object) {
-    object->sprite->aabb->x += object->velocity[0];
-    object->sprite->aabb->y -= object->velocity[1];
+void physics_move(PhysicsObject* object, float timestep) {
+    object->sprite->aabb->x += object->velocity[0] * timestep;
+    object->sprite->aabb->y -= object->velocity[1] * timestep;
 }
 
 void physics_reset_forces(PhysicsObject* object) {
@@ -142,7 +142,7 @@ void physics_update(PhysicsWorld* world, float timestep) {
             physics_apply_gravity(world, object);
 
         physics_apply_forces(object);
-        physics_move(object);
+        physics_move(object, timestep);
         physics_reset_forces(object);
 
         // re-check collisions after moving the objects
