@@ -26,9 +26,6 @@ typedef struct PhysicsObject {
 PhysicsWorld* physics_new();
 void physics_delete(PhysicsWorld* world);
 
-void physics_add_object(PhysicsWorld* world, PhysicsObject* object);
-void physics_remove_object(PhysicsWorld* world, PhysicsObject* object);
-
 void physics_set_gravity(PhysicsWorld* world, float* gravity);
 
 void physics_update(PhysicsWorld* world, float timestep);

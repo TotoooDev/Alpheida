@@ -3,9 +3,12 @@
 
 #include <sprite.h>
 #include <scene.h>
+#include <aabb.h>
 
 typedef struct Shrimp {
+    Scene* scene;
     Sprite* sprite;
+    AABB* hitbox;
 
     bool is_moving[2];
     float speed_multiplier;

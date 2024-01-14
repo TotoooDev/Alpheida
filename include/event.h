@@ -69,6 +69,9 @@ typedef struct JoystickMotionEvent {
 
 /**
  * A function pointer type that is called when an event is triggered.
+ * @param void* The event that occured.
+ * @param EventType The event type that occured.
+ * @param void* The user pointer.
 */
 typedef void(*EventFunction)(void*, EventType, void*);
 

@@ -1,4 +1,5 @@
 #include <game/shrimp.h>
+#include <game/bullet.h>
 #include <platform/fs.h>
 #include <event.h>
 #include <platform/input.h>
@@ -43,6 +44,12 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
                 shrimp->can_jump = false;
             }
             break;
+
+        case SHRIMP_KEY_B: {
+            Bullet* bullet = bullet_new(shrimp->scene, shrimp);
+            scene_add_sprite(shrimp->scene, bullet->sprite);
+            break;
+        }
         
         default:
             break;
@@ -107,6 +114,9 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
 
 Shrimp* shrimp_new(Scene* scene) {
     Shrimp* shrimp = (Shrimp*)malloc(sizeof(Shrimp));
+
+    shrimp->scene = scene;
+    shrimp->hitbox = NULL;
 
     Texture* texture = texture_new(fs_get_path_romfs("images/shrimp.png"));
     shrimp->sprite = sprite_new(0.0f, 0.0f, 64.0f, 64.0f, texture);
