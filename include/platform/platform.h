@@ -16,7 +16,7 @@ void platform_update();
 /**
  * Processes the platform's events.
 */
-void platform_process_events(EventType* event_type, void* event);
+EventType platform_process_events(void* event);
 
 /**
  * Exits the platform.

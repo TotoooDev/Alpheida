@@ -14,48 +14,40 @@ JoystickAxis linux_get_joystick_axis(i32 sdl_axis) {
     return -1;
 }
 
-void platform_process_events(EventType* event_type, void* event) {
+EventType platform_process_events(void* event) {
     SDL_Event sdl_event;
     if (SDL_PollEvent(&sdl_event) == 0) {
-        *event_type = EVENT_TYPE_NONE;
-        return;
+        return EVENT_TYPE_NONE;
     }
 
     switch (sdl_event.type) {
     case SDL_QUIT:
-        *event_type = EVENT_TYPE_PLATFORM_QUIT;
-        break;
+        return EVENT_TYPE_PLATFORM_QUIT;
 
     case SDL_KEYDOWN:
-        *event_type = EVENT_TYPE_KEY_DOWN;
         ((KeyDownEvent*)event)->key = sdl_event.key.keysym.scancode;
-        break;
+        return EVENT_TYPE_KEY_DOWN;
 
     case SDL_KEYUP:
-        *event_type = EVENT_TYPE_KEY_UP;
         ((KeyUpEvent*)event)->key = sdl_event.key.keysym.scancode;
-        break;
+        return EVENT_TYPE_KEY_UP;
 
     case SDL_JOYBUTTONDOWN:
-        *event_type = EVENT_TYPE_BUTTON_DOWN;
         ((ButtonDownEvent*)event)->button = sdl_event.jbutton.button;
-        break;
+        return EVENT_TYPE_BUTTON_DOWN;
 
     case SDL_JOYBUTTONUP:
-        *event_type = EVENT_TYPE_BUTTON_UP;
         ((ButtonUpEvent*)event)->button = sdl_event.jbutton.button;
-        break;
+        return EVENT_TYPE_BUTTON_UP;
 
     case SDL_JOYAXISMOTION:
-        *event_type = EVENT_TYPE_JOYSTICK_MOTION;
         ((JoystickMotionEvent*)event)->joystick = linux_get_joystick_axis(sdl_event.jaxis.axis);
         ((JoystickMotionEvent*)event)->axis = sdl_event.jaxis.axis % 2; // 0 and 2 are horizontal, 1 and 3 are vertical
         ((JoystickMotionEvent*)event)->value = (f32)sdl_event.jaxis.value / (f32)INT16_MAX;
-        break;
+        return EVENT_TYPE_JOYSTICK_MOTION;
     
     default:
-        event_type = EVENT_TYPE_NONE;
-        break;
+        return EVENT_TYPE_NONE;
     }
 }
 

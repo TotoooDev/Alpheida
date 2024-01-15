@@ -23,11 +23,10 @@ void event_update() {
     EventType event_type;
     void* event = event_new();
 
-    do {
-        platform_process_events(&event_type, event);
+    while ((event_type = platform_process_events(event)) != EVENT_TYPE_NONE) {
         for (u32 i = 0; i < num_event_functions; i++)
             event_functions[i](event, event_type, user_pointers[i]);
-    } while (event_type != EVENT_TYPE_NONE);
+    }
 
     event_delete(event);
 }
