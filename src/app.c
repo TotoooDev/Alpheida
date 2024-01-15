@@ -58,7 +58,6 @@ Window* app_get_window() {
 
 void app_run() {
     while (app_instance->is_running) {
-        event_update();
         window_clear(app_instance->window);
         
         if (app_instance->current_scene) {
@@ -71,6 +70,8 @@ void app_run() {
         app_update_timestep();
         
         platform_update();
+        
+        event_update();
     }
 }
 
