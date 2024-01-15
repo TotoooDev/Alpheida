@@ -16,6 +16,7 @@ typedef void(*OnCollisionFunction)(PhysicsObject*, PhysicsObject*, IntersectionA
 
 typedef struct PhysicsObject {
     bool takes_gravity;
+    bool is_trigger;
     f32 forces[2];
     f32 velocity[2];
     Sprite* sprite;
