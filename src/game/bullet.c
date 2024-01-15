@@ -12,6 +12,12 @@ void bullet_event_function_delete_texture(void*, EventType event_type, void* use
     }
 }
 
+void bullet_update(Sprite* sprite, f32 timestep) {
+    Bullet* bullet = (Bullet*)sprite->user_pointer;
+    sprite->aabb->x += bullet->direction[0] * timestep;
+    sprite->aabb->y += bullet->direction[1] * timestep;
+}
+
 Bullet* bullet_new(Scene* scene, Shrimp* shrimp) {
     if (first_texture) {
         bullet_texture = texture_new("images/bullet.png");
@@ -19,6 +25,8 @@ Bullet* bullet_new(Scene* scene, Shrimp* shrimp) {
     }
 
     Bullet* bullet = (Bullet*)malloc(sizeof(Bullet));
+    bullet->direction[0] = 1.0f;
+    bullet->direction[1] = 1.0f;
 
     bullet->sprite = sprite_new(
         shrimp->sprite->aabb->x,
@@ -27,6 +35,13 @@ Bullet* bullet_new(Scene* scene, Shrimp* shrimp) {
         shrimp->sprite->aabb->height,
         bullet_texture
     );
+    bullet->sprite->user_pointer = bullet;
+
+    bullet->sprite->update_function = bullet_update;
+
+    PhysicsObject* physics = physics_add_physics_object(scene_get_physics_world(scene), bullet->sprite);
+    physics->is_trigger = true;
+    physics->takes_gravity = false;
 
     event_add_function(bullet, bullet_event_function_delete_texture);
 
