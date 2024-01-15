@@ -28,6 +28,7 @@ MainScene* mainscene_new() {
     scene->ground = sprite_new_color(0.0f, 400.0f, 1000000.0f, 1000000.0f, color_magenta());
     PhysicsObject* ground_physics = physics_add_physics_object(world, scene->ground);
     ground_physics->takes_gravity = false;
+    ground_physics->filter = physics_set_all_filters();
 
     scene_add_sprite(scene->scene, scene->shrimp->sprite);
     scene_add_sprite(scene->scene, scene->ground);

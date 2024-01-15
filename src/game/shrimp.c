@@ -4,6 +4,7 @@
 #include <event.h>
 #include <platform/input.h>
 #include <platform/keyboard.h>
+#include <log.h>
 #include <math.h>
 #include <stdlib.h>
 
@@ -40,7 +41,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
 
         case SHRIMP_KEY_SPACE:
             if (shrimp->can_jump) {
-                shrimp->sprite->physics_object->forces[1] += 50.0f;
+                shrimp->sprite->physics_object->forces[1] += 10.0f;
                 shrimp->can_jump = false;
             }
             break;
@@ -81,7 +82,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         {
         case JOY_A:
             if (shrimp->can_jump) {
-                shrimp->sprite->physics_object->forces[1] += 50.0f;
+                shrimp->sprite->physics_object->forces[1] += 10.0f;
                 shrimp->can_jump = false;
             }
             break;
@@ -132,6 +133,7 @@ Shrimp* shrimp_new(Scene* scene) {
     PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
     physics_object->on_collision = shrimp_on_collision;
     physics_object->user_pointer = shrimp;
+    physics_object->filter |= physics_add_filter(0);
 
     event_add_function(shrimp, shrimp_on_event);
 

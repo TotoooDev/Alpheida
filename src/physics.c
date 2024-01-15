@@ -46,6 +46,9 @@ bool physics_detect_collisions(PhysicsWorld* world, PhysicsObject* object, Physi
         if (object == other_object)
             continue;
 
+        if ((object->filter & other_object->filter) == 0)
+            continue;
+
         collision_detected = aabb_intersect(object->sprite->aabb, other_object->sprite->aabb);
         if (collision_detected) {
             *colliding_object = other_object;
@@ -163,6 +166,7 @@ PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite) {
     object->sprite = sprite;
     object->takes_gravity = true;
     object->is_trigger = false;
+    object->filter = 0;
     object->forces[0] = 0.0f;
     object->forces[1] = 0.0f;
     object->velocity[0] = 0.0f;
@@ -181,3 +185,10 @@ void physics_remove_physics_object(PhysicsWorld* world, PhysicsObject* object) {
     free(object);
 }
 
+u32 physics_set_all_filters() {
+    return UINT32_MAX;
+}
+
+u32 physics_add_filter(u32 num_filter) {
+    return 1 << num_filter;
+}

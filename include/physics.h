@@ -17,8 +17,11 @@ typedef void(*OnCollisionFunction)(PhysicsObject*, PhysicsObject*, IntersectionA
 typedef struct PhysicsObject {
     bool takes_gravity;
     bool is_trigger;
+    
+    u32 filter;
     f32 forces[2];
     f32 velocity[2];
+
     Sprite* sprite;
 
     OnCollisionFunction on_collision;
@@ -34,6 +37,9 @@ void physics_update(PhysicsWorld* world, f32 timestep);
 
 PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite);
 void physics_remove_physics_object(PhysicsWorld* world, PhysicsObject* object);
+
+u32 physics_set_all_filters();
+u32 physics_add_filter(u32 num_filter);
 
 #endif
 

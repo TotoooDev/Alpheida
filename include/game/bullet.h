@@ -8,6 +8,7 @@
 
 typedef struct Bullet {
     Sprite* sprite;
+    Scene* scene;
 
     f32 direction[2];
 } Bullet;
