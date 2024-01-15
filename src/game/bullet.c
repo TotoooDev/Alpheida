@@ -5,9 +5,11 @@
 bool first_texture = true;
 Texture* bullet_texture = NULL;
 
-void bullet_event_function_delete_texture(void*, EventType event_type, void*) {
-    if (event_type == EVENT_TYPE_PLATFORM_QUIT)
+void bullet_event_function_delete_texture(void*, EventType event_type, void* user_pointer) {
+    if (event_type == EVENT_TYPE_PLATFORM_QUIT && bullet_texture != NULL) {
         texture_delete(bullet_texture);
+        bullet_texture = NULL;
+    }
 }
 
 Bullet* bullet_new(Scene* scene, Shrimp* shrimp) {
@@ -26,7 +28,7 @@ Bullet* bullet_new(Scene* scene, Shrimp* shrimp) {
         bullet_texture
     );
 
-    event_add_function(NULL, bullet_event_function_delete_texture);
+    event_add_function(bullet, bullet_event_function_delete_texture);
 
     return bullet;
 }
