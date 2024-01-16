@@ -1,9 +1,7 @@
 #include <engine/math/mat4.h>
 #include <math.h>
 
-typedef struct Mat4 {
-    f32 values[4][4];
-} Mat4;
+// please note that i am absolutely not a mathematician, hence why this code may appear as complete shit to you
 
 void mat4_identity(Mat4 mat) {
     mat4_diagonal(mat, 1.0f);

@@ -13,7 +13,46 @@
 typedef struct Renderer {
     Shader* shader_color;
     Shader* shader_texture;
+
+    u32 rect_vao;
+    u32 rect_ebo;
 } Renderer;
+
+void renderer_setup_vao(Renderer* renderer) {
+    float vertices[] = {
+        // positions          // texture coords
+         0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
+         0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+        -0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
+    };
+    
+    unsigned int indices[] = {
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
+    };
+    
+    u32 vbo;
+
+    glGenVertexArrays(1, &renderer->rect_vao);
+    glGenBuffers(1, &renderer->rect_ebo);
+    glGenBuffers(1, &vbo);
+
+    glBindVertexArray(renderer->rect_vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->rect_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // texture coord attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+}
 
 Renderer* renderer_new() {
 #ifdef SHRIMP_GRAPHICS_OPENGL
@@ -38,28 +77,43 @@ void renderer_delete(Renderer* renderer) {
 #endif
 }
 
-void renderer_clear(Color color) {
+void renderer_clear(Renderer* renderer, Color color) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
     glClearColor(color.r, color.g, color.b, color.a);
     glClear(GL_COLOR_BUFFER_BIT);
 #endif
 }
 
-void renderer_render_texture(Texture* texture, AABB* src, AABB* dest) {
+void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* src, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
 
 #endif
 }
 
-void renderer_render_full_texture(Texture* texture, AABB* dest) {
+void renderer_render_full_texture(Renderer* renderer, Texture* texture, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
 
 #endif
 }
 
-void renderer_render_color(Color color, AABB* dest) {
+void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
+    Mat4 model;
+    mat4_identity(model);
+    mat4_translate(model, model, (Vec2){ dest->x, dest->y });
 
+    Mat4 view, projection;
+    mat4_identity(view);
+    mat4_identity(projection);
+
+    shader_bind(renderer->shader_color);
+    shader_set_mat4(renderer->shader_color, model, "u_model");
+    shader_set_mat4(renderer->shader_color, view, "u_view");
+    shader_set_mat4(renderer->shader_color, projection, "u_projection");
+
+    glBindVertexArray(renderer->rect_vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->rect_ebo);
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 #endif
 }
-

@@ -10,9 +10,9 @@ typedef struct Renderer Renderer;
 Renderer* renderer_new();
 void renderer_delete(Renderer* renderer);
 
-void renderer_clear(Color color);
-void renderer_render_texture(Texture* texture, AABB* src, AABB* dest);
-void renderer_render_full_texture(Texture* texture, AABB* dest);
-void renderer_render_color(Color color, AABB* dest);
+void renderer_clear(Renderer* renderer, Color color);
+void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* src, AABB* dest);
+void renderer_render_full_texture(Renderer* renderer, Texture* texture, AABB* dest);
+void renderer_render_color(Renderer* renderer, Color color, AABB* dest);
 
 #endif

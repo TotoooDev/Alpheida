@@ -5,7 +5,9 @@
 #include <engine/math/vec2.h>
 #include <engine/types.h>
 
-typedef struct Mat4 Mat4;
+typedef struct Mat4 {
+    f32 values[4][4];
+} Mat4;
 
 void mat4_identity(Mat4 mat);
 void mat4_diagonal(Mat4 mat, f32 x);
