@@ -4,6 +4,7 @@
 #include <engine/log.h>
 #include <engine/stb_image/stb_image.h>
 #include <GL/glew.h>
+#include <stdlib.h>
 
 typedef struct Texture {
     u32 id;
