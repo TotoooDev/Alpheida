@@ -3,17 +3,17 @@
 
 #include <sprite.h>
 #include <scene.h>
-#include <game/shrimp.h>
-#include <types.h>
+#include <math/vec2.h>
 
 typedef struct Bullet {
     Sprite* sprite;
     Scene* scene;
 
-    f32 direction[2];
+    Vec2 direction;
+    f32 speed;
 } Bullet;
 
-Bullet* bullet_new(Scene* scene, Shrimp* shrimp);
+Bullet* bullet_new(Scene* scene, f32 x, f32 y, Vec2 direction);
 void bullet_delete(Bullet* bullet);
 
 #endif

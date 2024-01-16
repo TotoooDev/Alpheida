@@ -45,12 +45,6 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
                 shrimp->can_jump = false;
             }
             break;
-
-        case SHRIMP_KEY_B: {
-            Bullet* bullet = bullet_new(shrimp->scene, shrimp);
-            scene_add_sprite(shrimp->scene, bullet->sprite);
-            break;
-        }
         
         default:
             break;
@@ -74,6 +68,25 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         default:
             break;
         }
+    }
+
+    if (event_type == EVENT_TYPE_MOUSE_MOVED) {
+        MouseMovedEvent* event = (MouseMovedEvent*)e;
+        shrimp->cursor_pos.x = event->x;
+        shrimp->cursor_pos.y = event->y;
+    }
+
+    if (event_type == EVENT_TYPE_MOUSE_BUTTON_DOWN) {
+        MouseButtonDownEvent* event = (MouseButtonDownEvent*)e;
+
+        if (event->button != MOUSE_BUTTON_LEFT)
+            return;
+
+        Vec2 direction;
+        direction.x = shrimp->cursor_pos.x - shrimp->sprite->aabb->x;
+        direction.y = shrimp->cursor_pos.y - shrimp->sprite->aabb->y;
+        Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->aabb->x, shrimp->sprite->aabb->y, vec2_normalize(direction));
+        scene_add_sprite(shrimp->scene, bullet->sprite);
     }
 
     if (event_type == EVENT_TYPE_BUTTON_DOWN) {

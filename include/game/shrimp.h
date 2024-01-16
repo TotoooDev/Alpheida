@@ -4,7 +4,7 @@
 #include <sprite.h>
 #include <scene.h>
 #include <aabb.h>
-#include <types.h>
+#include <math/vec2.h>
 
 typedef struct Shrimp {
     Scene* scene;
@@ -14,6 +14,8 @@ typedef struct Shrimp {
     bool is_moving[2];
     f32 speed_multiplier;
     f32 speed;
+
+    Vec2 cursor_pos;
 
     bool can_jump;
 } Shrimp;
