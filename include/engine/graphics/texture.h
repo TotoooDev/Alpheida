@@ -7,4 +7,3 @@ Texture* texture_new(const char* filename);
 void texture_delete(Texture* texture);
 
 #endif
-

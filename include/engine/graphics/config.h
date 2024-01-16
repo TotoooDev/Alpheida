@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_CONFIG_H
 #define GRAPHICS_CONFIG_H
 
-#include <platform/config.h>
+#include <engine/platform/config.h>
 
 #if defined(SHRIMP_LINUX) || defined(SHRIMP_SWITCH)
     #define SHRIMP_GRAPHICS_OPENGL

@@ -2,6 +2,7 @@
 #include <engine/graphics/config.h>
 #include <engine/log.h>
 #include <GL/glew.h>
+#include <stdlib.h>
 
 typedef struct Shader {
     u32 id;

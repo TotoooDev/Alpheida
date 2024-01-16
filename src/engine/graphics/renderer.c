@@ -1,4 +1,5 @@
 #include <engine/graphics/renderer.h>
+#include <engine/log.h>
 #include <GL/glew.h>
 
 typedef struct Renderer {
