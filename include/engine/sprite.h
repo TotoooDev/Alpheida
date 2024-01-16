@@ -1,10 +1,10 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <engine/texture.h>
-#include <engine/color.h>
+#include <engine/graphics/texture.h>
+#include <engine/graphics/color.h>
+#include <engine/graphics/window.h>
 #include <engine/physics.h>
-#include <engine/window.h>
 #include <engine/types.h>
 
 typedef struct Sprite Sprite;

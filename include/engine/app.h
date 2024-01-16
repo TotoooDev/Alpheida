@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <engine/window.h>
+#include <engine/graphics/window.h>
 #include <engine/scene.h>
 
 /**

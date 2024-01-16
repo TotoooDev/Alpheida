@@ -1,7 +1,7 @@
 #include <engine/platform/config.h>
 #ifdef SHRIMP_LINUX
 
-#include <engine/window.h>
+#include <engine/graphics/window.h>
 #include <engine/config.h>
 #include <engine/platform/linux/linux_texture.h>
 #include <engine/log.h>

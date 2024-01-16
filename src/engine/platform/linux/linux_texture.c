@@ -2,7 +2,7 @@
 
 #ifdef SHRIMP_LINUX
 
-#include <engine/texture.h>
+#include <engine/graphics/texture.h>
 #include <engine/platform/linux/linux_texture.h>
 #include <engine/app.h>
 #include <engine/platform/linux/linux_window.h>

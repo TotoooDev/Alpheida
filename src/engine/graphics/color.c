@@ -1,4 +1,4 @@
-#include <engine/color.h>
+#include <engine/graphics/color.h>
 
 Color color_new(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
     return (Color){ r, g, b, a };

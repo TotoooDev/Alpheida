@@ -2,7 +2,7 @@
 
 #ifdef SHRIMP_WII
 
-#include <engine/window.h>
+#include <engine/graphics/window.h>
 #include <engine/platform/wii/wii_texture.h>
 #include <engine/log.h>
 #include <gccore.h>
