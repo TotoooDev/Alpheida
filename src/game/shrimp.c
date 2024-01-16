@@ -1,10 +1,10 @@
 #include <game/shrimp.h>
 #include <game/bullet.h>
-#include <platform/fs.h>
-#include <event.h>
-#include <platform/input.h>
-#include <platform/keyboard.h>
-#include <log.h>
+#include <engine/platform/fs.h>
+#include <engine/event.h>
+#include <engine/platform/input.h>
+#include <engine/platform/keyboard.h>
+#include <engine/log.h>
 #include <math.h>
 #include <stdlib.h>
 

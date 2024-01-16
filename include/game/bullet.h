@@ -1,9 +1,9 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <sprite.h>
-#include <scene.h>
-#include <math/vec2.h>
+#include <engine/sprite.h>
+#include <engine/scene.h>
+#include <engine/math/vec2.h>
 
 typedef struct Bullet {
     Sprite* sprite;

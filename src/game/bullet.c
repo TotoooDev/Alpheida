@@ -1,6 +1,6 @@
 #include <game/bullet.h>
-#include <event.h>
-#include <log.h>
+#include <engine/event.h>
+#include <engine/log.h>
 #include <stdlib.h>
 
 bool first_texture = true;

@@ -1,7 +1,7 @@
 #ifndef MAIN_SCENE_H
 #define MAIN_SCENE_H
 
-#include <scene.h>
+#include <engine/scene.h>
 #include <game/shrimp.h>
 
 typedef struct MainScene {

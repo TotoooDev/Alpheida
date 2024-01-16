@@ -1,7 +1,7 @@
 #include <game/main_scene.h>
-#include <event.h>
-#include <platform/input.h>
-#include <app.h>
+#include <engine/event.h>
+#include <engine/platform/input.h>
+#include <engine/app.h>
 #include <stdlib.h>
 
 void mainscene_on_event(void* e, EventType event_type, void* user_pointer) {

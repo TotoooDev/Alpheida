@@ -1,10 +1,10 @@
 #ifndef SHRIMP_H
 #define SHRIMP_H
 
-#include <sprite.h>
-#include <scene.h>
-#include <aabb.h>
-#include <math/vec2.h>
+#include <engine/sprite.h>
+#include <engine/scene.h>
+#include <engine/aabb.h>
+#include <engine/math/vec2.h>
 
 typedef struct Shrimp {
     Scene* scene;
