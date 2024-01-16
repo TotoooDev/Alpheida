@@ -35,7 +35,7 @@ Bullet* bullet_new(Scene* scene, f32 x, f32 y, Vec2 direction) {
 
     bullet->scene = scene;
     bullet->direction = direction;
-    bullet->speed = 50.0f;
+    bullet->speed = 500.0f;
 
     bullet->sprite = sprite_new(x, y, 64.0f, 64.0f, bullet_texture);
     bullet->sprite->user_pointer = bullet;

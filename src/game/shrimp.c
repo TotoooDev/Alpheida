@@ -31,10 +31,12 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         {
         case SHRIMP_KEY_A:
             shrimp->is_moving[0] = true;
+            shrimp->is_moving[1] = false;
             shrimp->speed_multiplier = 1.0f;
             break;
 
         case SHRIMP_KEY_D:
+            shrimp->is_moving[0] = false;
             shrimp->is_moving[1] = true;
             shrimp->speed_multiplier = 1.0f;
             break;
@@ -140,7 +142,7 @@ Shrimp* shrimp_new(Scene* scene) {
     shrimp->is_moving[0] = false;
     shrimp->is_moving[1] = false;
     shrimp->speed_multiplier = 1.0f;
-    shrimp->speed = 20.0f;
+    shrimp->speed = 500.0f;
     shrimp->can_jump = false;
 
     PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
