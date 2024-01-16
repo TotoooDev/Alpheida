@@ -14,6 +14,8 @@
 typedef struct Window {
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    SDL_GLContext* context;
 } Window;
 
 // global varibales (bad practice i know) (number of fucks given: 0)
@@ -28,6 +30,10 @@ void window_init_sdl() {
     SDL_InitSubSystem(SDL_INIT_JOYSTICK);
     SDL_JoystickEventState(SDL_ENABLE);
     SDL_JoystickOpen(0);
+
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 }
 
 Window* window_new(const char* title, i32 width, i32 height) {
@@ -44,9 +50,12 @@ Window* window_new(const char* title, i32 width, i32 height) {
         SDL_WINDOWPOS_CENTERED,
         width,
         height,
-        SDL_WINDOW_SHOWN
+        SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
     );
     log_assert(window->window != NULL, "failed to create window! sdl error: %s\n", SDL_GetError());
+
+    window->context = SDL_GL_CreateContext(window->window);
+    log_assert(window->context != NULL, "failed to initialize opengl context! sdl error: %s\n", SDL_GetError());
 
     window->renderer = SDL_CreateRenderer(
         window->window,

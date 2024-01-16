@@ -3,4 +3,7 @@
 
 typedef struct Renderer Renderer;
 
+Renderer* renderer_new();
+void renderer_delete(Renderer* renderer);
+
 #endif
