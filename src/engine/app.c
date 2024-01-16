@@ -1,12 +1,14 @@
 #include <engine/app.h>
 #include <engine/timer.h>
 #include <engine/event.h>
+#include <engine/graphics/renderer.h>
 #include <engine/platform/platform.h>
 #include <engine/log.h>
 #include <stdlib.h>
 
 typedef struct App {
     Window* window;
+    Renderer* renderer;
     Scene* current_scene;
 
     bool is_running;
@@ -36,6 +38,7 @@ void app_create(const char* name) {
     app_instance = (App*)malloc(sizeof(App));
 
     app_instance->window = window_new(name, 1280, 720);
+    app_instance->renderer = renderer_new();
     app_instance->current_scene = NULL;
     app_instance->is_running = true;
     app_instance->timestep = 0.0f;
@@ -48,6 +51,7 @@ void app_create(const char* name) {
 
 void app_delete() {
     platform_exit();
+    renderer_delete(app_instance->renderer);
     window_delete(app_instance->window);
     free(app_instance);
 }
@@ -58,11 +62,11 @@ Window* app_get_window() {
 
 void app_run() {
     while (app_instance->is_running) {
-        window_clear(app_instance->window);
+        renderer_clear(app_instance->renderer, color_white());
         
         if (app_instance->current_scene) {
             scene_update(app_instance->current_scene, app_instance->timestep);
-            scene_render_sprites(app_instance->current_scene, app_instance->window);
+            scene_render_sprites(app_instance->current_scene, app_instance->renderer);
         }
         
         window_present(app_instance->window);

@@ -16,6 +16,6 @@ u32 shader_get_id(Shader* shader);
 void shader_set_i32(Shader* shader, i32 value, const char* name);
 void shader_set_f32(Shader* shader, f32 value, const char* name);
 void shader_set_vec2(Shader* shader, Vec2 value, const char* name);
-void shader_set_mat4(Shader* shader, Mat4 value, const char* name);
+void shader_set_mat4(Shader* shader, Mat4* value, const char* name);
 
 #endif

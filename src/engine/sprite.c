@@ -1,12 +1,12 @@
 #include <engine/sprite.h>
 #include <stdlib.h>
 
-void sprite_default_draw_function(Sprite* sprite, Window* window) {
+void sprite_default_draw_function(Sprite* sprite, Renderer* renderer) {
     // draw the sprite (easy)
     if (sprite->use_color || sprite->texture == NULL)
-        window_render_color(window, sprite->color, sprite->aabb);
-    else
-        window_render_full_texture(window, sprite->texture, sprite->aabb);
+        renderer_render_color(renderer, color_magenta(), sprite->aabb);
+    // else
+        // window_render_full_texture(window, sprite->texture, sprite->aabb);
 }
 
 Sprite* sprite_new(f32 x, f32 y, f32 width, f32 height, Texture* texture) {

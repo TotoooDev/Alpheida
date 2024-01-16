@@ -10,12 +10,12 @@ const char* texture_fragment_shader_source =
 "in VS_OUT {\n"
 "	vec3 frag_pos;\n"
 "    vec2 tex_coords;\n"
-"} output;\n"
+"} vertex_out;\n"
 
 "uniform sampler2D u_texture;\n"
 
 "void main() {\n"
-"	frag_color = texture(u_texture, output.tex_coords);\n"
+"	frag_color = texture(u_texture, vertex_out.tex_coords);\n"
 "}\n"
 
 ;

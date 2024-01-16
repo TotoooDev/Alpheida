@@ -18,7 +18,7 @@ void scene_set_physics_world(Scene* scene, PhysicsWorld* world);
 PhysicsWorld* scene_get_physics_world(Scene* scene);
 
 void scene_update(Scene* scene, f32 timestep);
-void scene_render_sprites(Scene* scene, Window* window);
+void scene_render_sprites(Scene* scene, Renderer* renderer);
 
 #endif
 

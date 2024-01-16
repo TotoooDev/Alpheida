@@ -62,11 +62,10 @@ void scene_update(Scene* scene, f32 timestep) {
 #endif
 }
 
-void scene_render_sprites(Scene* scene, Window* window) {
+void scene_render_sprites(Scene* scene, Renderer* renderer) {
     for (u32 i = 0; i < array_get_num_elements(scene->sprites); i++) {
         Sprite* sprite = array_get(scene->sprites, i);
         if (sprite->draw_function != NULL)
-            sprite->draw_function(sprite, window);
+            sprite->draw_function(sprite, renderer);
     }
 }
-

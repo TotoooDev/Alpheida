@@ -98,8 +98,8 @@ void shader_set_vec2(Shader* shader, Vec2 value, const char* name) {
 #endif
 }
 
-void shader_set_mat4(Shader* shader, Mat4 value, const char* name) {
+void shader_set_mat4(Shader* shader, Mat4* value, const char* name) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
-    glUniformMatrix4fv(glGetUniformLocation(shader->id, name), 1, false, (float*)value.values);
+    glUniformMatrix4fv(glGetUniformLocation(shader->id, name), 1, true, value->values);
 #endif
 }

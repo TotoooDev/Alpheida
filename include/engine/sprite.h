@@ -3,14 +3,14 @@
 
 #include <engine/graphics/texture.h>
 #include <engine/graphics/color.h>
-#include <engine/graphics/window.h>
+#include <engine/graphics/renderer.h>
 #include <engine/physics.h>
 #include <engine/types.h>
 
 typedef struct Sprite Sprite;
 
 typedef void(*UpdateFunction)(Sprite*, f32);
-typedef void(*DrawFunction)(Sprite*, Window*);
+typedef void(*DrawFunction)(Sprite*, Renderer*);
 
 typedef struct Sprite {
     AABB* aabb;

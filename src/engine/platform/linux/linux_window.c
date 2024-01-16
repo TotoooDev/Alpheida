@@ -84,30 +84,9 @@ void window_delete(Window* window) {
     }
 }
 
-void window_clear(Window* window) {
-    SDL_SetRenderDrawColor(window->renderer, 0x7F, 0x7F, 0x7F, 0xFF);
-    SDL_RenderClear(window->renderer);
-}
-
 void window_present(Window* window) {
-    SDL_RenderPresent(window->renderer);
-}
-
-void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest) {
-    SDL_Rect src_rect = { (i32)src->x, (i32)src->y, (i32)src->width, (i32)src->height };
-    SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
-    SDL_RenderCopyF(window->renderer, linuxtexture_get_native_texture(texture), &src_rect, &dest_rect);
-}
-
-void window_render_full_texture(Window* window, Texture* texture, AABB* dest) {
-    SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
-    SDL_RenderCopyF(window->renderer, linuxtexture_get_native_texture(texture), NULL, &dest_rect);
-}
-
-void window_render_color(Window* window, Color color, AABB* dest) {
-    SDL_SetRenderDrawColor(window->renderer, color.r, color.g, color.b, color.a);
-    SDL_FRect dest_rect = { dest->x, dest->y, dest->width, dest->height };
-    SDL_RenderFillRectF(window->renderer, &dest_rect);
+    // SDL_RenderPresent(window->renderer);
+    SDL_GL_SwapWindow(window->window);
 }
 
 SDL_Window* linuxwindow_get_native_window(Window* window) {

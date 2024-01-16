@@ -64,6 +64,7 @@ Renderer* renderer_new() {
 
     renderer->shader_color = shader_new(color_vertex_shader_source, color_fragment_shader_source);
     renderer->shader_texture = shader_new(texture_vertex_shader_source, texture_fragment_shader_source);
+    renderer_setup_vao(renderer);
 
     return renderer;
 #endif
@@ -99,17 +100,17 @@ void renderer_render_full_texture(Renderer* renderer, Texture* texture, AABB* de
 void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
     Mat4 model;
-    mat4_identity(model);
-    mat4_translate(model, model, (Vec2){ dest->x, dest->y });
+    mat4_identity(&model);
+    mat4_translate(&model, &model, (Vec2){ 0.5f, -0.5f });
 
     Mat4 view, projection;
-    mat4_identity(view);
-    mat4_identity(projection);
+    mat4_identity(&view);
+    mat4_identity(&projection);
 
     shader_bind(renderer->shader_color);
-    shader_set_mat4(renderer->shader_color, model, "u_model");
-    shader_set_mat4(renderer->shader_color, view, "u_view");
-    shader_set_mat4(renderer->shader_color, projection, "u_projection");
+    shader_set_mat4(renderer->shader_color, &model, "u_model");
+    shader_set_mat4(renderer->shader_color, &view, "u_view");
+    shader_set_mat4(renderer->shader_color, &projection, "u_projection");
 
     glBindVertexArray(renderer->rect_vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->rect_ebo);

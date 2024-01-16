@@ -9,12 +9,12 @@ const char* color_fragment_shader_source =
 
 "in VS_OUT {\n"
 "	vec3 frag_pos;\n"
-"} output;\n"
+"} vertex_out;\n"
 
 "uniform vec4 u_color;\n"
 
 "void main() {\n"
-"	frag_color = u_color;\n"
+"	frag_color = vec4(1.0, 0.0, 1.0, 1.0);\n"
 "}\n"
 
 ;

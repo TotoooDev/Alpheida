@@ -28,42 +28,10 @@ Window* window_new(const char* title, i32 width, i32 height);
 void window_delete(Window* window);
 
 /**
- * Clears the window with a light grey color.
- * @param window The window to clear.
-*/
-void window_clear(Window* window);
-
-/**
  * Present what has been drawn to the window.
  * @param window The window to present to.
  * @note Drawing stuff without calling this function will display nothing.
 */
 void window_present(Window* window);
-
-/**
- * Draws a textured AABB to the window.
- * @param window The window to draw to.
- * @param texture The texture to use.
- * @param src The rectangle shape to draw from the texture. To draw the full texture, use `window_render_full_texture`.
- * @param dest The AABB to draw to.
-*/
-void window_render_texture(Window* window, Texture* texture, AABB* src, AABB* dest);
-
-/**
- * Draws a textured AABB to the window.
- * @param window The window to draw to.
- * @param texture The texture to use.
- * @param dest The AABB to draw to.
-*/
-void window_render_full_texture(Window* window, Texture* texture, AABB* dest);
-
-/**
- * Draws a colored AABB to the window.
- * @param window The window to draw to.
- * @param color The color to use.
- * @param dest The AABB to draw to.
- * @note CURRENTLY BROKEN ON WII, THE QUAD IS NOT DRAWN AT ALL
-*/
-void window_render_color(Window* window, Color color, AABB* dest);
 
 #endif
