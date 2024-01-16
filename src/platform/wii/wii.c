@@ -22,4 +22,8 @@ void platform_exit() {
     
 }
 
+u32 platform_get_time() {
+    
+}
+
 #endif

@@ -5,6 +5,7 @@
 #include <platform/platform.h>
 #include <log.h>
 #include <switch.h>
+#include <SDL2/SDL.h>
 
 void platform_init() {
     // initialize romfs
@@ -20,7 +21,7 @@ void platform_init() {
 }
 
 void platform_update() {
-
+    
 }
 
 void platform_exit() {
@@ -29,6 +30,10 @@ void platform_exit() {
 #endif
 
     romfsExit();
+}
+
+u32 platform_get_time() {
+    return SDL_GetTicks();
 }
 
 #endif

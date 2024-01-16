@@ -25,7 +25,7 @@ void app_on_event(void* event, EventType event_type, void* user_pointer) {
 }
 
 void app_update_timestep() {
-    f32 current_time = timer_get_time_ms();
+    f32 current_time = (f32)platform_get_time() * 0.001f;
     app_instance->timestep = current_time - app_instance->last_time;
     app_instance->last_time = current_time;
 }

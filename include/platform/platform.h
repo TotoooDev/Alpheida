@@ -2,6 +2,7 @@
 #define PLATFORM_H
 
 #include <event.h>
+#include <types.h>
 
 /**
  * Initializes the platform.
@@ -22,6 +23,11 @@ EventType platform_process_events(void* event);
  * Exits the platform.
 */
 void platform_exit();
+
+/**
+ * @returns The number of milliseconds since the app is launched.
+*/
+u32 platform_get_time();
 
 #endif
 
