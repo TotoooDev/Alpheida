@@ -11,10 +11,19 @@ typedef enum EventType {
     EVENT_TYPE_PLATFORM_QUIT,
     EVENT_TYPE_KEY_DOWN,
     EVENT_TYPE_KEY_UP,
+    EVENT_TYPE_MOUSE_MOVED,
+    EVENT_TYPE_MOUSE_BUTTON_DOWN,
+    EVENT_TYPE_MOUSE_BUTTON_UP,
     EVENT_TYPE_BUTTON_DOWN,
     EVENT_TYPE_BUTTON_UP,
     EVENT_TYPE_JOYSTICK_MOTION
 } EventType;
+
+typedef enum MouseButton {
+    MOUSE_BUTTON_LEFT,
+    MOUSE_BUTTON_RIGHT,
+    MOUSE_BUTTON_MIDDLE
+} MouseButton;
 
 /**
  * An enumeration for the different joystick types. This is used with the `JoystickMotionEvent` event type.
@@ -45,6 +54,28 @@ typedef struct KeyDownEvent {
 typedef struct KeyUpEvent {
     i32 key; /** The scancode of the key. You can find them in `platform/keyboard.h` */
 } KeyUpEvent;
+
+/**
+ * An event for when the mouse is moved.
+*/
+typedef struct MouseMovedEvent {
+    f32 x, y; /** The position of the mouse, relative to the window. */
+    f32 delta_x, delta_y; /** The movement of the mouse. */
+} MouseMovedEvent;
+
+/**
+ * An event for when a mouse button is pressed.
+*/
+typedef struct MouseButtonDownEvent {
+    MouseButton button; /** The mouse button that was pressed. */
+} MouseButtonDownEvent;
+
+/**
+ * An event for when a mouse button is released.
+*/
+typedef struct MouseButtonUpEvent {
+    MouseButton button; /** The mouse button that was released. */
+} MouseButtonUpEvent;
 
 /**
  * An event for when a button is pressed.

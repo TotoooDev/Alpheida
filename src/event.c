@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #define EVENT_FUNCTIONS_SIZE 64
-#define MAX_EVENT_STRUCT_SIZE sizeof(JoystickMotionEvent)
+#define MAX_EVENT_STRUCT_SIZE sizeof(MouseMovedEvent)
 
 static EventFunction event_functions[EVENT_FUNCTIONS_SIZE];
 static void* user_pointers[EVENT_FUNCTIONS_SIZE];
