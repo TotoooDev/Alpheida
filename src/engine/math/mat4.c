@@ -102,6 +102,7 @@ void mat4_rotate(Mat4* result, Mat4* mat, Vec2 axis, f32 angle) {
 }
 
 void mat4_ortho(Mat4* result, f32 x, f32 y, f32 width, f32 height, f32 near, f32 far) {
+    // http://www.songho.ca/opengl/gl_projectionmatrix.html#ortho
     f32 right = x + width / 2.0f;
     f32 left = x - width / 2.0f;
     f32 top = y + height / 2.0f;
