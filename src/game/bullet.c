@@ -20,11 +20,11 @@ void bullet_on_collision(PhysicsObject* object, PhysicsObject* colliding_object,
 
 void bullet_update(Sprite* sprite, f32 timestep) {
     Bullet* bullet = (Bullet*)sprite->user_pointer;
-    sprite->aabb->x += bullet->direction.x * bullet->speed * timestep;
-    sprite->aabb->y += bullet->direction.y * bullet->speed * timestep;
+    sprite->aabb->x += bullet->direction[0] * bullet->speed * timestep;
+    sprite->aabb->y += bullet->direction[1] * bullet->speed * timestep;
 }
 
-Bullet* bullet_new(Scene* scene, f32 x, f32 y, Vec2 direction) {
+Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction) {
     Bullet* bullet = (Bullet*)malloc(sizeof(Bullet));
 
     if (first_texture) {
@@ -34,8 +34,8 @@ Bullet* bullet_new(Scene* scene, f32 x, f32 y, Vec2 direction) {
     }
 
     bullet->scene = scene;
-    bullet->direction = direction;
     bullet->speed = 50.0f;
+    glm_vec2_copy(direction, bullet->direction);
 
     bullet->sprite = sprite_new(x, y, 64.0f, 64.0f, bullet_texture);
     bullet->sprite->user_pointer = bullet;

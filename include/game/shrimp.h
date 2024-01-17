@@ -4,7 +4,7 @@
 #include <engine/sprite.h>
 #include <engine/scene.h>
 #include <engine/aabb.h>
-#include <engine/math/vec2.h>
+#include <engine/cglm/cglm.h>
 
 typedef struct Shrimp {
     Scene* scene;
@@ -15,7 +15,7 @@ typedef struct Shrimp {
     f32 speed_multiplier;
     f32 speed;
 
-    Vec2 cursor_pos;
+    vec2 cursor_pos;
 
     bool can_jump;
 } Shrimp;

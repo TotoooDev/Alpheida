@@ -92,14 +92,14 @@ void shader_set_f32(Shader* shader, f32 value, const char* name) {
 #endif
 }
 
-void shader_set_vec2(Shader* shader, Vec2 value, const char* name) {
+void shader_set_vec2(Shader* shader, vec2 value, const char* name) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
-    glUniform2f(glGetUniformLocation(shader->id, name), value.x, value.y);
+    glUniform2f(glGetUniformLocation(shader->id, name), value[0], value[1]);
 #endif
 }
 
-void shader_set_mat4(Shader* shader, Mat4* value, const char* name) {
+void shader_set_mat4(Shader* shader, mat4 value, const char* name) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
-    glUniformMatrix4fv(glGetUniformLocation(shader->id, name), 1, true, value->values);
+    glUniformMatrix4fv(glGetUniformLocation(shader->id, name), 1, true, value[0]);
 #endif
 }
