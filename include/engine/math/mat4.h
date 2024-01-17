@@ -23,4 +23,6 @@ void mat4_translate(Mat4* result, Mat4* mat, Vec2 translation);
 void mat4_scale(Mat4* result, Mat4* mat, Vec2 scale);
 void mat4_rotate(Mat4* result, Mat4* mat, Vec2 axis, f32 angle);
 
+void mat4_ortho(Mat4* result, f32 x, f32 y, f32 width, f32 height, f32 near, f32 far);
+
 #endif

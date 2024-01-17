@@ -81,8 +81,8 @@ void mat4_translate(Mat4* result, Mat4* mat, Vec2 translation) {
 }
 
 void mat4_scale(Mat4* result, Mat4* mat, Vec2 scale) {
-    result->values[0 * 4 + 0] = mat->values[0 * 4 + 0] + scale.x;
-    result->values[1 * 4 + 1] = mat->values[1 * 4 + 1] + scale.y;
+    result->values[0 * 4 + 0] = mat->values[0 * 4 + 0] * scale.x;
+    result->values[1 * 4 + 1] = mat->values[1 * 4 + 1] * scale.y;
 }
 
 void mat4_rotate(Mat4* result, Mat4* mat, Vec2 axis, f32 angle) {
@@ -99,4 +99,21 @@ void mat4_rotate(Mat4* result, Mat4* mat, Vec2 axis, f32 angle) {
     result->values[2 * 4 + 0] = mat->values[2 * 4 + 0] + vec.x * vec.z * (1 - cosf(angle)) - vec.y * sinf(angle);
     result->values[2 * 4 + 1] = mat->values[2 * 4 + 1] + vec.y * vec.z * (1 - cosf(angle)) + vec.x * sinf(angle);
     result->values[2 * 4 + 2] = mat->values[2 * 4 + 2] + cosf(angle) + vec.z * vec.z * (1.0f - cosf(angle));
+}
+
+void mat4_ortho(Mat4* result, f32 x, f32 y, f32 width, f32 height, f32 near, f32 far) {
+    f32 right = x + width / 2.0f;
+    f32 left = x - width / 2.0f;
+    f32 top = y + height / 2.0f;
+    f32 bottom = y - height / 2.0f;
+
+    mat4_identity(result);
+
+    result->values[0 * 4 + 0] = 2 / (right - left);
+    result->values[1 * 4 + 1] = 2 / (top - bottom);
+    result->values[2 * 4 + 2] = 2 / (far - near);
+
+    result->values[0 * 4 + 3] = - (right + left) / (right - left);
+    result->values[1 * 4 + 3] = - (top + bottom) / (top - bottom);
+    result->values[2 * 4 + 3] = - (far + near) / (far - near);
 }

@@ -101,11 +101,13 @@ void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
     Mat4 model;
     mat4_identity(&model);
-    mat4_translate(&model, &model, (Vec2){ 0.5f, -0.5f });
+    mat4_translate(&model, &model, (Vec2){ dest->x, -dest->y });
+    mat4_scale(&model, &model, (Vec2){ dest->width, dest->height });
 
     Mat4 view, projection;
     mat4_identity(&view);
     mat4_identity(&projection);
+    mat4_ortho(&projection, 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 100.0f);
 
     shader_bind(renderer->shader_color);
     shader_set_mat4(renderer->shader_color, &model, "u_model");
