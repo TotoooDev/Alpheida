@@ -36,6 +36,14 @@ EventType platform_process_events(void* event) {
     case SDL_QUIT:
         return EVENT_TYPE_PLATFORM_QUIT;
 
+    case SDL_WINDOWEVENT:
+        if (sdl_event.window.event == SDL_WINDOWEVENT_RESIZED) {
+            ((WindowResizedEvent*)event)->width = sdl_event.window.data1;
+            ((WindowResizedEvent*)event)->height = sdl_event.window.data2;
+            return EVENT_TYPE_WINDOW_RESIZED;
+        }
+        return EVENT_TYPE_NONE;
+
     case SDL_KEYDOWN:
         ((KeyDownEvent*)event)->key = sdl_event.key.keysym.scancode;
         return EVENT_TYPE_KEY_DOWN;

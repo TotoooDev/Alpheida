@@ -13,8 +13,7 @@ void renderer_delete(Renderer* renderer);
 
 void renderer_clear(Renderer* renderer, Color color);
 void renderer_set_camera(Renderer* renderer, Camera cam);
-void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* src, AABB* dest);
-void renderer_render_full_texture(Renderer* renderer, Texture* texture, AABB* dest);
+void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* dest);
 void renderer_render_color(Renderer* renderer, Color color, AABB* dest);
 
 #endif

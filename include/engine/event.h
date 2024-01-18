@@ -9,6 +9,7 @@
 typedef enum EventType {
     EVENT_TYPE_NONE,
     EVENT_TYPE_PLATFORM_QUIT,
+    EVENT_TYPE_WINDOW_RESIZED,
     EVENT_TYPE_KEY_DOWN,
     EVENT_TYPE_KEY_UP,
     EVENT_TYPE_MOUSE_MOVED,
@@ -40,6 +41,14 @@ typedef enum JoystickAxis {
     JOYSTICK_AXIS_HORIZONTAL,
     JOYSTICK_AXIS_VERTICAL
 } JoystickAxis;
+
+/**
+ * An event for when the window is resized.
+*/
+typedef struct WindowResizedEvent {
+    f32 width;
+    f32 height;
+} WindowResizedEvent;
 
 /**
  * An event for when a key is pressed on the keyboard.
