@@ -49,7 +49,7 @@ bool physics_detect_collisions(PhysicsWorld* world, PhysicsObject* object, Physi
         if ((object->filter & other_object->filter) == 0)
             continue;
 
-        collision_detected = aabb_intersect(object->sprite->aabb, other_object->sprite->aabb);
+        collision_detected = aabb_intersect(object->aabb, other_object->aabb);
         if (collision_detected) {
             *colliding_object = other_object;
             return true;
@@ -72,8 +72,8 @@ void physics_apply_forces(PhysicsObject* object) {
 }
 
 void physics_move(PhysicsObject* object, f32 timestep) {
-    object->sprite->aabb->x += object->velocity[0] * timestep;
-    object->sprite->aabb->y -= object->velocity[1] * timestep;
+    object->sprite->pos[0] += object->velocity[0] * timestep;
+    object->sprite->pos[1] -= object->velocity[1] * timestep;
 }
 
 void physics_reset_forces(PhysicsObject* object) {
@@ -86,31 +86,31 @@ void physics_reset_velocity(PhysicsObject* object) {
     object->velocity[1] = 0.0f;
 }
 
-IntersectionAxis physics_move_intersecting_aabb(AABB* a, AABB* b) {
+IntersectionAxis physics_move_intersecting_aabb(AABB a, AABB b) {
     IntersectionAxis axis = aabb_get_intersection_axis(a, b);
 
     switch (axis) {
     case INTERSECTION_AXIS_POSITIVE_Y: {
-        f32 offset = a->y + a->height - b->y;
-        a->y -= offset;
+        f32 offset = a.y + a.height - b.y;
+        a.y -= offset;
         break;
     }
 
     case INTERSECTION_AXIS_NEGATIVE_Y: {
-        f32 offset = b->y + b->height - a->y;
-        a->y += offset;
+        f32 offset = b.y + b.height - a.y;
+        a.y += offset;
         break;
     }
 
     case INTERSECTION_AXIS_POSITIVE_X: {
-        f32 offset = a->x + a->width - b->x;
-        a->x -= offset;
+        f32 offset = a.x + a.width - b.x;
+        a.x -= offset;
         break;
     }
 
     case INTERSECTION_AXIS_NEGATIVE_X: {
-        f32 offset = b->x + b->width - a->x;
-        a->x += offset;
+        f32 offset = b.x + b.width - a.x;
+        a.x += offset;
         break;
     }
        
@@ -124,9 +124,9 @@ IntersectionAxis physics_move_intersecting_aabb(AABB* a, AABB* b) {
 void physics_on_collision(PhysicsObject* object, PhysicsObject* colliding_object) {
     IntersectionAxis axis;
     if (object->is_trigger || colliding_object->is_trigger)
-        axis = aabb_get_intersection_axis(object->sprite->aabb, colliding_object->sprite->aabb);
+        axis = aabb_get_intersection_axis(object->aabb, colliding_object->aabb);
     else
-        axis = physics_move_intersecting_aabb(object->sprite->aabb, colliding_object->sprite->aabb);
+        axis = physics_move_intersecting_aabb(object->aabb, colliding_object->aabb);
 
     if (object->on_collision != NULL)
         object->on_collision(object, colliding_object, axis);
@@ -171,6 +171,10 @@ PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite) {
     object->forces[1] = 0.0f;
     object->velocity[0] = 0.0f;
     object->velocity[1] = 0.0f;
+    object->aabb.x = sprite->pos[0] - sprite->scale[0] / 2;
+    object->aabb.y = sprite->pos[1] - sprite->scale[1] / 2;
+    object->aabb.width = sprite->scale[0];
+    object->aabb.height = sprite->scale[1];
     object->on_collision = NULL;
 
     sprite->physics_object = object;

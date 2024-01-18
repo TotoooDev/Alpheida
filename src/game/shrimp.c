@@ -12,9 +12,9 @@ void shrimp_update(Sprite* sprite, f32 timestep) {
     Shrimp* shrimp = (Shrimp*)sprite->user_pointer;
 
     if (shrimp->is_moving[0])
-        sprite->aabb->x -= shrimp->speed * shrimp->speed_multiplier * timestep;
+        sprite->pos[0] -= shrimp->speed * shrimp->speed_multiplier * timestep;
     if (shrimp->is_moving[1])
-        sprite->aabb->x += shrimp->speed * shrimp->speed_multiplier * timestep;
+        sprite->pos[0] += shrimp->speed * shrimp->speed_multiplier * timestep;
 }
 
 void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
@@ -85,10 +85,10 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
             return;
 
         vec2 direction;
-        direction[0] = shrimp->cursor_pos[0] - shrimp->sprite->aabb->x;
-        direction[1] = shrimp->cursor_pos[1] - shrimp->sprite->aabb->y;
+        direction[0] = shrimp->cursor_pos[0] - shrimp->sprite->pos[0];
+        direction[1] = shrimp->cursor_pos[1] - shrimp->sprite->pos[1];
         glm_vec2_normalize(direction);
-        Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->aabb->x, shrimp->sprite->aabb->y, direction);
+        Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->pos[0], shrimp->sprite->pos[1], direction);
         scene_add_sprite(shrimp->scene, bullet->sprite);
     }
 
@@ -131,12 +131,15 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
 
 Shrimp* shrimp_new(Scene* scene) {
     Shrimp* shrimp = (Shrimp*)malloc(sizeof(Shrimp));
+    Texture* texture = texture_new(fs_get_path_romfs("images/shrimp.png"));
+
+    vec2 pos = { 100.0f, 100.0f };
+    vec2 scale = { 64.0f, 64.0f };
+    shrimp->sprite = sprite_new(pos, scale, texture);
 
     shrimp->scene = scene;
     shrimp->hitbox = NULL;
 
-    Texture* texture = texture_new(fs_get_path_romfs("images/shrimp.png"));
-    shrimp->sprite = sprite_new(0.0f, 0.0f, 64.0f, 64.0f, texture);
     shrimp->sprite->update_function = shrimp_update;
     shrimp->sprite->user_pointer = (void*)shrimp;
 
@@ -146,10 +149,10 @@ Shrimp* shrimp_new(Scene* scene) {
     shrimp->speed = 500.0f;
     shrimp->can_jump = false;
 
-    PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
-    physics_object->on_collision = shrimp_on_collision;
-    physics_object->user_pointer = shrimp;
-    physics_object->filter |= physics_add_filter(0);
+    // PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
+    // physics_object->on_collision = shrimp_on_collision;
+    // physics_object->user_pointer = shrimp;
+    // physics_object->filter |= physics_add_filter(0);
 
     event_add_function(shrimp, shrimp_on_event);
 

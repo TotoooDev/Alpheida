@@ -128,13 +128,17 @@ void renderer_set_camera(Renderer* renderer, Camera cam) {
 #endif
 }
 
-void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* dest) {
+void renderer_render_texture(Renderer* renderer, Texture* texture, vec2 pos, vec2 scale, f32 angle) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
+    vec3 pos_3 = { pos[0], pos[1], 0.0f };
+    vec3 scale_3 = { scale[0], scale[1], 0.0f };
+    vec3 rotation_axis = { 0.0f, 0.0f, 1.0f };
+
     mat4 model;
     glm_mat4_identity(model);
-    
-    vec3 scale = { 100.0f, 100.0f, 0.0f };
-    glm_scale(model, scale);
+    // glm_rotate(model, angle, rotation_axis);
+    glm_translate(model, pos_3);
+    glm_scale(model, scale_3);
 
     renderer_set_matrices(renderer, renderer->shader_texture, model);
 
@@ -148,13 +152,17 @@ void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* dest) {
 #endif
 }
 
-void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
+void renderer_render_color(Renderer* renderer, Color color, vec2 pos, vec2 scale, f32 angle) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
+    vec3 pos_3 = { pos[0], pos[1], 0.0f };
+    vec3 scale_3 = { scale[0], scale[1], 0.0f };
+    vec3 rotation_axis = { 0.0f, 0.0f, 1.0f };
+
     mat4 model;
     glm_mat4_identity(model);
-    
-    vec3 scale = { 100.0f, 100.0f, 0.0f };
-    glm_scale(model, scale);
+    glm_rotate(model, angle, rotation_axis);
+    glm_translate(model, pos_3);
+    glm_scale(model, scale_3);
 
     renderer_set_matrices(renderer, renderer->shader_color, model);
     shader_set_color(renderer->shader_color, color, "u_color");

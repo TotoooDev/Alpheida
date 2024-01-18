@@ -6,6 +6,7 @@
 #include <engine/graphics/renderer.h>
 #include <engine/physics.h>
 #include <engine/types.h>
+#include <engine/cglm/cglm.h>
 
 typedef struct Sprite Sprite;
 
@@ -13,7 +14,10 @@ typedef void(*UpdateFunction)(Sprite*, f32);
 typedef void(*DrawFunction)(Sprite*, Renderer*);
 
 typedef struct Sprite {
-    AABB* aabb;
+    vec2 pos;
+    vec2 scale;
+    f32 angle;
+
     Texture* texture;
     Color color;
     bool use_color;
@@ -25,9 +29,8 @@ typedef struct Sprite {
     void* user_pointer;
 } Sprite;
 
-Sprite* sprite_new(f32 x, f32 y, f32 width, f32 height, Texture* texture);
-Sprite* sprite_new_color(f32 x, f32 y, f32 width, f32 height, Color color);
+Sprite* sprite_new(vec2 pos, vec2 scale, Texture* texture);
+Sprite* sprite_new_color(vec2 pos, vec2 scale, Color color);
 void sprite_delete(Sprite* sprite);
 
 #endif
-

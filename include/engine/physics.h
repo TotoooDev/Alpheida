@@ -3,6 +3,7 @@
 
 #include <engine/aabb.h>
 #include <engine/types.h>
+#include <engine/cglm/cglm.h>
 #include <stdbool.h>
 
 // forward declaration to avoid recursive inclusion hell
@@ -19,8 +20,9 @@ typedef struct PhysicsObject {
     bool is_trigger;
     
     u32 filter;
-    f32 forces[2];
-    f32 velocity[2];
+    vec2 forces;
+    vec2 velocity;
+    AABB aabb;
 
     Sprite* sprite;
 

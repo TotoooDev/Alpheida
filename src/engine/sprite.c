@@ -4,15 +4,18 @@
 void sprite_default_draw_function(Sprite* sprite, Renderer* renderer) {
     // draw the sprite (easy)
     if (sprite->use_color || sprite->texture == NULL)
-        renderer_render_color(renderer, color_magenta(), sprite->aabb);
-    // else
-        // window_render_full_texture(window, sprite->texture, sprite->aabb);
+        renderer_render_color(renderer, sprite->color, sprite->pos, sprite->scale, sprite->angle);
+    else
+        renderer_render_texture(renderer, sprite->texture, sprite->pos, sprite->scale, sprite->angle);
 }
 
-Sprite* sprite_new(f32 x, f32 y, f32 width, f32 height, Texture* texture) {
+Sprite* sprite_new(vec2 pos, vec2 scale, Texture* texture) {
     Sprite* sprite = (Sprite*)malloc(sizeof(Sprite));
 
-    sprite->aabb = aabb_new(x, y, width, height);
+    glm_vec2_copy(pos, sprite->pos);
+    glm_vec2_copy(scale, sprite->scale);
+    sprite->angle = 0.0f;
+
     sprite->texture = texture;
     sprite->color = color_magenta();
     sprite->use_color = false;
@@ -24,15 +27,13 @@ Sprite* sprite_new(f32 x, f32 y, f32 width, f32 height, Texture* texture) {
     return sprite;
 }
 
-Sprite* sprite_new_color(f32 x, f32 y, f32 width, f32 height, Color color) {
-    Sprite* sprite = sprite_new(x, y, width, height, NULL);
+Sprite* sprite_new_color(vec2 pos, vec2 scale, Color color) {
+    Sprite* sprite = sprite_new(pos, scale, NULL);
     sprite->color = color;
     sprite->use_color = true;
     return sprite;
 }
 
 void sprite_delete(Sprite* sprite) {
-    aabb_delete(sprite->aabb);
     free(sprite);
 }
-

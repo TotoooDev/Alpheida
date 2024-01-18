@@ -25,26 +25,12 @@ typedef enum IntersectionAxis {
 } IntersectionAxis;
 
 /**
- * Creates a new AABB.
- * @param x The x component of the AABB's coordinates.
- * @param y The y component of the AABB's coordinates.
- * @param width The width of the AABB.
- * @param height The height of the AABB.
-*/
-AABB* aabb_new(f32 x, f32 y, f32 width, f32 height);
-
-/**
- * Deletes an AABB.
-*/
-void aabb_delete(AABB* aabb);
-
-/**
  * Tests if two AABBs intersect.
  * @param a The first AABB.
  * @param a The second AABB.
  * @returns `true` if the AABBs intersect, `false` otherwise.
 */
-bool aabb_intersect(AABB* a, AABB* b);
+bool aabb_intersect(AABB a, AABB b);
 
 /**
  * Returns the intersection axis of two AABBs.
@@ -52,7 +38,7 @@ bool aabb_intersect(AABB* a, AABB* b);
  * @param a The second AABB.
  * @returns The intersection axis of `a` and `b`.
 */
-IntersectionAxis aabb_get_intersection_axis(AABB* a, AABB* b);
+IntersectionAxis aabb_get_intersection_axis(AABB a, AABB b);
 
 #endif
 
