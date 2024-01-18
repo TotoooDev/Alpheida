@@ -13,8 +13,6 @@
 
 typedef struct Window {
     SDL_Window* window;
-    SDL_Renderer* renderer;
-
     SDL_GLContext* context;
 } Window;
 
@@ -57,19 +55,11 @@ Window* window_new(const char* title, i32 width, i32 height) {
     window->context = SDL_GL_CreateContext(window->window);
     log_assert(window->context != NULL, "failed to initialize opengl context! sdl error: %s\n", SDL_GetError());
 
-    window->renderer = SDL_CreateRenderer(
-        window->window,
-        -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-    );
-    log_assert(window->renderer != NULL, "failed to create renderer! sdl error: %s\n", SDL_GetError());
-
     num_windows++;
     return window;
 }
 
 void window_delete(Window* window) {
-    SDL_DestroyRenderer(window->renderer);
     SDL_DestroyWindow(window->window);
     free(window);
 
@@ -85,16 +75,11 @@ void window_delete(Window* window) {
 }
 
 void window_present(Window* window) {
-    // SDL_RenderPresent(window->renderer);
     SDL_GL_SwapWindow(window->window);
 }
 
 SDL_Window* linuxwindow_get_native_window(Window* window) {
     return window->window;
-}
-
-SDL_Renderer* linuxwindow_get_renderer(Window* window) {
-    return window->renderer;
 }
 
 #endif
