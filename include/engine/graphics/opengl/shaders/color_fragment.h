@@ -14,7 +14,7 @@ const char* color_fragment_shader_source =
 "uniform vec4 u_color;\n"
 
 "void main() {\n"
-"	frag_color = vec4(1.0, 0.0, 1.0, 1.0);\n"
+"	frag_color = u_color;\n"
 "}\n"
 
 ;

@@ -1,6 +1,7 @@
 #ifndef OPENGL_SHADER_H
 #define OPENGL_SHADER_H
 
+#include <engine/graphics/color.h>
 #include <engine/cglm/cglm.h>
 #include <engine/types.h>
 
@@ -16,5 +17,6 @@ void shader_set_i32(Shader* shader, i32 value, const char* name);
 void shader_set_f32(Shader* shader, f32 value, const char* name);
 void shader_set_vec2(Shader* shader, vec2 value, const char* name);
 void shader_set_mat4(Shader* shader, mat4 value, const char* name);
+void shader_set_color(Shader* shader, Color color, const char* name);
 
 #endif

@@ -103,3 +103,9 @@ void shader_set_mat4(Shader* shader, mat4 value, const char* name) {
     glUniformMatrix4fv(glGetUniformLocation(shader->id, name), 1, false, value[0]);
 #endif
 }
+
+void shader_set_color(Shader* shader, Color color, const char* name) {
+#ifdef SHRIMP_GRAPHICS_OPENGL
+    glUniform4f(glGetUniformLocation(shader->id, name), color.r, color.g, color.b, color.a);
+#endif
+}

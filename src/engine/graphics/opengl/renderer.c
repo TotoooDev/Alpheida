@@ -104,7 +104,7 @@ void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* src, AA
 
 void renderer_render_full_texture(Renderer* renderer, Texture* texture, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
-
+    
 #endif
 }
 
@@ -122,6 +122,7 @@ void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
     shader_set_mat4(renderer->shader_color, model, "u_model");
     shader_set_mat4(renderer->shader_color, renderer->view_matrix, "u_view");
     shader_set_mat4(renderer->shader_color, projection, "u_projection");
+    shader_set_color(renderer->shader_color, color, "u_color");
 
     glBindVertexArray(renderer->rect_vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->rect_ebo);
