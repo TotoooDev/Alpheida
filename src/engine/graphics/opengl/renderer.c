@@ -98,6 +98,9 @@ Renderer* renderer_new() {
 
     glm_ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 100.0f, renderer->matrix_projection);
 
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+
     return renderer;
 #endif
 }
@@ -136,7 +139,7 @@ void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* dest) {
     renderer_set_matrices(renderer, renderer->shader_texture, model);
 
     texture_bind(texture);
-    shader_set_i32(renderer->shader_texture, texture_get_id(texture), "u_texture");
+    shader_set_i32(renderer->shader_texture, 0, "u_texture");
 
     glBindVertexArray(renderer->rect_vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->rect_ebo);
