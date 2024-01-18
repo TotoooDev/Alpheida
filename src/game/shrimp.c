@@ -149,10 +149,10 @@ Shrimp* shrimp_new(Scene* scene) {
     shrimp->speed = 500.0f;
     shrimp->can_jump = false;
 
-    // PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
-    // physics_object->on_collision = shrimp_on_collision;
-    // physics_object->user_pointer = shrimp;
-    // physics_object->filter |= physics_add_filter(0);
+    PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
+    physics_object->on_collision = shrimp_on_collision;
+    physics_object->user_pointer = shrimp;
+    physics_object->filter |= physics_add_filter(0);
 
     event_add_function(shrimp, shrimp_on_event);
 
