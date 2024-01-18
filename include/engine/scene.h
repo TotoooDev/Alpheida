@@ -3,6 +3,7 @@
 
 #include <engine/sprite.h>
 #include <engine/physics.h>
+#include <engine/graphics/camera.h>
 #include <engine/types.h>
 
 typedef struct Scene Scene;
@@ -17,8 +18,9 @@ void scene_remove_sprite(Scene* scene, Sprite* sprite);
 void scene_set_physics_world(Scene* scene, PhysicsWorld* world);
 PhysicsWorld* scene_get_physics_world(Scene* scene);
 
+Camera* scene_get_camera(Scene* scene);
+
 void scene_update(Scene* scene, f32 timestep);
 void scene_render_sprites(Scene* scene, Renderer* renderer);
 
 #endif
-

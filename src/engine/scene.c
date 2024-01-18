@@ -9,6 +9,7 @@
 typedef struct Scene {
     Array* sprites;
     PhysicsWorld* physics_world;
+    Camera cam;
 } Scene;
 
 Scene* scene_new() {
@@ -16,6 +17,7 @@ Scene* scene_new() {
 
     scene->sprites = array_new(NUM_SPRITES_MAX);
     scene->physics_world = NULL;
+    scene->cam = (Camera){ { 0.0f, 0.0f }, 0.0f };
 
     return scene;
 }
@@ -47,6 +49,10 @@ PhysicsWorld* scene_get_physics_world(Scene* scene) {
     return scene->physics_world;
 }
 
+Camera* scene_get_camera(Scene* scene) {
+    return &scene->cam;
+}
+
 void scene_update(Scene* scene, f32 timestep) {
     for (u32 i = 0; i < array_get_num_elements(scene->sprites); i++) {
         Sprite* sprite = array_get(scene->sprites, i);
@@ -63,6 +69,8 @@ void scene_update(Scene* scene, f32 timestep) {
 }
 
 void scene_render_sprites(Scene* scene, Renderer* renderer) {
+    renderer_set_camera(renderer, scene->cam);
+
     for (u32 i = 0; i < array_get_num_elements(scene->sprites); i++) {
         Sprite* sprite = array_get(scene->sprites, i);
         if (sprite->draw_function != NULL)

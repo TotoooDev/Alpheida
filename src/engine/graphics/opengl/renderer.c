@@ -15,6 +15,8 @@ typedef struct Renderer {
     Shader* shader_color;
     Shader* shader_texture;
 
+    mat4 view_matrix;
+
     u32 rect_vao;
     u32 rect_ebo;
 } Renderer;
@@ -86,6 +88,14 @@ void renderer_clear(Renderer* renderer, Color color) {
 #endif
 }
 
+void renderer_set_camera(Renderer* renderer, Camera cam) {
+#ifdef SHRIMP_GRAPHICS_OPENGL
+    mat4 view;
+    camera_get_view_matrix(cam, view);
+    glm_mat4_copy(view, renderer->view_matrix);
+#endif
+}
+
 void renderer_render_texture(Renderer* renderer, Texture* texture, AABB* src, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
 
@@ -100,23 +110,17 @@ void renderer_render_full_texture(Renderer* renderer, Texture* texture, AABB* de
 
 void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
-    vec3 eye = { 0.0f, 0.0f, 0.0f };
-    vec3 dir = { 0.0f, 0.0f, -1.0f };
-    vec3 up = { 0.0f, 1.0f, 0.0f };
-
-    mat4 model, view, projection;
+    mat4 model, projection;
     glm_mat4_identity(model);
-    glm_mat4_identity(view);
     glm_mat4_identity(projection);
     
     vec3 scale = { 100.0f, 100.0f, 0.0f };
     glm_scale(model, scale);
-    glm_look(eye, dir, up, view);
     glm_ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 100.0f, projection);
 
     shader_bind(renderer->shader_color);
     shader_set_mat4(renderer->shader_color, model, "u_model");
-    shader_set_mat4(renderer->shader_color, view, "u_view");
+    shader_set_mat4(renderer->shader_color, renderer->view_matrix, "u_view");
     shader_set_mat4(renderer->shader_color, projection, "u_projection");
 
     glBindVertexArray(renderer->rect_vao);
