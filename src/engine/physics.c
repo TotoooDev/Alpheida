@@ -91,13 +91,13 @@ IntersectionAxis physics_move_intersecting_aabb(AABB* a, AABB* b) {
 
     switch (axis) {
     case INTERSECTION_AXIS_POSITIVE_Y: {
-        f32 offset = a->y + a->height - b->y;
+        f32 offset = b->y + b->height - a->y;
         a->y += offset;
         break;
     }
 
     case INTERSECTION_AXIS_NEGATIVE_Y: {
-        f32 offset = b->y + b->height - a->y;
+        f32 offset = a->y + a->height - b->y;
         a->y -= offset;
         break;
     }
@@ -145,6 +145,8 @@ void physics_update(PhysicsWorld* world, f32 timestep) {
 
         object->aabb.x = object->sprite->pos[0] - object->sprite->scale[0] / 2.0f;
         object->aabb.y = object->sprite->pos[1] - object->sprite->scale[1] / 2.0f;
+        object->aabb.width  = object->sprite->scale[0];
+        object->aabb.height = object->sprite->scale[1];
 
         bool collision_detected = physics_detect_collisions(world, object, &colliding_object);
 
