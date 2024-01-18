@@ -1,10 +1,10 @@
 #include <game/shrimp.h>
 #include <game/bullet.h>
-#include <platform/fs.h>
-#include <event.h>
-#include <platform/input.h>
-#include <platform/keyboard.h>
-#include <log.h>
+#include <engine/platform/fs.h>
+#include <engine/event.h>
+#include <engine/platform/input.h>
+#include <engine/platform/keyboard.h>
+#include <engine/log.h>
 #include <math.h>
 #include <stdlib.h>
 
@@ -74,8 +74,8 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
 
     if (event_type == EVENT_TYPE_MOUSE_MOVED) {
         MouseMovedEvent* event = (MouseMovedEvent*)e;
-        shrimp->cursor_pos.x = event->x;
-        shrimp->cursor_pos.y = event->y;
+        shrimp->cursor_pos[0] = event->x;
+        shrimp->cursor_pos[1] = event->y;
     }
 
     if (event_type == EVENT_TYPE_MOUSE_BUTTON_DOWN) {
@@ -84,10 +84,11 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         if (event->button != MOUSE_BUTTON_LEFT)
             return;
 
-        Vec2 direction;
-        direction.x = shrimp->cursor_pos.x - shrimp->sprite->aabb->x;
-        direction.y = shrimp->cursor_pos.y - shrimp->sprite->aabb->y;
-        Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->aabb->x, shrimp->sprite->aabb->y, vec2_normalize(direction));
+        vec2 direction;
+        direction[0] = shrimp->cursor_pos[0] - shrimp->sprite->aabb->x;
+        direction[1] = shrimp->cursor_pos[1] - shrimp->sprite->aabb->y;
+        glm_vec2_normalize(direction);
+        Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->aabb->x, shrimp->sprite->aabb->y, direction);
         scene_add_sprite(shrimp->scene, bullet->sprite);
     }
 
