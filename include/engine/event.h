@@ -140,4 +140,11 @@ void event_update();
 */
 void event_add_function(void* user_pointer, EventFunction function);
 
+/**
+ * Sends the event in a waiting pool that is processed in the next call of event_update.
+ * @param event_type The type of the event.
+ * @param event The actual event.
+*/
+void event_send_event(EventType event_type, void* event);
+
 #endif
