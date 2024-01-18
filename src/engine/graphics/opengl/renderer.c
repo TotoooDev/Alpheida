@@ -109,7 +109,9 @@ void renderer_render_color(Renderer* renderer, Color color, AABB* dest) {
     glm_mat4_identity(view);
     glm_mat4_identity(projection);
     
-    glm_lookat(eye, dir, up, view);
+    vec3 scale = { 100.0f, 100.0f, 0.0f };
+    glm_scale(model, scale);
+    glm_look(eye, dir, up, view);
     glm_ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 100.0f, projection);
 
     shader_bind(renderer->shader_color);
