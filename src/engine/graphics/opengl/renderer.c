@@ -1,17 +1,13 @@
 #include <engine/graphics/renderer.h>
+#include <engine/graphics/opengl/renderer.h>
 #include <engine/graphics/opengl/shader.h>
 #include <engine/graphics/opengl/texture.h>
 #include <engine/graphics/config.h>
 #include <engine/event.h>
 #include <engine/log.h>
 #include <engine/cglm/cglm.h>
-#include <GL/glew.h>
+#include <engine/glad/glad.h>
 #include <stdlib.h>
-
-#include <engine/graphics/opengl/shaders/color_vertex.h>
-#include <engine/graphics/opengl/shaders/color_fragment.h>
-#include <engine/graphics/opengl/shaders/texture_vertex.h>
-#include <engine/graphics/opengl/shaders/texture_fragment.h>
 
 typedef struct Renderer {
     Shader* shader_color;
@@ -86,9 +82,8 @@ void renderer_set_matrices(Renderer* renderer, Shader* shader, mat4 model) {
 
 Renderer* renderer_new() {
 #ifdef SHRIMP_GRAPHICS_OPENGL
-    // initialize glew
-    GLenum result = glewInit();
-    log_assert(result == GLEW_OK, "failed to initialize glew! glew error: %s\n", glewGetErrorString(result));
+    // initialize glad
+    renderer_init_glad();
 
     Renderer* renderer = (Renderer*)malloc(sizeof(Renderer));
 

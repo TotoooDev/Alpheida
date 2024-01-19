@@ -1,7 +1,7 @@
 #include <engine/graphics/opengl/shader.h>
 #include <engine/graphics/config.h>
+#include <engine/graphics/opengl/gl_loader.h>
 #include <engine/log.h>
-#include <GL/glew.h>
 #include <stdlib.h>
 
 typedef struct Shader {

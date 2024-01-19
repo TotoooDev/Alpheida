@@ -12,7 +12,7 @@ static void* user_pointers[EVENT_FUNCTIONS_SIZE];
 static u32 num_event_functions = 0;
 
 static void* event_pool[EVENT_MAX_WAITING];
-static waiting_event_types[EVENT_MAX_WAITING];
+static EventType waiting_event_types[EVENT_MAX_WAITING];
 static u32 num_waiting_events = 0;
 
 void* event_new() {

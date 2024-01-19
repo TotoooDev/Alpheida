@@ -1,6 +1,8 @@
 #include <engine/platform/config.h>
 #include <engine/config.h>
 
+#ifdef SHRIMP_SWITCH
+
 #include <engine/graphics/window.h>
 #include <engine/platform/switch/switch_window.h>
 #include <engine/log.h>
@@ -17,7 +19,6 @@ typedef struct Window {
 } Window;
 
 void window_set_debug() {
-#if defined(SHRIMP_SWITCH) && defined(SHRIMP_DEBUG)
     // msa logging
     setenv("EGL_LOG_LEVEL", "debug", 1);
     setenv("MESA_VERBOSE", "all", 1);
@@ -27,11 +28,9 @@ void window_set_debug() {
     setenv("NV50_PROG_OPTIMIZE", "0", 1);
     setenv("NV50_PROG_DEBUG", "1", 1);
     setenv("NV50_PROG_CHIPSET", "0x120", 1);
-#endif
 }
 
 void window_init_egl(Window* window) {
-#ifdef SHRIMP_SWITCH
     // connect to the default egl display
     window->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     log_assert(window->display != NULL, "failed to connect to display! egl error: %d\n", eglGetError());
@@ -70,31 +69,26 @@ void window_init_egl(Window* window) {
     window->context = eglCreateContext(window->display, config, EGL_NO_CONTEXT, context_attributes_list);
     log_assert(window->context != NULL, "failed to create context! egl error: %d\n", eglGetError());
     eglMakeCurrent(window->display, window->surface, window->surface, window->context);
-#endif
 }
 
 Window* window_new(const char* title, i32 width, i32 height) {
-#ifdef SHRIMP_SWITCH
     window_set_debug();
     
     Window* window = (Window*)malloc(sizeof(Window));
     window_init_egl(window);
     return window;
-#endif
 }
 
 void window_delete(Window* window) {
-#ifdef SHRIMP_SWITCH
     eglMakeCurrent(window->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     eglDestroyContext(window->context);
     eglDestroySurface(window->surface);
     eglTerminate(window->display);
     free(window);
-#endif
 }
 
 void window_present(Window* window) {
-#ifdef SHRIMP_SWITCH
     eglSwapBuffers(window->disaplt, window->surface)
-#endif
 }
+
+#endif
