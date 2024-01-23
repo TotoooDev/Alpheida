@@ -6,7 +6,7 @@
 #include <engine/event.h>
 #include <engine/log.h>
 #include <engine/cglm/cglm.h>
-#include <engine/glad/glad.h>
+#include <engine/graphics/opengl/gl_loader.h>
 #include <stdlib.h>
 
 typedef struct Renderer {
@@ -83,7 +83,7 @@ void renderer_set_matrices(Renderer* renderer, Shader* shader, mat4 model) {
 Renderer* renderer_new() {
 #ifdef SHRIMP_GRAPHICS_OPENGL
     // initialize glad
-    renderer_init_glad();
+    glloader_init_gl();
 
     Renderer* renderer = (Renderer*)malloc(sizeof(Renderer));
 

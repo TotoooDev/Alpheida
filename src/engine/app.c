@@ -22,8 +22,9 @@ static App* app_instance = NULL;
 void app_on_event(void* event, EventType event_type, void* user_pointer) {
     App* app = (App*)user_pointer;
     
-    if (event_type == EVENT_TYPE_PLATFORM_QUIT)
+    if (event_type == EVENT_TYPE_PLATFORM_QUIT) {
         app->is_running = false;
+    }
 }
 
 void app_update_timestep() {

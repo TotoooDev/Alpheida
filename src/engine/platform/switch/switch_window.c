@@ -60,7 +60,7 @@ void window_init_egl(Window* window) {
     log_assert(window->surface != NULL, "failed to create a window surface! egl error: %d\n", eglGetError());
 
     // create an egl rendering context
-    static cont EGLint context_attributes_list[] = {
+    static const EGLint context_attributes_list[] = {
         EGL_CONTEXT_OPENGL_PROFILE_MASK_KHR, EGL_CONTEXT_OPENGL_CORE_PROFILE_BIT_KHR,
         EGL_CONTEXT_MAJOR_VERSION_KHR, 4,
         EGL_CONTEXT_MINOR_VERSION_KHR, 3,
@@ -81,14 +81,14 @@ Window* window_new(const char* title, i32 width, i32 height) {
 
 void window_delete(Window* window) {
     eglMakeCurrent(window->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-    eglDestroyContext(window->context);
-    eglDestroySurface(window->surface);
+    eglDestroyContext(window->display, window->context);
+    eglDestroySurface(window->display, window->surface);
     eglTerminate(window->display);
     free(window);
 }
 
 void window_present(Window* window) {
-    eglSwapBuffers(window->disaplt, window->surface)
+    eglSwapBuffers(window->display, window->surface);
 }
 
 #endif

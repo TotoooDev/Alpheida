@@ -2,10 +2,10 @@
 #include <engine/graphics/config.h>
 
 #include <engine/graphics/opengl/renderer.h>
-#include <engine/glad/glad.h>
+#include <engine/graphics/opengl/gl_loader.h>
 
 void renderer_init_glad() {
-#if defined(SHRIMP_GRAPHICS_OPENGL) && defined(SHRIMP_LINUX)
+#if defined(SHRIMP_GRAPHICS_OPENGL)
     gladLoadGL();
 #endif
 }

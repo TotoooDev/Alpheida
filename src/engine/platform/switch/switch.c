@@ -3,11 +3,16 @@
 
 #include <engine/config.h>
 #include <engine/platform/platform.h>
+#include <engine/platform/switch/switch_events.h>
 #include <engine/log.h>
 #include <switch.h>
-#include <SDL2/SDL.h>
+
+static PadState pad_state;
 
 void platform_init() {
+    padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+    padInitializeDefault(&pad_state);
+
     // initialize romfs
     Result result = romfsInit();
     log_assert(R_SUCCEEDED(result), "%08X: failed to initialize switch romfs!\n", result);
@@ -21,7 +26,8 @@ void platform_init() {
 }
 
 void platform_update() {
-    
+    padUpdate(&pad_state);
+    event_set_keys_down(padGetButtonsDown(&pad_state));
 }
 
 void platform_exit() {
@@ -33,7 +39,7 @@ void platform_exit() {
 }
 
 u32 platform_get_time() {
-    return SDL_GetTicks();
+    return 1;
 }
 
 #endif

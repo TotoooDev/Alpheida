@@ -6,7 +6,7 @@
 #if defined(SHRIMP_LINUX)
     #include <engine/platform/linux/glad/glad.h>
 #elif defined(SHRIMP_SWITCH)
-    #include <engine/platform/switch/glad/glad.h>
+    #include <glad/glad.h>
 #endif
 
 void glloader_init_gl();
