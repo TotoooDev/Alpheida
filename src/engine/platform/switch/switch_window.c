@@ -60,6 +60,7 @@ void window_init_egl(Window* window) {
     log_assert(num_configs != 0, "failed to find a config! egl error: %d\n", eglGetError());
 
     // create an egl window surface
+    window->window = nwindowGetDefault();
     window->surface = eglCreateWindowSurface(window->display, config, window->window, NULL);
     log_assert(window->surface != NULL, "failed to create a window surface! egl error: %d\n", eglGetError());
 
@@ -79,7 +80,6 @@ Window* window_new(const char* title, i32 width, i32 height) {
     window_set_debug();
     
     Window* window = (Window*)malloc(sizeof(Window));
-    window->window = nwindowGetDefault();
     window_init_egl(window);
     return window;
 }
