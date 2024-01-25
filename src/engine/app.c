@@ -34,6 +34,7 @@ void app_update_timestep() {
 }
 
 void app_create(const char* name) {
+    platform_init();
     log_info("creating the app\n");
 
     log_assert(app_instance == NULL, "an application already exists!\n");
@@ -47,7 +48,7 @@ void app_create(const char* name) {
     app_instance->timestep = 0.0f;
     app_instance->last_time = 0.0f;
 
-    platform_init();
+    
 
     event_add_function((void*)app_instance, app_on_event);
 }
