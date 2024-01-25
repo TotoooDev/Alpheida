@@ -32,6 +32,11 @@ void platform_update() {
 
     padUpdate(&pad_state);
     event_set_keys_down(padGetButtonsDown(&pad_state));
+
+    HidAnalogStickState left_stick = padGetStickPos(&pad_state, 0);
+    HidAnalogStickState right_stick = padGetStickPos(&pad_state, 1);
+    event_set_left_joystick_state((f32)left_stick.x / (f32)JOYSTICK_MAX, (f32)left_stick.y / (f32)JOYSTICK_MAX);
+    event_set_right_joystick_state((f32)right_stick.x / (f32)JOYSTICK_MAX, (f32)right_stick.y / (f32)JOYSTICK_MAX);
 }
 
 void platform_exit() {

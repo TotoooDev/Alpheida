@@ -10,8 +10,28 @@
 
 static u64 keys_down = 0;
 
+static f32 left_stick_x = 0.0f;
+static f32 left_stick_y = 0.0f;
+static f32 right_stick_x = 0.0f;
+static f32 right_stick_y = 0.0f;
+
+static f32 old_left_stick_x = 0.0f;
+static f32 old_left_stick_y = 0.0f;
+static f32 old_right_stick_x = 0.0f;
+static f32 old_right_stick_y = 0.0f;
+
 void event_set_keys_down(u64 keys) {
     keys_down = keys;
+}
+
+void event_set_left_joystick_state(f32 x, f32 y) {
+    left_stick_x = x;
+    left_stick_y = y;
+}
+
+void event_set_right_joystick_state(f32 x, f32 y) {
+    right_stick_x = x;
+    right_stick_y = y;
 }
 
 bool switch_process_button_down(void* event, u32 shrimp_button, u64 switch_button) {
@@ -60,9 +80,44 @@ bool switch_process_buttons_down(void* event) {
         return false;
 }
 
+bool switch_process_sticks(Event* event) {
+    if (left_stick_x != old_left_stick_x) {
+        ((JoystickMotionEvent*)event)->joystick = JOYSTICK_TYPE_LEFT;
+        ((JoystickMotionEvent*)event)->axis = JOYSTICK_AXIS_HORIZONTAL;
+        ((JoystickMotionEvent*)event)->value = left_stick_x;
+        old_left_stick_x = left_stick_x;
+        return true;
+    }
+    if (left_stick_y != old_left_stick_y) {
+        ((JoystickMotionEvent*)event)->joystick = JOYSTICK_TYPE_LEFT;
+        ((JoystickMotionEvent*)event)->axis = JOYSTICK_AXIS_VERTICAL;
+        ((JoystickMotionEvent*)event)->value = left_stick_y;
+        old_left_stick_y = left_stick_y;
+        return true;
+    }
+    if (right_stick_x != old_right_stick_x) {
+        ((JoystickMotionEvent*)event)->joystick = JOYSTICK_TYPE_RIGHT;
+        ((JoystickMotionEvent*)event)->axis = JOYSTICK_AXIS_HORIZONTAL;
+        ((JoystickMotionEvent*)event)->value = right_stick_x;
+        old_right_stick_x = right_stick_x;
+        return true;
+    }
+    if (right_stick_y != old_right_stick_y) {
+        ((JoystickMotionEvent*)event)->joystick = JOYSTICK_TYPE_RIGHT;
+        ((JoystickMotionEvent*)event)->axis = JOYSTICK_AXIS_VERTICAL;
+        ((JoystickMotionEvent*)event)->value = right_stick_y;
+        old_right_stick_y = right_stick_y;
+        return true;
+    }
+
+    return false;
+}
+
 EventType platform_process_events(void* event) {
     if (switch_process_buttons_down(event))
         return EVENT_TYPE_BUTTON_DOWN;
+    if (switch_process_sticks(event))
+        return EVENT_TYPE_JOYSTICK_MOTION;
 
     return EVENT_TYPE_NONE;
 }
