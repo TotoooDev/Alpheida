@@ -3,7 +3,7 @@
 
 const char* background_fragment_shader_source =
 
-"#version 330 es\n"
+"#version 330 core\n"
 "precision mediump float;\n"
 
 "out vec4 frag_color;\n"

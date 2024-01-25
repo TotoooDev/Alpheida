@@ -3,7 +3,7 @@
 
 const char* background_vertex_shader_source =
 
-"#version 330 es\n"
+"#version 330 core\n"
 "precision mediump float;\n"
 
 "layout (location = 0) in vec3 a_pos;\n"
