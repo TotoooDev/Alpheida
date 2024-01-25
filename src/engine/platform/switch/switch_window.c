@@ -13,9 +13,13 @@
 #include <stdlib.h>
 
 typedef struct Window {
+    NWindow* window;
+
     EGLDisplay display;
     EGLContext context;
     EGLSurface surface;
+
+    u32 width, height;
 } Window;
 
 void window_set_debug() {
@@ -56,7 +60,7 @@ void window_init_egl(Window* window) {
     log_assert(num_configs != 0, "failed to find a config! egl error: %d\n", eglGetError());
 
     // create an egl window surface
-    window->surface = eglCreateWindowSurface(window->display, config, nwindowGetDefault(), NULL);
+    window->surface = eglCreateWindowSurface(window->display, config, window->window, NULL);
     log_assert(window->surface != NULL, "failed to create a window surface! egl error: %d\n", eglGetError());
 
     // create an egl rendering context
@@ -75,6 +79,7 @@ Window* window_new(const char* title, i32 width, i32 height) {
     window_set_debug();
     
     Window* window = (Window*)malloc(sizeof(Window));
+    window->window = nwindowGetDefault();
     window_init_egl(window);
     return window;
 }
@@ -89,6 +94,31 @@ void window_delete(Window* window) {
 
 void window_present(Window* window) {
     eglSwapBuffers(window->display, window->surface);
+}
+
+u32 window_get_width(Window* window) {
+    return window->width;
+}
+
+u32 window_get_height(Window* window) {
+    return window->height;
+}
+
+void window_update_resolution(Window* window) {
+    switch (appletGetOperationMode()) {
+    default:
+    case AppletOperationMode_Handheld:
+        window->width = 1280;
+        window->height = 720;
+        break;
+
+    case AppletOperationMode_Console:
+        window->width = 1920;
+        window->height = 1080;
+        break;
+    }
+
+    nwindowSetCrop(window->window, 0, 0, window->width, window->height);
 }
 
 #endif

@@ -2,8 +2,10 @@
 #ifdef SHRIMP_SWITCH
 
 #include <engine/config.h>
+#include <engine/app.h>
 #include <engine/platform/platform.h>
 #include <engine/platform/switch/switch_events.h>
+#include <engine/platform/switch/switch_window.h>
 #include <engine/log.h>
 #include <switch.h>
 
@@ -26,6 +28,8 @@ void platform_init() {
 }
 
 void platform_update() {
+    window_update_resolution(app_get_window());
+
     padUpdate(&pad_state);
     event_set_keys_down(padGetButtonsDown(&pad_state));
 }
