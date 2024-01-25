@@ -1,7 +1,8 @@
 #include <game/shrimp.h>
 #include <game/bullet.h>
-#include <engine/platform/fs.h>
 #include <engine/event.h>
+#include <engine/app.h>
+#include <engine/platform/fs.h>
 #include <engine/platform/input.h>
 #include <engine/platform/keyboard.h>
 #include <engine/log.h>
@@ -75,7 +76,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
     if (event_type == EVENT_TYPE_MOUSE_MOVED) {
         MouseMovedEvent* event = (MouseMovedEvent*)e;
         shrimp->cursor_pos[0] = event->x;
-        shrimp->cursor_pos[1] = event->y;
+        shrimp->cursor_pos[1] = (f32)window_get_height(app_get_window()) - event->y;
     }
 
     if (event_type == EVENT_TYPE_MOUSE_BUTTON_DOWN) {
@@ -85,8 +86,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
             return;
 
         vec2 direction;
-        direction[0] = shrimp->cursor_pos[0] - shrimp->sprite->pos[0];
-        direction[1] = shrimp->cursor_pos[1] - shrimp->sprite->pos[1];
+        glm_vec2_sub(shrimp->cursor_pos, shrimp->sprite->pos, direction);
         glm_vec2_normalize(direction);
         Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->pos[0], shrimp->sprite->pos[1], direction);
         scene_add_sprite(shrimp->scene, bullet->sprite);

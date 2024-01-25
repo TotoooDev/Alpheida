@@ -15,5 +15,5 @@ wii:
 
 clean:
 	@echo "Cleaning..."
-	@rm -r obj
-	@rm -r bin
+	@rm -r obj/*
+	@rm -r bin/*

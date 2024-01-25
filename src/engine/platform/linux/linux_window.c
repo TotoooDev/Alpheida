@@ -78,6 +78,18 @@ void window_present(Window* window) {
     SDL_GL_SwapWindow(window->window);
 }
 
+u32 window_get_width(Window* window) {
+    u32 width;
+    SDL_GetWindowSize(window->window, &width, NULL);
+    return width;
+}
+
+u32 window_get_height(Window* window) {
+    u32 height;
+    SDL_GetWindowSize(window->window, NULL, &height);
+    return height;
+}
+
 SDL_Window* linuxwindow_get_native_window(Window* window) {
     return window->window;
 }

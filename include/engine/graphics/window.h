@@ -34,4 +34,7 @@ void window_delete(Window* window);
 */
 void window_present(Window* window);
 
+u32 window_get_width(Window* window);
+u32 window_get_height(Window* window);
+
 #endif

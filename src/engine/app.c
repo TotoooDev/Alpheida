@@ -67,6 +67,7 @@ void app_run() {
         
         if (app_instance->current_scene) {
             scene_update(app_instance->current_scene, app_instance->timestep);
+            scene_render_background(app_instance->current_scene, app_instance->renderer);
             scene_render_sprites(app_instance->current_scene, app_instance->renderer);
         }
         

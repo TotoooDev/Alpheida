@@ -1,6 +1,7 @@
 #include <engine/scene.h>
 #include <engine/array.h>
 #include <engine/physics.h>
+#include <engine/graphics/background.h>
 #include <engine/log.h>
 #include <stdlib.h>
 
@@ -8,6 +9,7 @@
 
 typedef struct Scene {
     Array* sprites;
+    Background* background;
     PhysicsWorld* physics_world;
     Camera cam;
 } Scene;
@@ -29,6 +31,8 @@ Scene* scene_new_physics(PhysicsWorld* world) {
 }
 
 void scene_delete(Scene* scene) {
+    if (scene->background != NULL)
+        background_delete(scene->background);
     array_delete(scene->sprites);
     free(scene);
 }
@@ -39,6 +43,14 @@ void scene_add_sprite(Scene* scene, Sprite* sprite) {
 
 void scene_remove_sprite(Scene* scene, Sprite* sprite) {
     array_remove(scene->sprites, sprite);
+}
+
+Background* scene_get_background(Scene* scene) {
+    return scene->background;
+}
+
+void scene_set_background(Scene* scene, Background* bg) {
+    scene->background = bg;
 }
 
 void scene_set_physics_world(Scene* scene, PhysicsWorld* world) {
@@ -66,6 +78,11 @@ void scene_update(Scene* scene, f32 timestep) {
 #else
     physics_update(scene->physics_world, 1.0f);
 #endif
+}
+
+void scene_render_background(Scene* scene, Renderer* renderer) {
+    if (scene->background != NULL)
+        renderer_render_background(renderer, scene->background);
 }
 
 void scene_render_sprites(Scene* scene, Renderer* renderer) {

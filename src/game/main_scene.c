@@ -23,6 +23,8 @@ MainScene* mainscene_new() {
     PhysicsWorld* world = physics_new();
     scene->scene = scene_new_physics(world);
 
+    scene_set_background(scene->scene, background_new(texture_new("images/shrimp.png"), 0, 0));
+
     scene->shrimp = shrimp_new(scene->scene);
 
     vec2 pos = {0.0f, 0.0f};

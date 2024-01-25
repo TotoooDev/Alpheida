@@ -34,7 +34,7 @@ Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction) {
     }
 
     bullet->scene = scene;
-    bullet->speed = 50.0f;
+    bullet->speed = 1000.0f;
     glm_vec2_copy(direction, bullet->direction);
 
     vec2 pos = { x, y };

@@ -12,6 +12,7 @@
 typedef struct Renderer {
     Shader* shader_color;
     Shader* shader_texture;
+    Shader* shader_background;
 
     mat4 matrix_view;
     mat4 matrix_projection;
@@ -89,6 +90,7 @@ Renderer* renderer_new() {
 
     renderer->shader_color = shader_new(color_vertex_shader_source, color_fragment_shader_source);
     renderer->shader_texture = shader_new(texture_vertex_shader_source, texture_fragment_shader_source);
+    renderer->shader_background = shader_new(background_vertex_shader_source, background_fragment_shader_source);
     renderer_setup_vao(renderer);
 
     glm_ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 100.0f, renderer->matrix_projection);
@@ -167,4 +169,14 @@ void renderer_render_color(Renderer* renderer, Color color, vec2 pos, vec2 scale
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 #endif
+}
+
+void renderer_render_background(Renderer* renderer, Background* bg) {
+    texture_bind(background_get_texture(bg));
+    shader_set_i32(renderer->shader_background, 0, "u_texture");
+
+    glBindVertexArray(renderer->rect_vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer->rect_ebo);
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
