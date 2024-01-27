@@ -32,6 +32,7 @@ void platform_update() {
 
     padUpdate(&pad_state);
     event_set_keys_down(padGetButtonsDown(&pad_state));
+    event_set_keys_up(padGetButtonsUp(&pad_state));
 
     HidAnalogStickState left_stick = padGetStickPos(&pad_state, 0);
     HidAnalogStickState right_stick = padGetStickPos(&pad_state, 1);
