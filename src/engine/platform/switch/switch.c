@@ -8,10 +8,15 @@
 #include <engine/platform/switch/switch_window.h>
 #include <engine/log.h>
 #include <switch.h>
+#include <time.h>
+#include <sys/time.h>
 
 static PadState pad_state;
+static u64 start_time = 0;
 
 void platform_init() {
+    start_time = platform_get_time();
+
     padConfigureInput(1, HidNpadStyleSet_NpadStandard);
     padInitializeDefault(&pad_state);
 
@@ -49,7 +54,11 @@ void platform_exit() {
 }
 
 u32 platform_get_time() {
-    return 1;
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    u64 time = start.tv_sec * 1000000 + start.tv_nsec / 1000;
+    time /= 1000; // convert to ms
+    return (u32)(time - start_time);
 }
 
 #endif
