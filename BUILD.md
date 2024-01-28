@@ -20,24 +20,39 @@ To build the game you will need:
 
 ### Building
 
-1. First, clone the repository: `git clone https://github.com/TotoooDev/alpheida.git && cd alpheida`.
-2. You can now build the game: `make`.
-3. After the compilation is over, the final game is located in the `bin` directory.
+1. First, clone the repository and enter the folder named `alpheida`.
+
+```bash
+git clone https://github.com/TotoooDev/alpheida.git && cd alpheida
+```
+
+2. You can now build the game with `make`.
+3. After the compilation is over, the final game is located in the `bin` directory. You can launch it with `./alpheida`.
 
 ## Nintendo Switch
 
 ### Dependencies
 
-Apart from the [develoment environment](https://devkitpro.org/wiki/Getting_Started), you will need a few dependencies :
+Apart from the [develoment environment](https://devkitpro.org/wiki/Getting_Started), you will need to install Glad:
 
-- SDL2
-- SDL2-image
-- SDL2-mixer
+```bash
+sudo dkp-pacman -Syu switch-glad
+```
 
 ### Building
 
-1. First, clone the repository: `git clone https://github.com/TotoooDev/alpheida.git && cd alpheida`.
-2. You can now build the game: `make switch`.
+1. First, clone the repository and enter the folder named `alpheida`.
+
+```bash
+git clone https://github.com/TotoooDev/alpheida.git && cd alpheida
+```
+
+2. You can now build the game.
+
+```bash
+make switch
+```
+
 3. After the compilation is over, the final hombrew is located in the `bin` directory, with a `.nro` extension.
 4. There are three ways to play the game:
     - By putting the `.nro` file in your SD card by hand.
