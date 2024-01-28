@@ -35,5 +35,7 @@ Sprite* sprite_new_color(vec2 pos, vec2 scale, Color color) {
 }
 
 void sprite_delete(Sprite* sprite) {
+    if (sprite->texture != NULL)
+        texture_delete(sprite->texture);
     free(sprite);
 }

@@ -160,7 +160,6 @@ Shrimp* shrimp_new(Scene* scene) {
 }
 
 void shrimp_delete(Shrimp* shrimp) {
-    texture_delete(shrimp->sprite->texture);
     sprite_delete(shrimp->sprite);
     free(shrimp);
 }

@@ -46,7 +46,6 @@ MainScene* mainscene_new() {
 void mainscene_delete(MainScene* scene) {
     sprite_delete(scene->ground);
     shrimp_delete(scene->shrimp);
-    physics_delete(scene_get_physics_world(scene->scene));
     scene_delete(scene->scene);
     free(scene);
 }

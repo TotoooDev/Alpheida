@@ -33,6 +33,8 @@ Scene* scene_new_physics(PhysicsWorld* world) {
 void scene_delete(Scene* scene) {
     if (scene->background != NULL)
         background_delete(scene->background);
+    if (scene->physics_world != NULL)
+        physics_delete(scene->physics_world);
     array_delete(scene->sprites);
     free(scene);
 }
