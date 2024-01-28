@@ -24,7 +24,7 @@ MainScene* mainscene_new() {
     PhysicsWorld* world = physics_new();
     scene->scene = scene_new_physics(world);
 
-    scene_set_background(scene->scene, background_new(texture_new(fs_get_path_romfs("images/shrimp.png")), 0, 0));
+    scene_set_background(scene->scene, background_new(texture_new(fs_get_path_romfs("images/shitty_background.png")), 0, 0));
 
     scene->shrimp = shrimp_new(scene->scene);
 

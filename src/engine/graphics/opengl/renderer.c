@@ -106,6 +106,7 @@ void renderer_delete(Renderer* renderer) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
     shader_delete(renderer->shader_color);
     shader_delete(renderer->shader_texture);
+    shader_delete(renderer->shader_background);
     free(renderer);
 #endif
 }
@@ -133,10 +134,11 @@ void renderer_render_texture(Renderer* renderer, Texture* texture, vec2 pos, vec
 
     mat4 model;
     glm_mat4_identity(model);
-    // glm_rotate(model, angle, rotation_axis);
+    glm_rotate(model, angle, rotation_axis);
     glm_translate(model, pos_3);
     glm_scale(model, scale_3);
 
+    shader_bind(renderer->shader_texture);
     renderer_set_matrices(renderer, renderer->shader_texture, model);
 
     texture_bind(texture);
@@ -161,6 +163,7 @@ void renderer_render_color(Renderer* renderer, Color color, vec2 pos, vec2 scale
     glm_translate(model, pos_3);
     glm_scale(model, scale_3);
 
+    shader_bind(renderer->shader_color);
     renderer_set_matrices(renderer, renderer->shader_color, model);
     shader_set_color(renderer->shader_color, color, "u_color");
 
@@ -172,7 +175,13 @@ void renderer_render_color(Renderer* renderer, Color color, vec2 pos, vec2 scale
 }
 
 void renderer_render_background(Renderer* renderer, Background* bg) {
+    mat4 model;
+    glm_mat4_identity(model);
+    glm_scale(model, (vec3){ 2.0f, 2.0f, 2.0f });
+
     texture_bind(background_get_texture(bg));
+    shader_bind(renderer->shader_background);
+    shader_set_mat4(renderer->shader_background, model, "u_model");
     shader_set_i32(renderer->shader_background, 0, "u_texture");
 
     glBindVertexArray(renderer->rect_vao);

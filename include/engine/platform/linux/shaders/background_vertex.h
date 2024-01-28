@@ -12,10 +12,12 @@ const char* background_vertex_shader_source =
 "    vec2 tex_coords;\n"
 "} vertex_out;\n"
 
+"uniform mat4 u_model;\n"
+
 "void main() {\n"
 "   vertex_out.tex_coords = a_tex_coords;\n"
 
-"	gl_Position = vec4(a_pos, 1.0);\n"
+"	gl_Position = u_model * vec4(a_pos, 1.0);\n"
 "}\n"
 
 ;

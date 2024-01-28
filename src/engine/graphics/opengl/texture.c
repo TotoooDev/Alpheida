@@ -22,6 +22,7 @@ void texture_load_from_file(Texture* texture, const char* filename) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     u32 width, height, num_channels;
+    stbi_set_flip_vertically_on_load(true);
     u8* data = stbi_load(filename, &width, &height, &num_channels, 0);
     log_assert(data != NULL, "failed to load image %s!", filename);
 
