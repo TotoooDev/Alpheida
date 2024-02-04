@@ -60,7 +60,7 @@ u32 array_get_index(Array* array, void* element) {
         }
     }
     log_assert(false, "failed to find element %p in array! it's not in the array.\n", element);
-    return 69; // just so gcc is happy;
+    return 69; // just so gcc is happy
 }
 
 u32 array_get_num_elements(Array* array) {

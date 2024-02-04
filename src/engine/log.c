@@ -33,7 +33,6 @@ void log_error(const char* msg, ...) {
 }
 
 void log_assert(bool cond, const char* msg, ...) {
-#ifdef SHRIMP_DEBUG
     if (!cond) {
         va_list parameters;
         va_start(parameters, msg);
@@ -41,5 +40,4 @@ void log_assert(bool cond, const char* msg, ...) {
         va_end(parameters);
         abort();
     }
-#endif
 }
