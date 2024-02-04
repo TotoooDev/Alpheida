@@ -17,6 +17,7 @@ Sprite* sprite_new(vec2 pos, vec2 scale, Texture* texture) {
     sprite->angle = 0.0f;
 
     sprite->texture = texture;
+    sprite->keep_texture_on_delete = false;
     sprite->color = color_magenta();
     sprite->use_color = false;
 
@@ -35,7 +36,7 @@ Sprite* sprite_new_color(vec2 pos, vec2 scale, Color color) {
 }
 
 void sprite_delete(Sprite* sprite) {
-    if (sprite->texture != NULL)
+    if (sprite->texture != NULL && !sprite->keep_texture_on_delete)
         texture_delete(sprite->texture);
     free(sprite);
 }

@@ -19,6 +19,7 @@ typedef struct Sprite {
     f32 angle;
 
     Texture* texture;
+    bool keep_texture_on_delete;
     Color color;
     bool use_color;
 
