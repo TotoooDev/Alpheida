@@ -1,13 +1,14 @@
 #include <game/bullet.h>
 #include <engine/event.h>
 #include <engine/app.h>
+#include <engine/platform/fs.h>
 #include <engine/log.h>
 #include <stdlib.h>
 
 bool first_texture = true;
 Texture* bullet_texture = NULL;
 
-void bullet_event_function_delete_texture(void*, EventType event_type, void* user_pointer) {
+void bullet_on_event(void*, EventType event_type, void* user_pointer) {
     if (event_type == EVENT_TYPE_PLATFORM_QUIT && bullet_texture != NULL) {
         texture_delete(bullet_texture);
         bullet_texture = NULL;
@@ -37,7 +38,7 @@ Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction) {
     Bullet* bullet = (Bullet*)malloc(sizeof(Bullet));
 
     if (first_texture) {
-        bullet_texture = texture_new("images/bullet.png");
+        bullet_texture = texture_new(fs_get_path_romfs("images/bullet.png"));
         first_texture = false;
         event_add_function(bullet, bullet_event_function_delete_texture);
     }
