@@ -40,7 +40,7 @@ Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction) {
     if (first_texture) {
         bullet_texture = texture_new(fs_get_path_romfs("images/bullet.png"));
         first_texture = false;
-        event_add_function(bullet, bullet_event_function_delete_texture);
+        event_add_function(bullet, bullet_on_event);
     }
 
     bullet->scene = scene;
