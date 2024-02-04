@@ -1,5 +1,6 @@
 #include <game/bullet.h>
 #include <engine/event.h>
+#include <engine/app.h>
 #include <engine/log.h>
 #include <stdlib.h>
 
@@ -15,13 +16,21 @@ void bullet_event_function_delete_texture(void*, EventType event_type, void* use
 
 void bullet_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
     Bullet* bullet = (Bullet*)object->user_pointer;
-    bullet_delete(bullet);
+    bullet->delete_next_update = true;
 }
 
 void bullet_update(Sprite* sprite, f32 timestep) {
     Bullet* bullet = (Bullet*)sprite->user_pointer;
     sprite->pos[0] += bullet->direction[0] * bullet->speed * timestep;
     sprite->pos[1] += bullet->direction[1] * bullet->speed * timestep;
+
+    if (sprite->pos[0] <= 0.0f || sprite->pos[0] >= window_get_width(app_get_window()))
+        bullet->delete_next_update = true;
+    if (sprite->pos[1] <= 0.0f || sprite->pos[1] >= window_get_height(app_get_window()))
+        bullet->delete_next_update = true;
+
+    if (bullet->delete_next_update)
+        bullet_delete(bullet);
 }
 
 Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction) {
@@ -35,11 +44,13 @@ Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction) {
 
     bullet->scene = scene;
     bullet->speed = 1000.0f;
+    bullet->delete_next_update = false;
     glm_vec2_copy(direction, bullet->direction);
 
     vec2 pos = { x, y };
     vec2 scale = { 64.0f, 64.0f };
     bullet->sprite = sprite_new(pos, scale, bullet_texture);
+    bullet->sprite->keep_texture_on_delete = true;
     bullet->sprite->user_pointer = bullet;
 
     bullet->sprite->update_function = bullet_update;

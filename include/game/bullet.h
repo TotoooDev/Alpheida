@@ -11,6 +11,8 @@ typedef struct Bullet {
 
     vec2 direction;
     f32 speed;
+
+    bool delete_next_update;
 } Bullet;
 
 Bullet* bullet_new(Scene* scene, f32 x, f32 y, vec2 direction);
