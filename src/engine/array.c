@@ -38,7 +38,7 @@ void array_remove(Array* array, void* element) {
 }
 
 void array_remove_index(Array* array, u32 index) {
-    log_assert(index < array->num_elements, "failed to remove index %p from array! the index was unused.\n", index);
+    log_assert(index < array->num_elements, "failed to remove index %d from array! the index was unused.\n", index);
     
     for (u32 i = index; i < array->num_elements; i++) {
         array->elements[i] = array->elements[i + 1];
