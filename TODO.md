@@ -13,4 +13,6 @@
 
 ## Engine
 
+- [ ] Implement the background offset.
+- [ ] Make use of the camera angle.
 - [ ] Document stuff
