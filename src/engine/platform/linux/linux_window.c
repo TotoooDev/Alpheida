@@ -3,7 +3,6 @@
 
 #include <engine/graphics/window.h>
 #include <engine/config.h>
-#include <engine/platform/linux/linux_texture.h>
 #include <engine/log.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
