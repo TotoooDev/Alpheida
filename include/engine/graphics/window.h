@@ -34,7 +34,18 @@ void window_delete(Window* window);
 */
 void window_present(Window* window);
 
+/**
+ * Returns the width of the window.
+ * @param window The window to get the dimensions from.
+ * @return The width of `window`.
+*/
 u32 window_get_width(Window* window);
+
+/**
+ * Returns the height of the window.
+ * @param window The window to get the dimensions from.
+ * @return The height of `window`.
+*/
 u32 window_get_height(Window* window);
 
 #endif

@@ -7,6 +7,9 @@
 #include <engine/graphics/background.h>
 #include <engine/cglm/cglm.h>
 
+/**
+ * The renderer API.
+*/
 typedef struct Renderer Renderer;
 
 Renderer* renderer_new();

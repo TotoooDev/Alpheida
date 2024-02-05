@@ -33,7 +33,7 @@ f32 background_get_offset_y(Background* bg) {
     return bg->offset_y;
 }
 
-Texture* background_set_texture(Background* bg, Texture* texture) {
+void background_set_texture(Background* bg, Texture* texture) {
     texture_delete(bg->texture);
     bg->texture = texture;
 }

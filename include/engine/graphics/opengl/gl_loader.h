@@ -9,6 +9,9 @@
     #include <glad/glad.h>
 #endif
 
+/**
+ * Initialize OpenGL with glad.
+*/
 void glloader_init_gl();
 
 #endif
