@@ -8,4 +8,10 @@
 #include <engine/platform/switch/shaders/background_vertex.h>
 #include <engine/platform/switch/shaders/background_fragment.h>
 
+void renderer_init_glad() {
+#if defined(SHRIMP_GRAPHICS_OPENGL)
+    gladLoadGL();
+#endif
+}
+
 #endif
