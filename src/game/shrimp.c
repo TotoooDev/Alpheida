@@ -1,18 +1,21 @@
 #include <game/shrimp.h>
-#include <platform/fs.h>
-#include <event.h>
-#include <platform/input.h>
-#include <platform/keyboard.h>
+#include <game/bullet.h>
+#include <engine/event.h>
+#include <engine/app.h>
+#include <engine/platform/fs.h>
+#include <engine/platform/input.h>
+#include <engine/platform/keyboard.h>
+#include <engine/log.h>
 #include <math.h>
 #include <stdlib.h>
 
-void shrimp_update(Sprite* sprite, float timestep) {
+void shrimp_update(Sprite* sprite, f32 timestep) {
     Shrimp* shrimp = (Shrimp*)sprite->user_pointer;
 
     if (shrimp->is_moving[0])
-        sprite->aabb->x -= shrimp->speed * shrimp->speed_multiplier * timestep;
+        sprite->pos[0] -= shrimp->speed * shrimp->speed_multiplier * timestep;
     if (shrimp->is_moving[1])
-        sprite->aabb->x += shrimp->speed * shrimp->speed_multiplier * timestep;
+        sprite->pos[0] += shrimp->speed * shrimp->speed_multiplier * timestep;
 }
 
 void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
@@ -29,17 +32,19 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         {
         case SHRIMP_KEY_A:
             shrimp->is_moving[0] = true;
+            shrimp->is_moving[1] = false;
             shrimp->speed_multiplier = 1.0f;
             break;
 
         case SHRIMP_KEY_D:
+            shrimp->is_moving[0] = false;
             shrimp->is_moving[1] = true;
             shrimp->speed_multiplier = 1.0f;
             break;
 
         case SHRIMP_KEY_SPACE:
             if (shrimp->can_jump) {
-                shrimp->sprite->physics_object->forces[1] += 50.0f;
+                shrimp->sprite->physics_object->forces[1] += 10.0f;
                 shrimp->can_jump = false;
             }
             break;
@@ -68,13 +73,32 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         }
     }
 
+    if (event_type == EVENT_TYPE_MOUSE_MOVED) {
+        MouseMovedEvent* event = (MouseMovedEvent*)e;
+        shrimp->cursor_pos[0] = event->x;
+        shrimp->cursor_pos[1] = (f32)window_get_height(app_get_window()) - event->y;
+    }
+
+    if (event_type == EVENT_TYPE_MOUSE_BUTTON_DOWN) {
+        MouseButtonDownEvent* event = (MouseButtonDownEvent*)e;
+
+        if (event->button != MOUSE_BUTTON_LEFT)
+            return;
+
+        vec2 direction;
+        glm_vec2_sub(shrimp->cursor_pos, shrimp->sprite->pos, direction);
+        glm_vec2_normalize(direction);
+        Bullet* bullet = bullet_new(shrimp->scene, shrimp->sprite->pos[0], shrimp->sprite->pos[1], direction);
+        scene_add_sprite(shrimp->scene, bullet->sprite);
+    }
+
     if (event_type == EVENT_TYPE_BUTTON_DOWN) {
         ButtonDownEvent* event = (ButtonDownEvent*)e;
         switch (event->button)
         {
         case JOY_A:
             if (shrimp->can_jump) {
-                shrimp->sprite->physics_object->forces[1] += 50.0f;
+                shrimp->sprite->physics_object->forces[1] += 10.0f;
                 shrimp->can_jump = false;
             }
             break;
@@ -96,7 +120,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         }
 
         if (event->axis == JOYSTICK_AXIS_HORIZONTAL) {
-            shrimp->speed_multiplier = (float)fabs((double)event->value);
+            shrimp->speed_multiplier = (f32)fabs((f64)event->value);
             if (event->value > 0.0f)
                 shrimp->is_moving[1] = true;
             else
@@ -107,21 +131,28 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
 
 Shrimp* shrimp_new(Scene* scene) {
     Shrimp* shrimp = (Shrimp*)malloc(sizeof(Shrimp));
-
     Texture* texture = texture_new(fs_get_path_romfs("images/shrimp.png"));
-    shrimp->sprite = sprite_new(0.0f, 0.0f, 64.0f, 64.0f, texture);
+
+    vec2 pos = { 100.0f, 100.0f };
+    vec2 scale = { 64.0f, 64.0f };
+    shrimp->sprite = sprite_new(pos, scale, texture);
+
+    shrimp->scene = scene;
+    shrimp->hitbox = NULL;
+
     shrimp->sprite->update_function = shrimp_update;
     shrimp->sprite->user_pointer = (void*)shrimp;
 
     shrimp->is_moving[0] = false;
     shrimp->is_moving[1] = false;
     shrimp->speed_multiplier = 1.0f;
-    shrimp->speed = 20.0f;
+    shrimp->speed = 500.0f;
     shrimp->can_jump = false;
 
     PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
     physics_object->on_collision = shrimp_on_collision;
     physics_object->user_pointer = shrimp;
+    physics_object->filter |= physics_add_filter(0);
 
     event_add_function(shrimp, shrimp_on_event);
 
@@ -129,7 +160,6 @@ Shrimp* shrimp_new(Scene* scene) {
 }
 
 void shrimp_delete(Shrimp* shrimp) {
-    texture_delete(shrimp->sprite->texture);
     sprite_delete(shrimp->sprite);
     free(shrimp);
 }

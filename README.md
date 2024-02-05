@@ -1,4 +1,4 @@
-# Alpheida 0.1.3
+# Alpheida 0.1.4
 
 ## Table of contents
 
@@ -21,7 +21,7 @@ The Shrimp Engine is currently compatible with these platforms :
 - Nintendo Switch (homebrew)
 - Wii (homebrew) **WIP: no sound, no inputs, textures are broken, and only tested on an emulator**
 
-More platforms are on their way!
+More platforms are on their way! If you want to add a new platform, please follow [this guide](PLATFORM.md).
 
 ## Playing the game
 

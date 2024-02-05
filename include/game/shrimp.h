@@ -1,15 +1,21 @@
 #ifndef SHRIMP_H
 #define SHRIMP_H
 
-#include <sprite.h>
-#include <scene.h>
+#include <engine/sprite.h>
+#include <engine/scene.h>
+#include <engine/aabb.h>
+#include <engine/cglm/cglm.h>
 
 typedef struct Shrimp {
+    Scene* scene;
     Sprite* sprite;
+    AABB* hitbox;
 
     bool is_moving[2];
-    float speed_multiplier;
-    float speed;
+    f32 speed_multiplier;
+    f32 speed;
+
+    vec2 cursor_pos;
 
     bool can_jump;
 } Shrimp;
