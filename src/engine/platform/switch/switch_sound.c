@@ -1,13 +1,31 @@
-#include <engine/platform/config.h>
+#include <engine/config.h>
 
 #ifdef SHRIMP_SWITCH
 
-// my honest reaction: https://www.youtube.com/watch?v=jO8o5LLmpR8
-// but the code between linux and switch are identical since both use sdl2
-// so i might just copy-paste it lol
+#include <engine/sound.h>
 
-#define SHRIMP_LINUX
-#include "../linux/linux_sound.c"
-#undef SHRIMP_LINUX
+Sound* sound_new(const char* filename) {
+    
+}
+
+void sound_delete(Sound* sound) {
+
+}
+
+void sound_play(Sound* sound) {
+
+}
+
+void sound_set_loops(Sound* sound, i32 loops) {
+
+}
+
+void sound_set_volume(Sound* sound, i32 volume) {
+
+}
+
+i32 sound_get_volume(Sound* sound) {
+
+}
 
 #endif

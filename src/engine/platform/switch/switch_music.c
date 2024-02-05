@@ -2,12 +2,58 @@
 
 #ifdef SHRIMP_SWITCH
 
-// my honest reaction: https://www.youtube.com/watch?v=jO8o5LLmpR8
-// but the code between linux and switch are identical since both use sdl2
-// so i might just copy-paste it lol
+#include <engine/music.h>
 
-#define SHRIMP_LINUX
-#include "../linux/linux_music.c"
-#undef SHRIMP_LINUX
+Music* music_new(const char* filename) {
+    
+}
+
+void music_delete(Music* music) {
+    
+}
+
+void music_play(Music* music) {
+
+}
+
+void music_play_position(Music* music, f64 pos_ms) {
+    
+}
+
+void music_play_fade_in(Music* music, i32 fade) {
+
+}
+
+void music_play_fade_in_position(Music* music, i32 fade, f64 pos_ms) {
+
+}
+
+void music_stop() {
+
+}
+
+void music_pause() {
+
+}
+
+void musix_resume() {
+
+}
+
+void music_fade_out(i32 fade) {
+
+}
+
+void music_set_loops(Music* music, i32 loops) {
+
+}
+
+void music_set_volume(Music* music, i32 volume) {
+
+}
+
+i32 music_get_volume(Music* music) {
+
+}
 
 #endif
