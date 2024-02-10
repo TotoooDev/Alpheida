@@ -28,6 +28,8 @@ MainScene* mainscene_new() {
 
     scene->shrimp = shrimp_new(scene->scene);
 
+    scene->test_enemy = enemy_new(scene->scene, scene->shrimp->sprite, ENEMY_TYPE_OIL, (vec2){ 800.0f, 100.0f }, true);
+
     vec2 pos = {0.0f, 0.0f};
     vec2 scale = {10000.0f, 10.0f};
     scene->ground = sprite_new_color(pos, scale, color_magenta());
@@ -36,6 +38,7 @@ MainScene* mainscene_new() {
     ground_physics->filter = physics_set_all_filters();
 
     scene_add_sprite(scene->scene, scene->shrimp->sprite);
+    scene_add_sprite(scene->scene, scene->test_enemy->sprite);
     scene_add_sprite(scene->scene, scene->ground);
 
     event_add_function(NULL, mainscene_on_event);
@@ -46,6 +49,7 @@ MainScene* mainscene_new() {
 void mainscene_delete(MainScene* scene) {
     sprite_delete(scene->ground);
     shrimp_delete(scene->shrimp);
+    enemy_delete(scene->test_enemy);
     scene_delete(scene->scene);
     free(scene);
 }

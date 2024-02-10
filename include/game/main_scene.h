@@ -3,10 +3,12 @@
 
 #include <engine/scene.h>
 #include <game/shrimp.h>
+#include <game/enemy.h>
 
 typedef struct MainScene {
     Scene* scene;
     Shrimp* shrimp;
+    Enemy* test_enemy;
 
     // temporary
     Sprite* ground;
