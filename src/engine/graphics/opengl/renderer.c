@@ -202,6 +202,8 @@ void renderer_render_text(Renderer* renderer, Font* font, const char* text, Colo
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(renderer->text_vao);
 
+    vec2 pos_copy;
+    glm_vec2_copy(pos, pos_copy);
     u32 len = strlen(text);
     for (u32 i = 0; i < len; i++) {
         u8 character = text[i];
@@ -211,8 +213,8 @@ void renderer_render_text(Renderer* renderer, Font* font, const char* text, Colo
         glyph_get_bearing(glyph, bearing);
         glyph_get_size(glyph, size);
 
-        f32 x = pos[0] + bearing[0] * scale;
-        f32 y = pos[1] - (size[1] - bearing[1]) * scale;
+        f32 x = pos_copy[0] + bearing[0] * scale;
+        f32 y = pos_copy[1] - (size[1] - bearing[1]) * scale;
         f32 width = size[0] * scale;
         f32 height = size[1] * scale;
 
@@ -234,7 +236,7 @@ void renderer_render_text(Renderer* renderer, Font* font, const char* text, Colo
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        pos[0] += (glyph_get_advance(glyph) >> 6) * scale;
+        pos_copy[0] += (glyph_get_advance(glyph) >> 6) * scale;
     }
 
     glBindVertexArray(0);
