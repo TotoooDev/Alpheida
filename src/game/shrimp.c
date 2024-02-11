@@ -16,6 +16,9 @@ void shrimp_update(Sprite* sprite, f32 timestep) {
         sprite->pos[0] -= shrimp->speed * shrimp->speed_multiplier * timestep;
     if (shrimp->is_moving[1])
         sprite->pos[0] += shrimp->speed * shrimp->speed_multiplier * timestep;
+
+    if (shrimp->hp <= 0)
+        log_info("oh no you died :(\n");
 }
 
 void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
@@ -142,6 +145,9 @@ Shrimp* shrimp_new(Scene* scene) {
 
     shrimp->sprite->update_function = shrimp_update;
     shrimp->sprite->user_pointer = (void*)shrimp;
+    shrimp->sprite->draw_function = shrimp_draw_function;
+
+    shrimp->hp = 3;
 
     shrimp->is_moving[0] = false;
     shrimp->is_moving[1] = false;

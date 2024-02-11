@@ -13,13 +13,15 @@ typedef enum EnemyType {
 typedef struct Enemy {
     Sprite* sprite;
     PhysicsObject* physics;
-    Sprite* target;
+    Shrimp* target;
 
     EnemyType type;
-    float speed;
+    f32 speed;
+    f32 last_attack;
+    f32 attack_cooldown;
 } Enemy;
 
-Enemy* enemy_new(Scene* scene, Sprite* target, EnemyType enemy_type, vec2 pos, bool has_physics);
+Enemy* enemy_new(Scene* scene, Shrimp* target, EnemyType enemy_type, vec2 pos, bool has_physics);
 void enemy_delete(Enemy* enemy);
 
 #endif

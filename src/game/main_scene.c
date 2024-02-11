@@ -28,7 +28,7 @@ MainScene* mainscene_new() {
 
     scene->shrimp = shrimp_new(scene->scene);
 
-    scene->test_enemy = enemy_new(scene->scene, scene->shrimp->sprite, ENEMY_TYPE_OIL, (vec2){ 800.0f, 100.0f }, true);
+    scene->test_enemy = enemy_new(scene->scene, scene->shrimp, ENEMY_TYPE_OIL, (vec2){ 800.0f, 100.0f }, true);
 
     vec2 pos = {0.0f, 0.0f};
     vec2 scale = {10000.0f, 10.0f};

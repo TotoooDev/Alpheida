@@ -11,6 +11,8 @@ typedef struct Shrimp {
     Sprite* sprite;
     AABB* hitbox;
 
+    u32 hp;
+
     bool is_moving[2];
     f32 speed_multiplier;
     f32 speed;
