@@ -22,7 +22,6 @@ void enemy_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, 
 
     f32 current_time = timer_get_time_s();
     if (current_time - enemy->last_attack > enemy->attack_cooldown) {
-        log_info("enemy attack!\n");
         enemy->target->hp--;
         enemy->last_attack = current_time;
     }
@@ -57,11 +56,12 @@ Enemy* enemy_new(Scene* scene, Shrimp* target, EnemyType enemy_type, vec2 pos, b
     enemy->target = target;
     enemy->type = enemy_type;
     enemy->speed = 5.0f;
-    enemy->last_attack = 0.0f;
+    enemy->last_attack = 1.0f;
     enemy->attack_cooldown = 1.0f;
 
     enemy->physics = physics_add_physics_object(scene_get_physics_world(scene), enemy->sprite);
     enemy->physics->filter = physics_add_filter(1);
+    enemy->physics->trigger_filter = physics_add_filter(1);
     enemy->physics->on_collision = enemy_on_collision;
     enemy->physics->user_pointer = enemy;
 

@@ -20,6 +20,7 @@ typedef struct PhysicsObject {
     bool is_trigger;
     
     u32 filter;
+    u32 trigger_filter;
     vec2 forces;
     vec2 velocity;
     AABB aabb;

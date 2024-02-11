@@ -16,6 +16,7 @@ typedef struct Shrimp {
     bool is_moving[2];
     f32 speed_multiplier;
     f32 speed;
+    f32 jump_force;
 
     vec2 cursor_pos;
 

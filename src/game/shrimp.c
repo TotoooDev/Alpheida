@@ -16,14 +16,17 @@ void shrimp_update(Sprite* sprite, f32 timestep) {
         sprite->pos[0] -= shrimp->speed * shrimp->speed_multiplier * timestep;
     if (shrimp->is_moving[1])
         sprite->pos[0] += shrimp->speed * shrimp->speed_multiplier * timestep;
-
-    if (shrimp->hp <= 0)
-        log_info("oh no you died :(\n");
 }
 
 void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
     Shrimp* shrimp = (Shrimp*)object->user_pointer;
     shrimp->can_jump = true;
+
+    // enemy collision
+    if (object->trigger_filter == colliding_object->trigger_filter) {
+        object->forces[0] += 5000.0f;
+        // object->forces[1] += 50.0f;
+    }
 }
 
 void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
@@ -47,7 +50,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
 
         case SHRIMP_KEY_SPACE:
             if (shrimp->can_jump) {
-                shrimp->sprite->physics_object->forces[1] += 10.0f;
+                shrimp->sprite->physics_object->forces[1] += shrimp->jump_force;
                 shrimp->can_jump = false;
             }
             break;
@@ -101,7 +104,7 @@ void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
         {
         case JOY_A:
             if (shrimp->can_jump) {
-                shrimp->sprite->physics_object->forces[1] += 10.0f;
+                shrimp->sprite->physics_object->forces[1] += shrimp->jump_force;
                 shrimp->can_jump = false;
             }
             break;
@@ -152,12 +155,14 @@ Shrimp* shrimp_new(Scene* scene) {
     shrimp->is_moving[1] = false;
     shrimp->speed_multiplier = 1.0f;
     shrimp->speed = 500.0f;
+    shrimp->jump_force = 500.0f;
     shrimp->can_jump = false;
 
     PhysicsObject* physics_object = physics_add_physics_object(scene_get_physics_world(scene), shrimp->sprite);
     physics_object->on_collision = shrimp_on_collision;
     physics_object->user_pointer = shrimp;
     physics_object->filter |= physics_add_filter(0);
+    physics_object->trigger_filter = physics_add_filter(1);
 
     event_add_function(shrimp, shrimp_on_event);
 
