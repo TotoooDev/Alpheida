@@ -7,5 +7,7 @@
 #include <engine/platform/linux/shaders/texture_fragment.h>
 #include <engine/platform/linux/shaders/background_vertex.h>
 #include <engine/platform/linux/shaders/background_fragment.h>
+#include <engine/platform/linux/shaders/text_vertex.h>
+#include <engine/platform/linux/shaders/text_fragment.h>
 
 #endif

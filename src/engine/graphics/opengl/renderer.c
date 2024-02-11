@@ -2,23 +2,29 @@
 #include <engine/graphics/opengl/renderer.h>
 #include <engine/graphics/opengl/shader.h>
 #include <engine/graphics/opengl/texture.h>
+#include <engine/graphics/opengl/text.h>
 #include <engine/graphics/config.h>
 #include <engine/event.h>
 #include <engine/log.h>
 #include <engine/cglm/cglm.h>
 #include <engine/graphics/opengl/gl_loader.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Renderer {
     Shader* shader_color;
     Shader* shader_texture;
     Shader* shader_background;
+    Shader* shader_text;
 
     mat4 matrix_view;
     mat4 matrix_projection;
 
     u32 rect_vao;
     u32 rect_ebo;
+
+    u32 text_vao;
+    u32 text_vbo;
 } Renderer;
 
 void renderer_on_event(void* e, EventType event_type, void* user_pointer) {
@@ -72,6 +78,18 @@ void renderer_setup_vao(Renderer* renderer) {
 #endif
 }
 
+void renderer_setup_text_vao(Renderer* renderer) {
+    glGenVertexArrays(1, &renderer->text_vao);
+    glGenBuffers(1, &renderer->text_vbo);
+    glBindVertexArray(renderer->text_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, renderer->text_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 void renderer_set_matrices(Renderer* renderer, Shader* shader, mat4 model) {
 #ifdef SHRIMP_GRAPHICS_OPENGL
     shader_bind(shader);
@@ -91,7 +109,9 @@ Renderer* renderer_new() {
     renderer->shader_color = shader_new(color_vertex_shader_source, color_fragment_shader_source);
     renderer->shader_texture = shader_new(texture_vertex_shader_source, texture_fragment_shader_source);
     renderer->shader_background = shader_new(background_vertex_shader_source, background_fragment_shader_source);
+    renderer->shader_text = shader_new(text_vertex_shader_source, text_fragment_shader_source);
     renderer_setup_vao(renderer);
+    renderer_setup_text_vao(renderer);
 
     glm_ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 100.0f, renderer->matrix_projection);
 
@@ -172,6 +192,53 @@ void renderer_render_color(Renderer* renderer, Color color, vec2 pos, vec2 scale
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 #endif
+}
+
+void renderer_render_text(Renderer* renderer, Font* font, const char* text, Color color, vec2 pos, f32 scale) {
+    shader_bind(renderer->shader_text);
+    shader_set_color(renderer->shader_text, color, "u_color");
+    shader_set_mat4(renderer->shader_text, renderer->matrix_projection, "u_projection");
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(renderer->text_vao);
+
+    u32 len = strlen(text);
+    for (u32 i = 0; i < len; i++) {
+        u8 character = text[i];
+        Glyph* glyph = font_get_character(font, character);
+
+        vec2 bearing, size;
+        glyph_get_bearing(glyph, bearing);
+        glyph_get_size(glyph, size);
+
+        f32 x = pos[0] + bearing[0] * scale;
+        f32 y = pos[1] - (size[1] - bearing[1]) * scale;
+        f32 width = size[0] * scale;
+        f32 height = size[1] * scale;
+
+        f32 vertices[6][4] = {
+            { x,         y + height,   0.0f, 0.0f },            
+            { x,         y,            0.0f, 1.0f },
+            { x + width, y,            1.0f, 1.0f },
+
+            { x,         y + height,   0.0f, 0.0f },
+            { x + width, y,            1.0f, 1.0f },
+            { x + width, y + height,   1.0f, 0.0f }
+        };
+
+        glBindTexture(GL_TEXTURE_2D, glyph_get_texture_id(glyph));
+
+        glBindBuffer(GL_ARRAY_BUFFER, renderer->text_vbo);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        pos[0] += (glyph_get_advance(glyph) >> 6) * scale;
+    }
+
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void renderer_render_background(Renderer* renderer, Background* bg) {

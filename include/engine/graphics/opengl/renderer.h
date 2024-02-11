@@ -13,6 +13,8 @@ extern const char* texture_vertex_shader_source;
 extern const char* texture_fragment_shader_source;
 extern const char* background_vertex_shader_source;
 extern const char* background_fragment_shader_source;
+extern const char* text_vertex_shader_source;
+extern const char* text_fragment_shader_source;
 
 #endif
 
