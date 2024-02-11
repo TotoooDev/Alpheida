@@ -145,7 +145,6 @@ Shrimp* shrimp_new(Scene* scene) {
 
     shrimp->sprite->update_function = shrimp_update;
     shrimp->sprite->user_pointer = (void*)shrimp;
-    shrimp->sprite->draw_function = shrimp_draw_function;
 
     shrimp->hp = 3;
 
