@@ -17,6 +17,7 @@ typedef void(*OnCollisionFunction)(PhysicsObject*, PhysicsObject*, IntersectionA
 
 typedef struct PhysicsObject {
     bool takes_gravity;
+    bool moved_by_collision;
     bool is_trigger;
     
     u32 filter;

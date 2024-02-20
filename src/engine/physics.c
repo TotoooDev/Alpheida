@@ -125,7 +125,7 @@ IntersectionAxis physics_move_intersecting_aabb(AABB* a, AABB* b) {
 void physics_on_collision(PhysicsObject* object, PhysicsObject* colliding_object) {
     IntersectionAxis axis;
     bool act_as_trigger = (object->is_trigger || colliding_object->is_trigger) || (object->trigger_filter & colliding_object->trigger_filter);
-    if (object->is_trigger || colliding_object->is_trigger)
+    if (act_as_trigger || !object->moved_by_collision)
         axis = aabb_get_intersection_axis(object->aabb, colliding_object->aabb);
     else
         axis = physics_move_intersecting_aabb(&object->aabb, &colliding_object->aabb);
@@ -136,7 +136,8 @@ void physics_on_collision(PhysicsObject* object, PhysicsObject* colliding_object
     if (colliding_object->on_collision != NULL)
         colliding_object->on_collision(colliding_object, object, axis);
 
-    physics_reset_velocity(object);
+    if (!act_as_trigger || !object->moved_by_collision)
+        physics_reset_velocity(object);
 }
 
 void physics_update(PhysicsWorld* world, f32 timestep) {
@@ -175,6 +176,7 @@ PhysicsObject* physics_add_physics_object(PhysicsWorld* world, Sprite* sprite) {
 
     object->sprite = sprite;
     object->takes_gravity = true;
+    object->moved_by_collision = true;
     object->is_trigger = false;
     object->filter = 0;
     object->trigger_filter = 0;
