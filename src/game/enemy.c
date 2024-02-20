@@ -21,9 +21,18 @@ void enemy_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, 
     Enemy* enemy = (Enemy*)object->user_pointer;
 
     f32 current_time = timer_get_time_s();
-    if (current_time - enemy->last_attack > enemy->attack_cooldown) {
-        enemy->target->hp--;
-        enemy->last_attack = current_time;
+    if (object->trigger_filter == colliding_object->trigger_filter) {
+        if (current_time - enemy->last_attack > enemy->attack_cooldown) {
+            enemy->target->hp--;
+            enemy->last_attack = current_time;
+
+            vec2 direction;
+            glm_vec2_sub(enemy->target->sprite->pos, enemy->sprite->pos, direction);
+            glm_vec2_normalize(direction);
+
+            colliding_object->forces[0] += direction[0] * 500.0f;
+            colliding_object->forces[1] += direction[1] * 500.0f;
+        }
     }
 }
 

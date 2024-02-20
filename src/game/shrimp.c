@@ -21,12 +21,6 @@ void shrimp_update(Sprite* sprite, f32 timestep) {
 void shrimp_on_collision(PhysicsObject* object, PhysicsObject* colliding_object, IntersectionAxis axis) {
     Shrimp* shrimp = (Shrimp*)object->user_pointer;
     shrimp->can_jump = true;
-
-    // enemy collision
-    if (object->trigger_filter == colliding_object->trigger_filter) {
-        object->forces[0] += 5000.0f;
-        // object->forces[1] += 50.0f;
-    }
 }
 
 void shrimp_on_event(void* e, EventType event_type, void* user_pointer) {
