@@ -1,8 +1,8 @@
-#include <engine/config.h>
+#include <engine/platform/config.h>
 
 #ifdef SHRIMP_SWITCH
 
-#include <engine/sound.h>
+#include <engine/audio/sound.h>
 
 Sound* sound_new(const char* filename) {
     

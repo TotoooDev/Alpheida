@@ -2,7 +2,7 @@
 
 #ifdef SHRIMP_SWITCH
 
-#include <engine/music.h>
+#include <engine/audio/music.h>
 
 Music* music_new(const char* filename) {
     

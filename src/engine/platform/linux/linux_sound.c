@@ -1,8 +1,8 @@
-#include <engine/config.h>
+#include <engine/platform/config.h>
 
 #ifdef SHRIMP_LINUX
 
-#include <engine/sound.h>
+#include <engine/audio/sound.h>
 #include <engine/log.h>
 #include <SDL2/SDL_mixer.h>
 

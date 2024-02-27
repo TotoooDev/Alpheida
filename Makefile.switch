@@ -39,7 +39,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 TARGET		:=  Alpheida
 BUILD		:=	obj
-SOURCES		:=	src src/game src/engine src/engine/graphics src/engine/graphics/opengl src/engine/platform src/engine/platform/switch src/engine/platform/switch/glad src/engine/stb_image
+SOURCES		:=	src/game src/engine src/engine/scene src/engine/physics src/engine/graphics src/engine/graphics/opengl src/engine/platform src/engine/platform/switch src/engine/platform/switch/glad src/engine/stb_image
 DATA		:=	data
 INCLUDES	:=	include
 ROMFS		:=	assets
@@ -54,7 +54,8 @@ APP_VERSION := 0.1.1
 ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
 CFLAGS	:=	-O2 -ffunction-sections \
-			$(ARCH) $(DEFINES)
+			$(ARCH) $(DEFINES) \
+			-I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/harfbuzz -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-6 # freetype nonsense
 
 CFLAGS	+=	$(INCLUDE) -D__SWITCH__
 
@@ -64,7 +65,7 @@ ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:=	-lglad -lEGL -lglapi -ldrm_nouveau \
-			-lnx -lm
+			-lnx -lm -lfreetype
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

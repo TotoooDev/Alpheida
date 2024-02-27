@@ -2,7 +2,7 @@
 
 #ifdef SHRIMP_LINUX
 
-#include <engine/music.h>
+#include <engine/audio/music.h>
 #include <engine/log.h>
 #include <SDL2/SDL_mixer.h>
 
