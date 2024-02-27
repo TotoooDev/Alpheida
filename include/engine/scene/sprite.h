@@ -4,7 +4,7 @@
 #include <engine/graphics/texture.h>
 #include <engine/graphics/color.h>
 #include <engine/graphics/renderer.h>
-#include <engine/physics.h>
+#include <engine/physics/physics.h>
 #include <engine/types.h>
 #include <engine/cglm/cglm.h>
 

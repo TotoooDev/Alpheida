@@ -3,7 +3,6 @@
 
 #include <engine/graphics/texture.h>
 #include <engine/graphics/color.h>
-#include <engine/aabb.h>
 #include <engine/types.h>
 #include <stdbool.h>
 

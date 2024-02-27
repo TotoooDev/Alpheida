@@ -1,5 +1,5 @@
-#include <engine/physics.h>
-#include <engine/sprite.h>
+#include <engine/physics/physics.h>
+#include <engine/scene/sprite.h>
 #include <engine/array.h>
 #include <engine/log.h>
 #include <stdlib.h>

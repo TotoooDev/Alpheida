@@ -1,8 +1,8 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <engine/sprite.h>
-#include <engine/scene.h>
+#include <engine/scene/sprite.h>
+#include <engine/scene/scene.h>
 #include <engine/cglm/cglm.h>
 
 typedef struct Bullet {

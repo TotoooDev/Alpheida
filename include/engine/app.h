@@ -2,7 +2,7 @@
 #define APPLICATION_H
 
 #include <engine/graphics/window.h>
-#include <engine/scene.h>
+#include <engine/scene/scene.h>
 
 /**
  * Creates a new application.

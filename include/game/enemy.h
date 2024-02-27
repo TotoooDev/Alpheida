@@ -2,7 +2,7 @@
 #define ENEMY_H
 
 #include <game/shrimp.h>
-#include <engine/sprite.h>
+#include <engine/scene/sprite.h>
 
 #define NUM_ENEMY_TYPES 1
 

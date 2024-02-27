@@ -1,9 +1,9 @@
 #ifndef SHRIMP_H
 #define SHRIMP_H
 
-#include <engine/sprite.h>
-#include <engine/scene.h>
-#include <engine/aabb.h>
+#include <engine/scene/sprite.h>
+#include <engine/scene/scene.h>
+#include <engine/physics/aabb.h>
 #include <engine/cglm/cglm.h>
 
 typedef struct Shrimp {

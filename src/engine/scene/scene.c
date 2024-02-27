@@ -1,6 +1,6 @@
-#include <engine/scene.h>
+#include <engine/scene/scene.h>
+#include <engine/physics/physics.h>
 #include <engine/array.h>
-#include <engine/physics.h>
 #include <engine/graphics/background.h>
 #include <engine/log.h>
 #include <stdlib.h>

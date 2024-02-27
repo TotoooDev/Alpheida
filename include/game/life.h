@@ -2,8 +2,8 @@
 #define LIFE_H
 
 #include <game/shrimp.h>
-#include <engine/scene.h>
-#include <engine/sprite.h>
+#include <engine/scene/scene.h>
+#include <engine/scene/sprite.h>
 #include <engine/graphics/text.h>
 
 typedef struct Life {

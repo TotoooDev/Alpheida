@@ -1,8 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <engine/sprite.h>
-#include <engine/physics.h>
+#include <engine/scene/sprite.h>
+#include <engine/physics/physics.h>
 #include <engine/graphics/camera.h>
 #include <engine/types.h>
 

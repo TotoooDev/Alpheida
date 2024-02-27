@@ -1,4 +1,4 @@
-#include <engine/sprite.h>
+#include <engine/scene/sprite.h>
 #include <stdlib.h>
 
 void sprite_default_draw_function(Sprite* sprite, Renderer* renderer) {

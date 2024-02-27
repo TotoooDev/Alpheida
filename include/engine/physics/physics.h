@@ -1,7 +1,7 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include <engine/aabb.h>
+#include <engine/physics/aabb.h>
 #include <engine/types.h>
 #include <engine/cglm/cglm.h>
 #include <stdbool.h>

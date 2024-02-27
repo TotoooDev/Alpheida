@@ -1,7 +1,7 @@
 #ifndef MAIN_SCENE_H
 #define MAIN_SCENE_H
 
-#include <engine/scene.h>
+#include <engine/scene/scene.h>
 #include <game/shrimp.h>
 #include <game/enemy.h>
 #include <game/life.h>
